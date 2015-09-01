@@ -6,11 +6,17 @@ EMC XtremIO PowerShell Module
 Introduction
 -------
 This module provides PowerShell access to the EMC XtremIO REST API
+
 The module has full read coverage over the 1.0 version of the XtremIO REST API(XtremIO 3.x)
+
 There is create, update and delete functionality for the most common objects listed below:
+
 Volume Folders
+
 Volumes
+
 Snapshots
+
 Lunmaps
 
 Currently working on additional functionality to provide full API coverage
@@ -19,7 +25,9 @@ Currently working on additional functionality to provide full API coverage
 Requirements
 -------
 PowerShell Version 4
+
 Should work under PowerShell 3.0 but has not been tested yet
+
 Primary requirement is Invoke-RestMethod Cmdlet introduced in PowerShell 3.0
 
 
