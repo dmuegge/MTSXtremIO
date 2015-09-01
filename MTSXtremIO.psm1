@@ -2,29 +2,7 @@
 ## 
 ## Author:          David Muegge
 ## Purpose:         Provides PowerShell access to the EMC XtremIO REST API
-##																					
-## Requirements:    PowerShell Version 4
-## 					
-##					
-## History:         0.10.0 2015-01-31 - Initial Creation
-##                  0.11.0 2015-02-09 - Completed initial Get CmdLets
-##                  0.12.0 2015-02-20 - Added New, Update, and Remove CmdLets for common objects
-##                  0.13.0 2015-03-08 - Updated comments and published to GitHub
-##                  0.20.0 2015-08-30 - Changed Set-XIOAPIConnectionIno to hostname as parameter
-##                                      This is a very minor breaking change - needed so user no
-##                                      longer needs to understand entire URI path
-##                                      misc parameter changes
-##
-## Notes:
-##                  This module hase full read coverage over the 3.0 version of the XtremIO REST API
-##                  There is create, update and delete functionality for the most common objects 
-##                  listed below:
-##                      Volume Folders
-##                      Volumes
-##                      Snapshots
-##                      Lunmaps
-##
-##                                  
+##																					             
 ##                                                                             
 ####################################################################################################
 ## Disclaimer
@@ -37,38 +15,11 @@
 ## *                                                              *
 ## **************************************************************** 
 ###################################################################################################>
-
+#Requires -Version 4
 
 # Base, helper and connection functions
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-PasswordFile{
-<#
-.SYNOPSIS
-    Creates enrypted password file
-
-.DESCRIPTION
-    Will prompt for password and write encrypted password to file
-    Encryption key is generated based on current windows user security token
-
-.PARAMETER Path
-    Path to location of encrypted password file
-
-.PARAMETER Filename
-    Filename of enrypted password file
-
-.INPUTS
-    Filename and path
-    Will prompt for password to be encrypted
-
-.OUTPUTS
-    Encrypted password file
-
-.EXAMPLE
-    New-PasswordFile -Path "C:\Temp\Passwords" -Filename "lab-PWD.txt"
-
-.NOTES
-    This cmdlet is used allow the use of basic authentication and persist password info
-
-#>
 	[CmdletBinding()]
 	param ( 
 		[Parameter(Mandatory=$True)][Alias('p')][string]$Path,
@@ -89,32 +40,9 @@ function New-PasswordFile{
     
 } # New-PasswordFile
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-PasswordFromFile{
-<#
-.SYNOPSIS
-   Get password from encrypted password file 
-
-.DESCRIPTION
-    Read password from encrypted file
-    Encryption key is based on windows user security token of logged on user when file was created
-
-.PARAMETER FullPath
-    Path to location of encrypted password file
-        
-.INPUTS
-    Encrypted password file
-    
-.OUTPUTS
-    UnEncrypted password
-
-.EXAMPLE
-    New-PasswordFile -Path "C:\Temp\Passwords" -Filename "lab-PWD.txt"
-
-.NOTES
-    This cmdlet is used allow the use of basic authentication and persist authentication info
-
-#>
-	[CmdletBinding()]
+[CmdletBinding()]
 	param ( 
 		[Parameter(Mandatory=$True)][Alias('f')][string]$FullPath
 	)
@@ -139,21 +67,8 @@ function Get-PasswordFromFile{
     
 } # Get-PasswordFromFile
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Disable-CertificateValidation{
-<#
-.SYNOPSIS
-    Disable certificate validation
-
-.DESCRIPTION
-    Ignore SSL errors - This would not be used if self signed certificates were not used and the proper CA cert was installed
-
-.EXAMPLE
-    Disable-CertificateValidation
-
-.NOTES
-    
-
-#>
 [CmdletBinding()]
 param()
 
@@ -174,38 +89,8 @@ using System.Security.Cryptography.X509Certificates;
 
 } # Disable-CertificateValidation
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOAPIConnectionInfo{
-<#
-.SYNOPSIS
-    Set XtremIO Connection Information
-    
-.DESCRIPTION
-    Stores XtremIO REST API connection and authentication information
-
-.PARAMETER username
-    API username
-        
-.PARAMETER passwordfile
-    File for API user
-        
-.PARAMETER baseuri
-    Base URL of XtremIO XMS server
-        
-.PARAMETER certpath
-    Certificate store path
-        
-.PARAMETER certthumbprint
-    Certificate store path
-        
-.EXAMPLE
-    Set-XIOAPIConnectionInfo -username "Admin" -passwordfile "C:\temp\password.txt" -baseurl "https://192.168.1.59/api/json/types/"
-
-.NOTES
-
-    Client certificate functionality has not been implemented yet
-
-
-#>
 	[CmdletBinding()]
 	param ([Parameter(Mandatory=$True)][Alias('u')][string]$username,
            [Parameter(Mandatory=$True)][Alias('p')][string]$passwordfile,
@@ -227,26 +112,19 @@ function Set-XIOAPIConnectionInfo{
     New-Variable -Name XIOAPIBaseUri -Value $baseuri -Scope Global -Force
     New-Variable -Name XIOAPIHeaders -Value @{'Authorization'="Basic $($EncodedPassword)"} -Scope Global -Force
 
-    # Setup root certificate validation - this requires installation of root certificate in client store - TODO****
+    
     if($certpath){
             
     }
+
+    # TODO - Setup root certificate validation - this requires installation of root certificate in client store
+
+
 } # Set-XIOAPIConnectionInfo
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOAPITypes{
-<#
-.SYNOPSIS
-    Get XtremIO API Types Information
-    
-.DESCRIPTION
-    Get XtremIO API Types Information
- 
-.EXAMPLE
-    Get XtremIO Object Types
-    Get-XIOAPITypes
-
-#>
-	[CmdletBinding()]
+[CmdletBinding()]
 	param ()
         
     $Uri = $Global:XIOAPIBaseUri
@@ -255,95 +133,9 @@ function Get-XIOAPITypes{
     
 } # Get-XIOAPITypes
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOItem{
-<#
-.SYNOPSIS
-    Get XtremIO Item list
-    
-.DESCRIPTION
-    Get XtremIO Item list
-
-.PARAMETER UriString
-    URI String for Query
-        
-.EXAMPLE
-    List clusters
-    (Get-XIOItem -UriString "clusters").clusters
-
-.EXAMPLE
-    Get XtremIO bricks
-    (Get-XIOItem -UriString "bricks").bricks
-
-.EXAMPLE
-    Get XtremIO volumes
-    (Get-XIOItem -UriString "volumes").volumes
-
-.EXAMPLE
-    Get XtremIO volume folders
-    (Get-XIOItem -UriString "volume-folders").folders
-
-.EXAMPLE
-    Get XtremIO storage controllers
-    (Get-XIOItem -UriString "storage-controllers")."storage-controllers"
-
-.EXAMPLE
-    Get XtremIO target groups
-    (Get-XIOItem -UriString "target-groups")."target-groups"
-
-.EXAMPLE
-    Get XtremIO lun maps
-    (Get-XIOItem -UriString "lun-maps")."lun-maps"
-
-.EXAMPLE
-    Get XtremIO initiator group folders
-    (Get-XIOItem -UriString "ig-folders").folders
-
-.EXAMPLE
-    Get XtremIO snapshots
-    (Get-XIOItem -UriString "snapshots").snapshots
-
-.EXAMPLE
-    Get XtremIO iscsi portals
-    (Get-XIOItem -UriString "iscsi-portals")."iscsi-portals"
-
-.EXAMPLE
-    Get XtremIO xenvs
-    (Get-XIOItem -UriString "xenvs").xenvs
-
-.EXAMPLE
-    Get XtremIO iscsi routes
-    (Get-XIOItem -UriString "iscsi-routes")."iscsi-routes"
-
-.EXAMPLE
-    Get XtremIO events
-    (Get-XIOItem -UriString "events").events
-
-.EXAMPLE
-    Get XtremIO initiator groups
-    (Get-XIOItem -UriString "initiator-groups")."initiator-groups"
-
-.EXAMPLE
-    Get XtremIO initiators
-    (Get-XIOItem -UriString "initiators").initiators
-
-.EXAMPLE
-    Get XtremIO ssds 
-    (Get-XIOItem -UriString "ssds").ssds
-
-.EXAMPLE
-    Get XtremIO data-protection-groups
-    (Get-XIOItem -UriString "data-protection-groups")."data-protection-groups"
-
-.EXAMPLE
-    Get XtremIO targets
-    (Get-XIOItem -UriString "targets").targets
-
-.NOTES
-    
-
-
-#>
-	[CmdletBinding()]
+[CmdletBinding()]
 	param ([Parameter(Mandatory=$True)][Alias('u')][string]$UriString)
     
     Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
@@ -354,37 +146,8 @@ function Get-XIOItem{
 
 
 # Read functions
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOCluster{
-<#
-.SYNOPSIS
-    Get XtremIO Cluster Information
-    
-.DESCRIPTION
-    Get XtremIO Cluster Information
-
-.PARAMETER Name
-    Name String for Cluster Info Query by name
-
-.PARAMETER ID
-    ID String for Cluster Info Query by index
-
-.EXAMPLE
-    Get XtremIO Cluster Info by index
-    Get-XIOCluster -ID 1
-    
-.EXAMPLE
-    Get XtremIO Cluster Info by name    
-    Get-XIOCluster -Name X1
-    Get-XIOCluster X1
-
-.EXAMPLE
-    Get-XIOCluster
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllClusters')]
 param ( [Parameter( Mandatory=$true,
                     ValueFromPipeline=$true,
@@ -422,33 +185,8 @@ param ( [Parameter( Mandatory=$true,
     }  
 } # Get-XIOCluster
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOBrick{
-<#
-.SYNOPSIS
-    Get XtremIO Brick Information
-    
-.DESCRIPTION
-    Get XtremIO Brick Information
-
-.PARAMETER Name
-    Name String for Brick Info Query by name
-        
-.PARAMETER ID
-    ID String for Brick Info Query by index
-        
-.EXAMPLE
-    Get XtremIO Brick Info by index
-    Get-XIOBrick -ID 1
-    
-.EXAMPLE
-    Get XtremIO Brick Info by name    
-    Get-XIOBrick -Name X1
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllBricks')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,  
@@ -490,39 +228,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOBrick
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOXenvs{
-<#
-.SYNOPSIS
-    Get XtremIO Xenvs Information
-    
-.DESCRIPTION
-    Get XtremIO Xenvs Information
-
-.PARAMETER Name
-    Name String for Xenvs Info Query by name
-        
-.PARAMETER ID
-    ID String for Xenvs Info Query by index
-        
-.EXAMPLE
-    Get XtremIO Xenvs Info by index
-    Get-XIOXenvs -ID 1
-    
-.EXAMPLE
-    Get XtremIO Xenvs Info by name    
-    Get-XIOXenvs -Name X1
-    Get-XIOXenvs X1
-
-.EXAMPLE
-    Get XtremIO Xenvs Info by name    
-    Get-XIOXenvs
-
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllXEnvs')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true, 
@@ -567,37 +274,8 @@ param ( [Parameter(Mandatory=$true,
     
 } # Get-XIOXenvs
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOVolume{
-<#
-.SYNOPSIS
-    Get XtremIO Volume Information
-    
-.DESCRIPTION
-    Get XtremIO Volume Information
-
-.PARAMETER Name
-    Name String for Volume Info Query by name
-        
-.PARAMETER ID
-    ID String for Volume Info Query by index
-        
-.EXAMPLE
-    Get XtremIO Volume Info by index
-    Get-XIOVolume -ID 1
-    
-.EXAMPLE
-    Get XtremIO Volume Info by name    
-    Get-XIOVolume -Name X1
-    Get-XIOVolume X1
-
-.EXAMPLE
-    Get-XIOVolume    
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllVolumes')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
@@ -636,36 +314,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOVolume
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOVolumeFolder{
-<#
-.SYNOPSIS
-    Get XtremIO volume folder info
-    
-.DESCRIPTION
-    Get XtremIO volume folder info
-
-.PARAMETER Name
-    String for name of folder
-        
-.PARAMETER ID
-    String for ID of folder
-        
-.EXAMPLE
-    Get volume folder by ID
-    Get-XIOVolumeFolder -ID 1
-    
-.EXAMPLE
-    Get volume folder by name
-    Get-XIOVolumeFolder -Name "Test01"
-    Get-XIOVolumeFolder "Test01"
-
-.EXAMPLE
-    Get-XIOVolumeFolder
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllVolumeFolders')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true, 
@@ -702,36 +352,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOVolumeFolder
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOStorageController{
-<#
-.SYNOPSIS
-    Get XtremIO storage controller info
-    
-.DESCRIPTION
-    Get XtremIO storage controller info
-
-.PARAMETER Name
-    String for name of storage controller
-        
-.PARAMETER ID
-    String for ID of storage controller
-        
-.EXAMPLE
-    Get storage controller by ID
-    Get-XIOStorageController -ID 1
-    
-.EXAMPLE
-    Get storage controller by name
-    Get-XIOStorageController -Name "Test01"
-    Get-XIOStorageController "Test01"
-
-.EXAMPLE
-    Get-XIOStorageController
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllControllers')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,  
@@ -766,36 +388,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOStorageController
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIODataProtectionGroup{
-<#
-.SYNOPSIS
-    Get XtremIO Data Protection Group info
-    
-.DESCRIPTION
-    Get XtremIO Data Protection Group info
-
-.PARAMETER Name
-    String for name of Data Protection Group
-        
-.PARAMETER ID
-    String for ID of Data Protection Group
-        
-.EXAMPLE
-    Get Data Protection Group by ID
-    Get-XIODataProtectionGroup -ID 1
-    
-.EXAMPLE
-    Get Data Protection Group by name
-    Get-XIODataProtectionGroup -Name "Test01"
-    Get-XIODataProtectionGroup "Test01"
-
-.EXAMPLE
-    Get-XIODataProtectionGroup
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllDPGroups')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
@@ -831,37 +425,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIODataProtectionGroup
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOSnapshot{
-<#
-.SYNOPSIS
-    Get XtremIO Snapshot Information
-    
-.DESCRIPTION
-    Get XtremIO Snapshot Information
-
-.PARAMETER Name
-    Name String for Snapshot Info Query by name
-        
-.PARAMETER ID
-    ID String for Snapshot Info Query by index
-        
-.EXAMPLE
-    Get XtremIO Snapshot Info by index
-    Get-XIOSnapshot -ID 1
-    
-.EXAMPLE
-    Get XtremIO Snapshot Info by name    
-    Get-XIOSnapshot -Name X1
-    Get-XIOSnapshot X1
-
-.EXAMPLE
-    Get-XIOSnapshot
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllSnapshots')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
@@ -899,37 +464,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOSnapshot
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOInitiator{
-<#
-.SYNOPSIS
-    Get XtremIO Initiator Information
-    
-.DESCRIPTION
-    Get XtremIO Initiator Information
-
-.PARAMETER Name
-    Name String for Initiator Info Query by name
-        
-.PARAMETER ID
-    ID String for Initiator Info Query by index
-        
-.EXAMPLE
-    Get XtremIO Initiator Info by index
-    Get-XIOInitiator -ID 1
-    
-.EXAMPLE
-    Get XtremIO Initiator Info by name    
-    Get-XIOInitiator -Name X1
-    Get-XIOInitiator X1
-
-.EXAMPLE
-    Get-XIOInitiator
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllInitiators')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,  
@@ -967,36 +503,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOInitiator
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOInitiatorGroup{
-<#
-.SYNOPSIS
-    Get XtremIO Initiator Group info
-    
-.DESCRIPTION
-    Get XtremIO Initiator Group info
-
-.PARAMETER Name
-    String for name of Initiator Group
-        
-.PARAMETER ID
-    String for ID of Initiator Group
-        
-.EXAMPLE
-    Get Initiator Group by ID
-    Get-XIOInitiatorGroup -ID 1
-    
-.EXAMPLE
-    Get Initiator Group by name
-    Get-XIOInitiatorGroup -Name "Test01"
-    Get-XIOInitiatorGroup "Test01"
-
-.EXAMPLE
-    Get-XIOInitiatorGroup
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllInitiatorGroups')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
@@ -1032,36 +540,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOInitiatorGroup
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOInitiatorGroupFolder{
-<#
-.SYNOPSIS
-    Get XtremIO Initiator Group folder info
-    
-.DESCRIPTION
-    Get XtremIO Initiator Group folder info
-
-.PARAMETER Name
-    String for name of Initiator Group folder
-        
-.PARAMETER ID
-    String for ID of Initiator Group folder
-        
-.EXAMPLE
-    Get Initiator Group folder by ID
-    Get-XIOInitiatorGroupFolder -ID 1
-    
-.EXAMPLE
-    Get Initiator Group folder by name
-    Get-XIOInitiatorGroupFolder -Name "Test01"
-    Get-XIOInitiatorGroupFolder "Test01"
-
-.EXAMPLE
-    Get-XIOInitiatorGroupFolder
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllIGFolders')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
@@ -1097,37 +577,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOInitiatorGroupFolder
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOTarget{
-<#
-.SYNOPSIS
-    Get XtremIO Target Information
-    
-.DESCRIPTION
-    Get XtremIO Target Information
-
-.PARAMETER Name
-    Name String for Target Info Query by name
-        
-.PARAMETER ID
-    ID String for Target Info Query by index
-        
-.EXAMPLE
-    Get XtremIO Target Info by index
-    Get-XIOTarget -ID 1
-    
-.EXAMPLE
-    Get XtremIO Target Info by name    
-    Get-XIOTarget -Name X1
-    Get-XIOTarget X1
-
-.EXAMPLE
-    Get-XIOTarget
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllTargets')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
@@ -1165,36 +616,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOTarget
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOTargetGroup{
-<#
-.SYNOPSIS
-    Get XtremIO Target Group info
-    
-.DESCRIPTION
-    Get XtremIO Target Group info
-
-.PARAMETER Name
-    String for name of Target Group
-        
-.PARAMETER ID
-    String for ID of Target Group
-        
-.EXAMPLE
-    Get Target Group by ID
-    Get-XIOTargetGroup -ID 1
-    
-.EXAMPLE
-    Get Target Group by name
-    Get-XIOTargetGroup -Name "Test01"
-    Get-XIOTargetGroup "Test01"
-
-.EXAMPLE
-    Get-XIOTargetGroup
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllTargetGroups')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
@@ -1230,36 +653,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOTargetGroup
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOIscsiPortal{
-<#
-.SYNOPSIS
-    Get XtremIO iSCSI Portal info
-    
-.DESCRIPTION
-    Get XtremIO iSCSI Portal info
-
-.PARAMETER Name
-    String for name of iSCSI Portal
-        
-.PARAMETER ID
-    String for ID of iSCSI Portal
-        
-.EXAMPLE
-    Get iSCSI Portal by ID
-    Get-XIOIscsiPortal -ID 1
-    
-.EXAMPLE
-    Get iSCSI Portal by name
-    Get-XIOIscsiPortal -Name "Test01"
-    Get-XIOIscsiPortal "Test01"
-
-.EXAMPLE
-    Get-XIOIscsiPortal
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllISCSIPortals')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
@@ -1295,36 +690,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOIscsiPortal
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOIscsiRoute{
-<#
-.SYNOPSIS
-    Get XtremIO iSCSI Route info
-    
-.DESCRIPTION
-    Get XtremIO iSCSI Route info
-
-.PARAMETER Name
-    String for name of iSCSI Route
-        
-.PARAMETER ID
-    String for ID of iSCSI Route
-        
-.EXAMPLE
-    Get iSCSI Route by ID
-    Get-XIOIscsiRoute -ID 1
-    
-.EXAMPLE
-    Get iSCSI Route by name
-    Get-XIOIscsiRoute -Name "Test01"
-    Get-XIOIscsiRoute "Test01"
-
-.EXAMPLE
-    Get-XIOIscsiRoute
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllISCSIRoutes')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
@@ -1360,36 +727,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOIscsiRoute
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOLunMap{
-<#
-.SYNOPSIS
-    Get XtremIO Lun Map info
-    
-.DESCRIPTION
-    Get XtremIO Lun Map info
-
-.PARAMETER Name
-    String for name of Lun Map
-        
-.PARAMETER ID
-    String for ID of Lun Map
-        
-.EXAMPLE
-    Get Lun Map by ID
-    Get-XIOLunMap -ID 1
-    
-.EXAMPLE
-    Get Lun Map by name
-    Get-XIOLunMap -Name "Test01"
-    Get-XIOLunMap "Test01"
-
-.EXAMPLE
-    Get-XIOLunMap
-
-.NOTES
-    
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllLunMaps')]
 param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
@@ -1425,37 +764,8 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOLunMap
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOSSD{
-<#
-.SYNOPSIS
-    Get XtremIO SSD Information
-    
-.DESCRIPTION
-    Get XtremIO SSD Information
-
-.PARAMETER Name
-    Name String for SSD Info Query by name
-        
-.PARAMETER ID
-    ID String for SSD Info Query by index
-        
-.EXAMPLE
-    Get XtremIO SSD Info by index
-    Get-XIOSSD -ID 1
-    
-.EXAMPLE
-    Get XtremIO SSD Info by name    
-    Get-XIOSSD -Name X1
-    Get-XIOSSD X1
-
-.EXAMPLE
-    Get-XIOSSD
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding(DefaultParameterSetName='AllSSDs')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
@@ -1473,9 +783,9 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = 'ssds/'
             $UriString += ('?name=' + $Name)
-
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
-        (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+        
     }
     End{
         # Return detail of specific ssd by ID
@@ -1492,55 +802,55 @@ param ( [Parameter(Mandatory=$true,
     }
 } # Get-XIOSSD
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
+function Get-XIOEvent{
+[CmdletBinding(DefaultParameterSetName='AllEvents')]
+param ( [Parameter(Mandatory=$true,
+                    ParameterSetName='EventsByDateTime')]
+        [ValidateNotNull()]
+        [Alias('f')] 
+        [Alias('From')]
+        [datetime]$FromDateTime,
+        [Parameter(Mandatory=$true,
+                    ParameterSetName='EventsByDateTime')]
+        [ValidateNotNull()]
+        [Alias('t')] 
+        [Alias('To')]
+        [datetime]$ToDateTime
+)
+    
+    $UriString = 'events/'
+    # Return events by from date and time
+    if($FromDateTime){
+        $UriString += ('from-date-time="' + ($FromDateTime.ToString('u').Replace('Z',[string]::Empty)) + '"')
+        if($ToDateTime){
+            $UriString += ('?to-date-time="' + ($ToDateTime.ToString('u').Replace('Z',[string]::Empty)) + '"')   
+        }
+    }
+    else{
+        # Return events by to date and time
+        if($ToDateTime){
+            $UriString += ('to-date-time="' + ($ToDateTime.ToString('u').Replace('Z',[string]::Empty)) + '"')   
+        }
+    }
+    # No parameters passed return details of all events
+    if($PSCmdlet.ParameterSetName -eq 'AllEvents'){
+        (Get-XIOItem -UriString 'events').events
+    }
+    else{
+        (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).events
+    }
+
+    # TODO - Need to revist this after feedback from EMC on from and to behavior. From does not seem to work and all requests appear to retrieve 504 records
+    
+} # Get-XIOEvent
 
 
 
 
 # Create functions
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOVolume{
-<#
-.SYNOPSIS
-    Create New XtremIO Volume
-    
-.DESCRIPTION
-    Create New XtremIO Volume
-
-.PARAMETER Size
-    String for Volume Size in KB(k)/MB(m)/GB(g)/TB(t)
-    Must be greater than 0 and a multiple of 1MB
-        
-.PARAMETER Name
-    String for Volume name
-        
-.PARAMETER Offset
-    String for Volume offset 0-7
-    Alignment offset for volumes of 512LB Size
-        
-.PARAMETER LBSize
-    String for Logical Block Size 512(Default) or 4096
-        
-.PARAMETER SysID
-    String for Cluster name or index when more
-    than one cluster is defined 
-        
-.PARAMETER ParentFolderID
-    String for folder name to create volume in 
-        
-.EXAMPLE
-    New XtremIO Volume minimum requirements with defaults
-    New-XIOVolume -VolSize "10m"
-    
-.EXAMPLE
-    New XtremIO Volume named and created in specific volume folder    
-    New-XIOVolume -VolSize "10m" -VolName "dtest" -ParentFolderID "/DMTest"
-
-.NOTES
-    
-    TODO - Need to experiment with options of using pipline.
-            
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true)]
         [Alias('s')]
@@ -1596,37 +906,12 @@ param ( [Parameter(Mandatory=$true)]
     
     Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
     
-
+    # TODO - Need to experiment with options of using pipline.
     
 } # New-XIOVolume
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOVolumeFolder{
-<#
-.SYNOPSIS
-    Create new XtremIO volume folder
-    
-.DESCRIPTION
-    Create new XtremIO volume folder
-
-.PARAMETER Caption
-    String for name of new folder
-        
-.PARAMETER ParentFolderName
-    String for folder name of parent folder
-        
-.EXAMPLE
-    Create new top level folder
-    New-XIOVolumeFolder -Caption "Test01" -ParentFolderName "/"
-    
-.EXAMPLE
-    Create new subfolder under "/Test01"
-    New-XIOVolumeFolder -Caption "Test" -ParentFolderName "/Test01"
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true)]
         [Alias('c')] 
@@ -1648,42 +933,8 @@ param ( [Parameter(Mandatory=$true)]
 
 } # New-XIOVolumeFolder
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOLunMap{
-<#
-.SYNOPSIS
-    Create new XtremIO LUN Map
-    
-.DESCRIPTION
-    Create new XtremIO LUN Map
-
-.PARAMETER Name
-    Name string of volume to be mapped
-        
-.PARAMETER ID
-    ID string of volume to be mapped
-        
-.PARAMETER InitiatorGroup
-    Initiator Group's name or index number
-        
-.PARAMETER HostID
-    Unique LUN identification, exposing the volume to the host (16K LUN mappings are currently supported)
-        
-.PARAMETER TargetGroup
-    Target’s group's name or index number 
-        
-.EXAMPLE
-    New XtremIO Volume minimum requirements with defaults
-    New-XIOLunMap -VolSize "10m"
-    
-.EXAMPLE
-    New XtremIO Volume named and created in specific volume folder    
-    New-XIOLunMap -VolSize "10m" -VolName "dtest" -ParentFolderID "/DMTest"
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true,
                     ValueFromPipeline=$true, 
@@ -1737,33 +988,8 @@ param ( [Parameter(Mandatory=$true,
 
 } # New-XIOLunMap
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOSnapshot{
-<#
-.SYNOPSIS
-    Create New XtremIO Snapshot
-    
-.DESCRIPTION
-    Create New XtremIO Snapshot
-
-.PARAMETER VolName
-    Source volume’s name
-        
-.PARAMETER SnapName
-    Snapshot’s name
-        
-.PARAMETER ParentFolderID
-    Destination folder’s name 
-        
-.EXAMPLE
-    New XtremIO snapshot
-    New-XIOSnapshot -VolName "DTest01" -SnapName ("DTest01_" + (Get-Date -Format yyyyMMdd-HHmmss)) -FolderID "/DMTest"
-    
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true,
                     ValueFromPipeline=$true, 
@@ -1781,52 +1007,28 @@ param ( [Parameter(Mandatory=$true,
         [string]$FolderID=$null
 )
 
-        Begin{
+    Begin{
 
-            $UriString = 'snapshots'
+        $UriString = 'snapshots'
 
-        }
+    }
 
-        Process{
+    Process{
             
-            $JSoNBody = New-Object -TypeName psobject
-            if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name ancestor-vol-id -Value $Name}
-            if($SnapName){$JSoNBody | Add-Member -MemberType NoteProperty -Name snap-vol-name -Value $SnapName}
-            if($FolderID){$JSoNBody | Add-Member -MemberType NoteProperty -Name folder-id -Value $FolderID}
-            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        $JSoNBody = New-Object -TypeName psobject
+        if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name ancestor-vol-id -Value $Name}
+        if($SnapName){$JSoNBody | Add-Member -MemberType NoteProperty -Name snap-vol-name -Value $SnapName}
+        if($FolderID){$JSoNBody | Add-Member -MemberType NoteProperty -Name folder-id -Value $FolderID}
+        Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
             
-        }
+    }
 
+    # TODO - Does not implement REST API functionality to complete snapshot of set of volumes, but easily done using PowerShell features
 
 } # New-XIOSnapshot
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOIGFolder{
-<#
-.SYNOPSIS
-    Create new XtremIO initiator group folder
-    
-.DESCRIPTION
-    Create new XtremIO initiator group folder
-
-.PARAMETER Caption
-    String for name of new folder
-        
-.PARAMETER ParentFolderName
-    String for folder name of parent folder
-        
-.EXAMPLE
-    Create new top level folder
-    New-XIOIGFolder -Caption "Test01" -ParentFolderName "/"
-    
-.EXAMPLE
-    Create new subfolder under "/Test01"
-    New-XIOIGFolder -Caption "Test" -ParentFolderName "/Test01"
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true)]
         [Alias('c')] 
@@ -1850,36 +1052,19 @@ param ( [Parameter(Mandatory=$true)]
 
 
 
-# Update functions
-function Rename-XIOVolumeFolder{
-<#
-.SYNOPSIS
-    Rename XtremIO volume folder
-    
-.DESCRIPTION
-    Rename XtremIO volume folder
+# TODO - New-XIOInitiator
 
-.PARAMETER NewCaption
-    String for new name of folder
-        
-.PARAMETER FolderName
-    String for folder name of folder
-        
-.PARAMETER FolderID
-    String for folder ID of folder
-        
-.EXAMPLE
-    Rename top level folder
-    Rename-XIOVolumeFolder -Caption "Test01" -FolderID 1
-    
-.EXAMPLE
-    Rename subfolder "/Test"
-    Rename-XIOVolumeFolder -Caption "Test01" -FolderName "/Test"
+# TODO - New-XIOInitiatorGroup
 
-.NOTES
-    
+# TODO - New-XIOIscsiPortal
 
-#>
+# TODO - New-XIOIscsiRoute
+
+
+
+# Set functions
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
+function Set-XIOVolumeFolder{
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true)]
         [Alias('c')] 
@@ -1902,55 +1087,10 @@ param ( [Parameter(Mandatory=$true)]
     $ReturnData = Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
     $ReturnData
 
-} # Rename-XIOVolumeFolder
+} # Set-XIOVolumeFolder
 
-function Update-XIOVolume{
-<#
-.SYNOPSIS
-    Update XtremIO Volume Properties
-    
-.DESCRIPTION
-    Update XtremIO Volume Properties
-
-.PARAMETER VolID
-    ID String for Volume Info Query by index
-        
-.PARAMETER VolName
-    Name String for Volume Info Query by name
-        
-.PARAMETER NewVolName
-    Name String for new volume name
-        
-.PARAMETER NewVolSize
-    Size String for new volume size
-        
-.PARAMETER SmallIOAlerts
-    String for state of volume small IO alerts
-        
-.PARAMETER UnalignedIOAlerts
-    String for state of volume unaligned IO alerts
-        
-.PARAMETER VaaiTpAlerts
-    String for state of volume VAAI TP alerts
-        
-.EXAMPLE
-    Update XtremIO Volume Info by index
-    Update-XIOVolume -VolID 1 -NewVolName "X01"
-    
-.EXAMPLE
-    Update XtremIO Volume Info by name    
-    Update-XIOVolume -VolName "X1" -NewVolName "X01"
-
-.EXAMPLE
-    Update XtremIO Volume Info by name    
-    Update-XIOVolume -VolName "X1" -VaaiTpAlerts enable
-
-
-.NOTES
-    
-
-
-#>
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
+function Set-XIOVolume{
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true, 
                     ParameterSetName='VolNameUpdateByIndex')]
@@ -2033,37 +1173,10 @@ param ( [Parameter(Mandatory=$true,
     $ReturnData = Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
     $ReturnData
 
-} # Update-XIOVolume
+} # Set-XIOVolume
 
-function Rename-XIOIGFolder{
-<#
-.SYNOPSIS
-    Rename XtremIO initiator group folder
-    
-.DESCRIPTION
-    Rename XtremIO initiator group folder
-
-.PARAMETER NewCaption
-    String for new name of folder
-        
-.PARAMETER FolderName
-    String for folder name of folder
-        
-.PARAMETER FolderID
-    String for folder ID of folder
-        
-.EXAMPLE
-    Rename top level folder
-    Rename-XIOIGFolder -Caption "Test01" -FolderID 1
-    
-.EXAMPLE
-    Rename subfolder "/Test"
-    Rename-XIOIGFolder -Caption "Test01" -FolderName "/Test"
-
-.NOTES
-    
-
-#>
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
+function Set-XIOIGFolder{
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true)]
         [Alias('c')] 
@@ -2086,40 +1199,17 @@ param ( [Parameter(Mandatory=$true)]
     $ReturnData = Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
     $ReturnData
 
-} # Rename-XIOIGFolder
+} # Set-XIOIGFolder
 
+# TODO - Set/Update-XIOInitiator
 
+# TODO - Set/Rename-XIOInitiatorGroup
 
 
 
 # Remove Functions
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOVolume{
-<#
-.SYNOPSIS
-    Remove XtremIO Volume
-    
-.DESCRIPTION
-    Remove XtremIO Volume
-
-.PARAMETER VolID
-    ID String to Remove Volume by index
-        
-.PARAMETER VolName
-    Name String to Remove Volume by name
-        
-.EXAMPLE
-    Remove XtremIO Volume by index
-    Remove-XIOVolume -VolID 1
-    
-.EXAMPLE
-    Remove XtremIO Volume by name    
-    Remove-XIOVolume -VolName X1
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
@@ -2159,33 +1249,8 @@ param ( [Parameter(Mandatory=$true,
     
 } # Remove-XIOVolume
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOVolumeFolder{
-<#
-.SYNOPSIS
-    Remove XtremIO VolumeFolder
-    
-.DESCRIPTION
-    Remove XtremIO VolumeFolder
-
-.PARAMETER FolderID
-    ID String to Remove Volume Folder by index
-        
-.PARAMETER FolderName
-    Name String to Remove Volume Folder by name
-        
-.EXAMPLE
-    Remove XtremIO Volume Folder by index
-    Remove-XIOVolumeFolder -FolderID 1
-    
-.EXAMPLE
-    Remove XtremIO Volume Folder by name    
-    Remove-XIOVolumeFolder -FolderName X1
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
@@ -2224,33 +1289,8 @@ param ( [Parameter(Mandatory=$true,
      
 } # Remove-XIOVolumeFolder
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOLunMap{
-<#
-.SYNOPSIS
-    Remove XtremIO Lun Map
-    
-.DESCRIPTION
-    Remove XtremIO Lun Map
-
-.PARAMETER VolName
-    Name String to Remove Lun Map by name
-        
-.PARAMETER ID
-    ID String to Remove Lun Map by index
-        
-.EXAMPLE
-    Remove XtremIO Lun Map by index
-    Remove-XIOLunMap -ID 1
-    
-.EXAMPLE
-    Remove XtremIO Lun Map by name    
-    Remove-XIOLunMap -Name X1
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
@@ -2286,33 +1326,8 @@ param ( [Parameter(Mandatory=$true,
 
 } # Remove-XIOLunMap
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOSnapshot{
-<#
-.SYNOPSIS
-    Remove XtremIO Snapshot
-    
-.DESCRIPTION
-    Remove XtremIO Snapshot
-
-.PARAMETER ID
-    ID String to Remove Volume/Snapshot by index
-        
-.PARAMETER Name
-    Name String to Remove Volume/Snapshot by name
-        
-.EXAMPLE
-    Remove XtremIO Volume/Snapshot by index
-    Remove-XIOSnapshot -VolID 1
-    
-.EXAMPLE
-    Remove XtremIO Volume/Snapshot by name    
-    Remove-XIOSnapshot -VolName X1
-
-.NOTES
-    
-
-
-#>
 [CmdletBinding()]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true, 
@@ -2351,6 +1366,16 @@ param ( [Parameter(Mandatory=$true,
 } # Remove-XIOSnapshot
 
 
+# TODO - Remove-XIOInitiator
+
+# TODO - Remove-XIOInitiatorGroup
+
+# TODO - Remove-XIOIGFolder
+
+# TODO - Remove-XIOIscsiPortal
+
+# TODO - Remove-XIOIscsiRoute
+
 
 
 
@@ -2383,6 +1408,7 @@ Export-ModuleMember -Function Get-XIOIscsiPortal
 Export-ModuleMember -Function Get-XIOIscsiRoute
 Export-ModuleMember -Function Get-XIOLunMap
 Export-ModuleMember -Function Get-XIOSSD
+Export-ModuleMember -Function Get-XIOEvent
 
 
 Export-ModuleMember -Function New-XIOVolume
@@ -2396,6 +1422,9 @@ Export-ModuleMember -Function Rename-XIOVolumeFolder
 Export-ModuleMember -Function Update-XIOVolume
 Export-ModuleMember -Function Rename-XIOIGFolder
 
+New-Alias -Name Rename-XIOVolumeFolder -Value Set-XIOVolumeFolder
+New-Alias -Name Update-XIOVolume -Value Set-XIOVolume
+New-Alias -Name Rename-XIOIGFolder -Value Set-XIOIGFolder
 
 Export-ModuleMember -Function Remove-XIOVolume
 Export-ModuleMember -Function Remove-XIOVolumeFolder

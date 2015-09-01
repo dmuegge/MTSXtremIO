@@ -1,0 +1,25 @@
+TOPIC
+    about_MTSXtremIO
+
+SHORT DESCRIPTION
+    MTSXtremIO is a module to provide PowerShell functionality for the EMC XtremIO
+	REST API.
+
+LONG DESCRIPTION
+    
+
+
+SEE ALSO
+
+    
+
+
+
+
+
+
+
+
+
+
+

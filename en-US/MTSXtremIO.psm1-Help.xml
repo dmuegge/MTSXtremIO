@@ -2805,10 +2805,6 @@ than one cluster is defined</maml:para>
 		</command:parameters>
 		<maml:alertSet>
 			<!-- Notes-->
-			<maml:title/>
-			<maml:alert>
-				<maml:para>TODO - Need to experiment with options of using pipline.</maml:para>
-			</maml:alert>
 		</maml:alertSet>
 		<command:examples>
 			<!-- Examples-->
@@ -3383,14 +3379,14 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Rename-XIOVolumeFolder</command:name>
+			<command:name>Set-XIOVolumeFolder</command:name>
 			<maml:description>
 				<maml:para>Rename XtremIO volume folder</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
-			<command:verb>Rename</command:verb>
+			<command:verb>Set</command:verb>
 			<command:noun>XIOVolumeFolder</command:noun>
 			<dev:version/>
 		</command:details>
@@ -3400,7 +3396,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 		<command:syntax>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Rename-XIOVolumeFolder</maml:name>
+				<maml:name>Set-XIOVolumeFolder</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>Caption</maml:name>
 					<maml:description>
@@ -3417,7 +3413,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Rename-XIOVolumeFolder</maml:name>
+				<maml:name>Set-XIOVolumeFolder</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>Caption</maml:name>
 					<maml:description>
@@ -3500,24 +3496,24 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Update-XIOVolume</command:name>
+			<command:name>Set-XIOVolume</command:name>
 			<maml:description>
-				<maml:para>Update XtremIO Volume Properties</maml:para>
+				<maml:para>Set XtremIO Volume Properties</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
-			<command:verb>Update</command:verb>
+			<command:verb>Set</command:verb>
 			<command:noun>XIOVolume</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Update XtremIO Volume Properties</maml:para>
+			<maml:para>Set XtremIO Volume Properties</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolID</maml:name>
 					<maml:description>
@@ -3534,7 +3530,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolID</maml:name>
 					<maml:description>
@@ -3551,7 +3547,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolID</maml:name>
 					<maml:description>
@@ -3568,7 +3564,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolID</maml:name>
 					<maml:description>
@@ -3585,7 +3581,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolID</maml:name>
 					<maml:description>
@@ -3602,7 +3598,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolName</maml:name>
 					<maml:description>
@@ -3619,7 +3615,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolName</maml:name>
 					<maml:description>
@@ -3636,7 +3632,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolName</maml:name>
 					<maml:description>
@@ -3653,7 +3649,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolName</maml:name>
 					<maml:description>
@@ -3670,7 +3666,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Update-XIOVolume</maml:name>
+				<maml:name>Set-XIOVolume</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>VolName</maml:name>
 					<maml:description>
@@ -3811,14 +3807,14 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Rename-XIOIGFolder</command:name>
+			<command:name>Set-XIOIGFolder</command:name>
 			<maml:description>
 				<maml:para>Rename XtremIO initiator group folder</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
-			<command:verb>Rename</command:verb>
+			<command:verb>Set</command:verb>
 			<command:noun>XIOIGFolder</command:noun>
 			<dev:version/>
 		</command:details>
@@ -3828,7 +3824,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 		<command:syntax>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Rename-XIOIGFolder</maml:name>
+				<maml:name>Set-XIOIGFolder</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>Caption</maml:name>
 					<maml:description>
@@ -3845,7 +3841,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Rename-XIOIGFolder</maml:name>
+				<maml:name>Set-XIOIGFolder</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>Caption</maml:name>
 					<maml:description>
@@ -4338,4 +4334,82 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 		</command:examples>
 	</command:command>
 	<!-- Generated by: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOEvent</command:name>
+			<maml:description>
+				<maml:para>Get XtremIO Event Information</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOEvent</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get XtremIO Event Information</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOEvent</maml:name>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOEvent</maml:name>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>FromDateTime</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">DateTime</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>ToDateTime</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">DateTime</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<maml:alertSet>
+			<!-- Notes-->
+		</maml:alertSet>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOEvent</dev:code>
+				<dev:remarks>
+					<maml:para>Get All Events</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime(&apos;7/1/2015&apos;)) -ToDateTime ([System.convert]::ToDateTime(&apos;7/30/2015&apos;))</dev:code>
+				<dev:remarks>
+					<maml:para>Get Events for specified period of time</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
 </helpItems>
