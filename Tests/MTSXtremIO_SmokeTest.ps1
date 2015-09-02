@@ -16,6 +16,14 @@ Set-XIOAPIConnectionInfo -username "admin" -passwordfile "C:\Users\dmuegge\Dropb
 Get-XIOAPITypes
 Get-XIOAPITypes | foreach-object {if($_.Name -ne $null){Get-XIOItem -UriString $_.Name}}
 
+$Xmss = @('RTTXtremIO','RTTXtremIO')
+Get-XIOXms
+Get-XIOXms -Name $Xms[0] | Select-Object name,index,xms-id,version | FT
+Get-XIOXms -ID 1 | Select-Object name,index,xms-id,version | FT
+$Xms[0] | Get-XIOXms | Select-Object name,index,xms-id,version | FT
+$Xms | Get-XIOXms | Select-Object name,index,xms-id,version | FT
+
+
 $Clusters = @('RTTXtremIO','RTTXtremIO')
 Get-XIOCluster
 Get-XIOCluster -Name $Clusters[0] | Select-Object name,sys-psnt-serial-number,sys-sw-version | FT

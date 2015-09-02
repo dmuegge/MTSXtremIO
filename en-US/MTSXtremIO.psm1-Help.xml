@@ -4342,8 +4342,7 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				<maml:para>Get XtremIO Event Information</maml:para>
 			</maml:description>
 			<maml:copyright>
-				<maml:para>
-				</maml:para>
+				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
 			<command:noun>XIOEvent</command:noun>
@@ -4366,22 +4365,18 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>FromDateTime</maml:name>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<command:parameterValue required="false">DateTime</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>ToDateTime</maml:name>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<command:parameterValue required="false">DateTime</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<maml:alertSet>
@@ -4407,6 +4402,534 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				<dev:code>Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime(&apos;7/1/2015&apos;)) -ToDateTime ([System.convert]::ToDateTime(&apos;7/30/2015&apos;))</dev:code>
 				<dev:remarks>
 					<maml:para>Get Events for specified period of time</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOXms</command:name>
+			<maml:description>
+				<maml:para>Get XtremIO XMS Information</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOXms</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get XtremIO XMS Information</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOXms</maml:name>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOXms</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOXms</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOXms</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOConsistencyGroup</command:name>
+			<maml:description>
+				<maml:para>Get Consistency Group Information</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOConsistencyGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get Consistency Group Information</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOConsistencyGroup</maml:name>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOConsistencyGroup</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>New-XIOConsistencyGroup</command:name>
+			<maml:description>
+				<maml:para>Create new XtremIO consistency group</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>New</command:verb>
+			<command:noun>XIOConsistencyGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Create new XtremIO consistency group</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>New-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ClusterID</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>TagList</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolList</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ClusterID</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>TagList</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>VolList</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>New-XIOConsistencyGroup -Name SQLDataVols</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOConsistencyGroup</command:name>
+			<maml:description>
+				<maml:para>Set name of XtremIO consistency group</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOConsistencyGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Set name of XtremIO consistency group</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Set-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Set-XIOConsistencyGroup -Name &lt;NewName&gt; -ID &lt;cg-id&gt;</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Remove-XIOConsistencyGroup</command:name>
+			<maml:description>
+				<maml:para>Remove XtremIO Consistency Group</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOConsistencyGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Remove XtremIO Consistency Group</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Remove-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Remove-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">
+					</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Remove-XIOConsistencyGroup</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>

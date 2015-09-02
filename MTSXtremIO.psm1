@@ -106,7 +106,7 @@ function Set-XIOAPIConnectionInfo{
     $EncodedPassword = [System.Convert]::ToBase64String($Encoded)
 
     # set base uri
-    $baseuri = 'https://' + $hostname + '/api/json/types/'
+    $baseuri = 'https://' + $hostname + '/api/json/v2/types/'
 
     # Define global connection variables
     New-Variable -Name XIOAPIBaseUri -Value $baseuri -Scope Global -Force
@@ -146,6 +146,45 @@ function Get-XIOItem{
 
 
 # Read functions
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
+function Get-XIOXms{
+[CmdletBinding(DefaultParameterSetName='AllXmss')]
+param ( [Parameter( Mandatory=$true,
+                    ValueFromPipeline=$true,
+                    Position=0, 
+                    ParameterSetName='XMSByName')]
+        [Alias('n')][string]$Name=$null,
+        [Parameter(Mandatory=$true,ParameterSetName='XMSByID')]
+        [Alias('i')][string]$ID=$null
+        
+)
+
+    Process{
+        # Return details of XMS names passed by parameter or pipeline
+        if($Name){
+            $UriString = 'xms/'
+            $UriString += ('?name=' + $Name)
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).Content
+        }
+    }
+    End{
+        
+        # Return detail of specific XMS by ID
+        if($ID){
+            $UriString = 'xms/'
+            $UriString += $ID
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).Content
+        }
+
+        # No parameters passed return details of all XMSs
+        if($PSCmdlet.ParameterSetName -eq 'AllXmss'){
+            $UriString = 'xms/'
+            (Get-XIOItem -UriString 'xms').xms | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+        }
+        
+    }  
+} # Get-XIOXms
+
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOCluster{
 [CmdletBinding(DefaultParameterSetName='AllClusters')]
@@ -654,6 +693,48 @@ param ( [Parameter(Mandatory=$true,
 } # Get-XIOTargetGroup
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
+function Get-XIOConsistencyGroup{
+[CmdletBinding(DefaultParameterSetName='AllConsistencyGroups')]
+param ( [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true,
+                   Position=0, 
+                   ParameterSetName='CGByName')]
+        [Alias('n')] 
+        [string]$Name=$null,
+        [Parameter(Mandatory=$true,ParameterSetName='CGByIndex')]
+        [Alias('i')] 
+        [string]$ID=$null,
+        [Parameter(Mandatory=$false,ParameterSetName='CGByIndex')]
+        [Parameter(ParameterSetName='CGByName')]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        [string]$Cluster
+)
+    Process{
+        
+        # Return details of target group by name passed by parameter or pipeline
+        if($Name){
+            $UriString = 'consistency-groups/'
+            $UriString += ('?name=' + $Name)
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+        }
+    }
+    End{
+        # Return detail of specific target group by ID   
+        if($ID){
+            $UriString = 'consistency-groups/'
+            $UriString += $ID
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+        }
+        # No parameters passed return details of all target groups
+        if($PSCmdlet.ParameterSetName -eq 'AllConsistencyGroups'){
+            $UriString = 'consistency-groups/'
+            (Get-XIOItem -UriString 'consistency-groups').'consistency-groups' | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+        }
+    }
+} # Get-XIOConsistencyGroup
+
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOIscsiPortal{
 [CmdletBinding(DefaultParameterSetName='AllISCSIPortals')]
 param ( [Parameter(Mandatory=$true,
@@ -1048,7 +1129,37 @@ param ( [Parameter(Mandatory=$true)]
 
 } # New-XIOIGFolder
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
+function New-XIOConsistencyGroup{
+[CmdletBinding()]
+param ( [Parameter(Mandatory=$true)]
+        [Alias('n')] 
+        [string]$Name,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        [string]$Cluster,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('t')] 
+        [string]$TagList,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('v')] 
+        [string]$VolList
+)
+    
+        $UriString = 'consistency-groups'
+        $JSoNBody = New-Object -TypeName psobject
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name consistency-group-name -Value $Name
+        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+        if($VolList){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-list -Value $VolList}
+        if($TagList){$JSoNBody | Add-Member -MemberType NoteProperty -Name tag-list -Value $TagList}
 
+        (Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)).Links
+        
+
+} # New-XIOConsistencyGroup
 
 
 
@@ -1200,6 +1311,28 @@ param ( [Parameter(Mandatory=$true)]
     $ReturnData
 
 } # Set-XIOIGFolder
+
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
+function Set-XIOConsistencyGroup{
+[CmdletBinding()]
+param ( [Parameter(Mandatory=$true)]
+        [Alias('n')] 
+        [string]$Name,
+        [Parameter(Mandatory=$true)]
+        [Alias('i')] 
+        [string]$ID
+       )
+    
+    
+    $UriString = 'consistency-groups/'
+    $JSoNBody = New-Object -TypeName psobject
+    $JSoNBody | Add-Member -MemberType NoteProperty -Name new-name -Value $Name
+    $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ID
+    
+    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+    
+
+} # Set-XIOConsistencyGroup
 
 # TODO - Set/Update-XIOInitiator
 
@@ -1365,6 +1498,57 @@ param ( [Parameter(Mandatory=$true,
         
 } # Remove-XIOSnapshot
 
+# .ExternalHelp MTSXtremIO.psm1-Help.xml
+function Remove-XIOConsistencyGroup{
+[CmdletBinding()]
+param ( [Parameter(Mandatory=$true, 
+                    ValueFromPipeline=$true,
+                    Position=0,
+                    ParameterSetName='CGByName')]
+        [Alias('n')] 
+        [string]$Name=$null,
+        [Parameter(Mandatory=$true, 
+                    ParameterSetName='CGByIndex')]
+        [Alias('i')] 
+        [string]$ID=$null,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Parameter(ParameterSetName='CGByName')]
+        [Parameter(ParameterSetName='CGByIndex')]
+        [Alias('c')] 
+        [string]$Cluster
+
+)
+    
+    Process{
+        # Remove CG by Name
+        if($Name){
+            $UriString = 'consistency-groups/'
+            $JSoNBody = New-Object -TypeName psobject
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $Name
+            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        }
+    }
+    End{
+        # Remove CG by Index
+        if($ID){
+            $UriString = 'consistency-groups/'
+            $UriString += $ID
+            if($Cluster){
+                $JSoNBody = New-Object -TypeName psobject
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $Name
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }else{
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            }
+        }
+    } 
+
+} # Remove-XIOConsistencyGroup
+
+
 
 # TODO - Remove-XIOInitiator
 
@@ -1389,7 +1573,7 @@ Export-ModuleMember -Function Set-XIOAPIConnectionInfo
 Export-ModuleMember -Function Get-XIOAPITypes
 Export-ModuleMember -Function Get-XIOItem
 
-
+Export-ModuleMember -Function Get-XIOXms
 Export-ModuleMember -Function Get-XIOCluster
 Export-ModuleMember -Function Get-XIOBrick
 Export-ModuleMember -Function Get-XIOXenvs
@@ -1404,6 +1588,7 @@ Export-ModuleMember -Function Get-XIOInitiatorGroup
 Export-ModuleMember -Function Get-XIOInitiatorGroupFolder
 Export-ModuleMember -Function Get-XIOTarget
 Export-ModuleMember -Function Get-XIOTargetGroup
+Export-ModuleMember -Function Get-XIOConsistencyGroup
 Export-ModuleMember -Function Get-XIOIscsiPortal
 Export-ModuleMember -Function Get-XIOIscsiRoute
 Export-ModuleMember -Function Get-XIOLunMap
@@ -1416,17 +1601,21 @@ Export-ModuleMember -Function New-XIOVolumeFolder
 Export-ModuleMember -Function New-XIOLunMap
 Export-ModuleMember -Function New-XIOSnapshot
 Export-ModuleMember -Function New-XIOIGFolder
+Export-ModuleMember -Function New-XIOConsistencyGroup
 
 
-Export-ModuleMember -Function Rename-XIOVolumeFolder
-Export-ModuleMember -Function Update-XIOVolume
-Export-ModuleMember -Function Rename-XIOIGFolder
+Export-ModuleMember -Function Set-XIOVolumeFolder
+Export-ModuleMember -Function Set-XIOVolume
+Export-ModuleMember -Function Set-XIOIGFolder
+Export-ModuleMember -Function Set-XIOConsistencyGroup
 
 New-Alias -Name Rename-XIOVolumeFolder -Value Set-XIOVolumeFolder
 New-Alias -Name Update-XIOVolume -Value Set-XIOVolume
 New-Alias -Name Rename-XIOIGFolder -Value Set-XIOIGFolder
+New-Alias -Name Rename-XIOConsistencyGroup -Value Set-XIOConsistencyGroup
 
 Export-ModuleMember -Function Remove-XIOVolume
 Export-ModuleMember -Function Remove-XIOVolumeFolder
 Export-ModuleMember -Function Remove-XIOLunMap
 Export-ModuleMember -Function Remove-XIOSnapshot
+Export-ModuleMember -Function Remove-XIOConsistencyGroup
