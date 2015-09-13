@@ -4,71 +4,140 @@ MTSXtremIO Smoke Test code
 
 Used to test functionality of all XtremIO REST API objects via MTSXtremIO PowerShell module 
 
+
+$Uri = 'https://192.168.1.59/api/json/types/'
+Invoke-RestMethod -Method Get -Uri $Uri -Headers $Global:XIOAPIHeaders
+
 #>
 
 Import-Module MTSXtremIO
 
 # XtremIO Connection example
 Disable-CertificateValidation
+#Set-XIOAPIConnectionInfo -username "restapi" -passwordfile "C:\Users\dmuegge\Dropbox\DTools\Scripts\PS\!Passwords\EMCX_pwd.txt" -hostname "10.5.80.64"
 Set-XIOAPIConnectionInfo -username "admin" -passwordfile "C:\Users\dmuegge\Dropbox\DTools\Scripts\PS\!Passwords\RTTLab-admdmuegge-XtremIO.txt" -hostname "192.168.1.59"
 
-# Get Tests
+
+#region Get Types
 Get-XIOAPITypes
 Get-XIOAPITypes | foreach-object {if($_.Name -ne $null){Get-XIOItem -UriString $_.Name}}
+#endregion
 
-$Xmss = @('RTTXtremIO','RTTXtremIO')
+
+#region object performance
+
+
+
+#endregion
+
+
+#region XMS Information
+$Xmss = @('xms','xms')
 Get-XIOXms
-Get-XIOXms -Name $Xms[0] | Select-Object name,index,xms-id,version | FT
+Get-XIOXms -Name $Xmss[0] | Select-Object name,index,xms-id,version | FT
 Get-XIOXms -ID 1 | Select-Object name,index,xms-id,version | FT
-$Xms[0] | Get-XIOXms | Select-Object name,index,xms-id,version | FT
-$Xms | Get-XIOXms | Select-Object name,index,xms-id,version | FT
+$Xmss[0] | Get-XIOXms | Select-Object name,index,xms-id,version | FT
+$Xmss | Get-XIOXms | Select-Object name,index,xms-id,version | FT
+#endregion
 
 
+#region User Account Information
+$Users = @('','')
+Get-XIOUserAccount
+Get-XIOUserAccount | Select-Object Name,Index,Role
+Get-XIOUserAccount -Name $Users[0] | Select-Object Name,Index,Role
+Get-XIOUserAccount -ID 1 | Select-Object Name,Index,Role
+$Users[0] | Get-XIOUserAccount | Select-Object Name,Index,Role
+$Users | Get-XIOUserAccount | Select-Object Name,Index,Role
+#endregion
+
+
+#region Cluster Information
 $Clusters = @('RTTXtremIO','RTTXtremIO')
 Get-XIOCluster
 Get-XIOCluster -Name $Clusters[0] | Select-Object name,sys-psnt-serial-number,sys-sw-version | FT
 Get-XIOCluster -ID 1 | Select-Object name,sys-psnt-serial-number,sys-sw-version | FT
 $Clusters[0] | Get-XIOCluster | Select-Object name,sys-psnt-serial-number,sys-sw-version | FT
 $Clusters | Get-XIOCluster | Select-Object name,sys-psnt-serial-number,sys-sw-version | FT
+#endregion
 
+
+#region X-Brick Information
 $Bricks = @('X1','X1')
 Get-XIOBrick
 Get-XIOBrick -Name $Bricks[0]
 Get-XIOBrick -ID 1
 $Bricks | Get-XIOBrick
+#endregion
 
+
+#region XEnv Information
 $XEnvs = @('X1-SC1-E1','X1-SC2-E1','X1-SC1-E2','X1-SC2-E2')
 Get-XIOXenvs
 Get-XIOXenvs -Name $XEnvs[0] | Select-Object Name,Index,xms-id | FT
 Get-XIOXenvs -ID 1 | Select-Object Name,Index,xms-id | FT
 Get-XIOXenvs | Select-Object Name,Index,xms-id | FT
- $XEnvs| Get-XIOXenvs | Select-Object Name,Index,xms-id | FT
+$XEnvs| Get-XIOXenvs | Select-Object Name,Index,xms-id | FT
+#endregion
 
-$Volumes = @('DMSQLVol01','DMSQLVol02')
-Get-XIOVolume | Select Name,lb-size,vol-size,logical-space-in-use | FT
-Get-XIOVolume -Name $Volumes[0]
-Get-XIOVolume -ID 1
-$Volumes | Get-XIOVolume | Select Name,lb-size,vol-size,logical-space-in-use | FT
 
-$VolumeFolders = @('/DMFolder01','/TN_HyperV_Test')
-Get-XIOVolumeFolder
-Get-XIOVolumeFolder | Select-Object Name,caption,num-of-vols,num-of-subfolders | FT
-Get-XIOVolumeFolder -Name $VolumeFolders[0] | Select-Object Name,caption,num-of-vols,num-of-subfolders | FT
-Get-XIOVolumeFolder -ID 1 | Select-Object Name,caption,num-of-vols,num-of-subfolders | FT
-$VolumeFolders | Get-XIOVolumeFolder | Select-Object Name,caption,num-of-vols,num-of-subfolders | FT
-
+#region Storage Controller Information
 $StorageControllers = @('X1-SC1','X1-SC2')
 Get-XIOStorageController
 Get-XIOStorageController -Name $StorageControllers[0] | Select-Object name,part-number,serial-number,os-version,node-health-state | FT
 Get-XIOStorageController -ID 1 | Select-Object name,part-number,serial-number,os-version,node-health-state | FT
-$StorageControllers | Get-XIOStorageController | Select name,part-number,serial-number,os-version,node-health-state | FT
+$StorageControllers | Get-XIOStorageController | Select-Object name,part-number,serial-number,os-version,node-health-state | FT
+#endregion
 
+
+#region Storage Controller PSU Information
+$StorageControllerPSUs = @('X1-SC1','X1-SC2')
+Get-XIOStorageControllerPSU
+Get-XIOStorageControllerPSU -Name $StorageControllers[0] | Select-Object name,index,part-number,serial-number | FT
+Get-XIOStorageControllerPSU -ID 1 | Select-Object name,index,part-number,serial-number | FT
+$StorageControllerPSUs | Get-XIOStorageControllerPSU | Select-Object name,index,part-number,serial-number | FT
+#endregion
+
+
+#region Data Protection Group Information
 $DataProtectionGroups = @('X1-DPG','X1-DPG')
 Get-XIODataProtectionGroup
 Get-XIODataProtectionGroup -Name $DataProtectionGroups[0] | Select-Object Name,protection-state | FT
 Get-XIODataProtectionGroup -ID 1 | Select-Object Name,protection-state | FT
 $DataProtectionGroups | Get-XIODataProtectionGroup | Select-Object Name,protection-state | FT
+#endregion
 
+
+#region Tag Information
+$Tags = @('/Volume/dmuegge','/Volume/dmuegge')
+$Tags | New-XIOTag
+
+Get-XIOTag
+Get-XIOTag | Select-Object Name,caption,object-type,num-of-direct-objs | FT
+Get-XIOTag -Name $Tags[0] | Select-Object Name,caption,object-type,num-of-direct-objs | FT
+$Tags | Get-XIOTag | Select-Object Name,caption,object-type,num-of-direct-objs | FT
+$Tags | Set-XIOTag
+
+$Tags | Remove-XIOTag
+#endregion
+
+
+#region Volume Information
+$Volumes = @('DMSQLVol01','DMSQLVol02')
+$Volumes | New-XIOVolume
+$Volumes | Get-XIOVOlume | Set-XIOVolume -SmallIOAlerts enable
+
+Get-XIOVolume -Name $Volumes[0] -ClusterName 'test'
+Get-XIOVolume | Select-Object Name,index,lb-size,vol-size,logical-space-in-use | FT
+Get-XIOVolume -ID 1
+$Volumes | Get-XIOVolume | Select-object Name,lb-size,vol-size,logical-space-in-use | FT
+
+
+
+#endregion
+
+
+#region Snapshot Information
 $Snapshots = @('towerdb1.snap.01202015-15:37','towerdb2.snap.01202015-15:37','towerdb4.snap.01202015-15:37')
 Get-XIOSnapshot
 Get-XIOSnapshot | Select-Object Name,@{Name="AncestorValumeName";Expression={$_."ancestor-vol-id"[1]}},creation-time,vol-size,logical-space-in-use | ft
@@ -76,6 +145,36 @@ Get-XIOSnapshot -Name $Snapshots[0] | Select-Object Name,@{Name="AncestorValumeN
 Get-XIOSnapshot -ID 73 | Select-Object Name,@{Name="AncestorValumeName";Expression={$_."ancestor-vol-id"[1]}},creation-time,vol-size,logical-space-in-use | ft
 $Snapshots | Get-XIOSnapshot | Select-Object Name,@{Name="AncestorValumeName";Expression={$_."ancestor-vol-id"[1]}},creation-time,vol-size,logical-space-in-use | ft
 
+#endregion
+
+
+#region Snapshot Set Information
+
+$SnapSets = @('DMTestSet','DMTestSet','DMTestSet')
+Get-XIOSnapshotSet
+Get-XIOSnapshotSet | Select-Object Name,index,tag-list,num-of-vols,vol-list | ft
+Get-XIOSnapshotSet -Name $SnapSets[0] | Select-Object Name,index,tag-list,num-of-vols,vol-list | ft
+Get-XIOSnapshotSet -ID 13 | Select-Object Name,index,tag-list,num-of-vols,vol-list | ft
+$SnapSets | Get-XIOSnapshotSet | Select-Object Name,index,tag-list,num-of-vols,vol-list | ft
+
+
+#endregion
+
+
+#region Schedulers
+
+$Schedulers = @('','')
+Get-XIOScheduler
+Get-XIOScheduler | Select-Object name,index,enabled-state,snapshot-type,last-activation-time | ft
+Get-XIOScheduler -Name $Schedulers[0] | Select-Object name,index,enabled-state,snapshot-type,last-activation-time | ft
+Get-XIOScheduler -ID 1 | Select-Object name,index,enabled-state,snapshot-type,last-activation-time | ft
+$Schedulers | Get-XIOScheduler | Select-Object name,index,enabled-state,snapshot-type,last-activation-time | ft
+
+
+#endregion
+
+
+#region Initiators
 $Initiators = @('esxlab4b-hba1','esxlab4a-hba2','esxlab4c-hba1','esxlab4b-hba2')
 Get-XIOInitiator
 Get-XIOInitiator -Name $Initiators[0] | ft
@@ -83,6 +182,11 @@ Get-XIOInitiator -ID 1 | ft
 Get-XIOInitiator | Select-Object Name,initiator-id,ig-id,port-type | ft
 $Initiators | Get-XIOInitiator | Select-Object Name,initiator-id,ig-id,port-type | ft
 
+
+#endregion
+
+
+#region Initiator Groups
 $InitiatorGroups = @('esxlab4b','esxlab4a','esxlab4c')
 Get-XIOInitiatorGroup
 Get-XIOInitiatorGroup | Select-Object Name,index,ig-id
@@ -90,12 +194,23 @@ Get-XIOInitiatorGroup -Name $InitiatorGroups[0] | Select-Object Name,index,ig-id
 Get-XIOInitiatorGroup -ID 1 | Select-Object Name,index,ig-id
 $InitiatorGroups | Get-XIOInitiatorGroup | Select-Object Name,index,ig-id
 
-$InitiatorGroupFolders = @('/lab-cluster','/extreme-performance-cluster')
-Get-XIOInitiatorGroupFolder
-Get-XIOInitiatorGroupFolder | Select-Object Name,caption,index,folder-id
-Get-XIOInitiatorGroupFolder -Name $InitiatorGroupFolders[0] | Select-Object Name,caption,index,folder-id
-Get-XIOInitiatorGroupFolder -ID 1 | Select-Object Name,caption,index,folder-id
-$InitiatorGroupFolders | Get-XIOInitiatorGroupFolder | Select-Object Name,caption,index,folder-id
+
+#endregion
+
+
+#region Consistency Groups
+
+$ConsistencyGroups = @('dmueggeCG00','dmueggeCG02')
+Get-XIOConsistencyGroup
+Get-XIOConsistencyGroup | Select-Object Name,index,tag-list,vol-list | FT
+Get-XIOConsistencyGroup -Name $ConsistencyGroups[0] | Select-Object Name,index,tag-list,vol-list | FT
+Get-XIOConsistencyGroup -ID 1 | Select-Object Name,index,tag-list,vol-list | FT
+$ConsistencyGroups | Get-XIOConsistencyGroup | Select-Object Name,index,tag-list,vol-list | FT
+
+#endregion
+
+
+
 
 $Targets = @('X1-SC2-fc1','X1-SC2-fc2','X1-SC1-fc1')
 Get-XIOTarget
@@ -134,6 +249,8 @@ Get-XIOSSD -Name $SSDs[0]
 Get-XIOSSD -ID 1
 $SSDs | Get-XIOSSD
 
+Get-XIOSlot
+
 Get-XIOEvent
 Get-XIOEvent -ToDateTime ([System.convert]::ToDateTime('4/19/2015'))
 Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime('7/16/2015')) -ToDateTime ([System.convert]::ToDateTime('7/17/2015'))
@@ -141,10 +258,26 @@ Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime('7/16/2015')) -ToDateTi
 
 
 # New/Set/Remove Tests
-$Volumes = @()
-$VolumeFolders = @()
+$Volumes = @('dmuegge01','dmuegge02','dmuegge03')
+New-XIOVolume -Name $Volumes[1] -Size 10g
 
 
+
+$TagNames = @('/Volume/dmuegge','/Volume/dmuegge2','/Volume/dmuegge3')
+$TagCaptions = @('dmuegge','dmuegge2','dmuegge3')
+New-XIOTag -Type Volume -Name $TagCaptions[0] -ObjectName dmuegge02
+Set-XIOTag -Name $TagNames[1] -NewName $TagCaptions[2]
+Remove-XIOTag -Name $Tags[2]
+
+
+$ConsistencyGroups = @('dmueggeCG01','dmueggeCG02')
+New-XIOConsistencyGroup -Name $ConsistencyGroups[0]
+New-XIOConsistencyGroup -Name $ConsistencyGroups[1]
+Set-XIOConsistencyGroup -Name $ConsistencyGroups[0] -NewName 'dmueggeCG00'
+
+
+
+(Get-XIOItem -UriString 'snapshot-sets').'snapshot-sets'
 
 
 <#
@@ -173,6 +306,14 @@ New-XIOIGFolder -Caption "DMTest01" -ParentFolderName "/"
 
 # Rename Initiator Group Folder
 Rename-XIOIGFolder -Caption "DMFolder" -FolderName "/DMTest01"
+
+
+$InitiatorGroupFolders = @('/lab-cluster','/extreme-performance-cluster')
+Get-XIOInitiatorGroupFolder
+Get-XIOInitiatorGroupFolder | Select-Object Name,caption,index,folder-id
+Get-XIOInitiatorGroupFolder -Name $InitiatorGroupFolders[0] | Select-Object Name,caption,index,folder-id
+Get-XIOInitiatorGroupFolder -ID 1 | Select-Object Name,caption,index,folder-id
+$InitiatorGroupFolders | Get-XIOInitiatorGroupFolder | Select-Object Name,caption,index,folder-id
 
 
 
