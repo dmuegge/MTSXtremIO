@@ -1,0 +1,180 @@
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Get-XIOVolume]
+ParameterBinding Information: 0 :     BIND arg [DAM01] to parameter [Name]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: DAM01
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [DAM01] to param [Name] SUCCESSFUL
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Get-XIOVolume]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Get-XIOVolume]
+ParameterBinding Information: 0 :     BIND arg [] to parameter [ID]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [] to param [ID] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [] to parameter [ClusterName]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [] to param [ClusterName] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [0] to parameter [ClusterID]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 0
+ParameterBinding Information: 0 :         COERCE arg to [System.Int32]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [0] to param [ClusterID] SUCCESSFUL
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Set-XIOVolume]
+ParameterBinding Information: 0 :     BIND arg [enable] to parameter [SmallIOAlerts]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: enable
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         Executing VALIDATION metadata: [System.Management.Automation.ValidateNotNullOrEmptyAttribute]
+ParameterBinding Information: 0 :         Executing VALIDATION metadata: [System.Management.Automation.ValidateSetAttribute]
+ParameterBinding Information: 0 :         BIND arg [enable] to param [SmallIOAlerts] SUCCESSFUL
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Set-XIOVolume]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Set-XIOVolume]
+ParameterBinding Information: 0 :     BIND arg [] to parameter [Name]
+ParameterBinding Information: 0 :         BIND arg [] to param [Name] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [] to parameter [ID]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [] to param [ID] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [] to parameter [NewVolName]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [] to param [NewVolName] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [] to parameter [NewVolSize]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [] to param [NewVolSize] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [] to parameter [UnalignedIOAlerts]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [] to param [UnalignedIOAlerts] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [] to parameter [VaaiTpAlerts]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [System.Management.Automation.ArgumentTypeConverterAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 
+ParameterBinding Information: 0 :         COERCE arg to [System.String]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [] to param [VaaiTpAlerts] SUCCESSFUL
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Invoke-RestMethod]
+ParameterBinding Information: 0 :     BIND arg [Get] to parameter [Method]
+ParameterBinding Information: 0 :         COERCE arg to [Microsoft.PowerShell.Commands.WebRequestMethod]
+ParameterBinding Information: 0 :             Trying to convert argument value from System.String to Microsoft.PowerShell.Commands.WebRequestMethod
+ParameterBinding Information: 0 :             CONVERT arg type to param type using LanguagePrimitives.ConvertTo
+ParameterBinding Information: 0 :             CONVERT SUCCESSFUL using LanguagePrimitives.ConvertTo: [Get]
+ParameterBinding Information: 0 :         BIND arg [Get] to param [Method] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [https://192.168.1.59/api/json/v2/types/volumes/?name=DAM01] to parameter [Uri]
+ParameterBinding Information: 0 :         COERCE arg to [System.Uri]
+ParameterBinding Information: 0 :             Trying to convert argument value from System.String to System.Uri
+ParameterBinding Information: 0 :             CONVERT arg type to param type using LanguagePrimitives.ConvertTo
+ParameterBinding Information: 0 :             CONVERT SUCCESSFUL using LanguagePrimitives.ConvertTo: [https://192.168.1.59/api/json/v2/types/volumes/?name=DAM01]
+ParameterBinding Information: 0 :         Executing VALIDATION metadata: [System.Management.Automation.ValidateNotNullOrEmptyAttribute]
+ParameterBinding Information: 0 :         BIND arg [https://192.168.1.59/api/json/v2/types/volumes/?name=DAM01] to param [Uri] SUCCESSFUL
+ParameterBinding Information: 0 :     BIND arg [System.Collections.Hashtable] to parameter [Headers]
+ParameterBinding Information: 0 :         COERCE arg to [System.Collections.IDictionary]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [System.Collections.Hashtable] to param [Headers] SUCCESSFUL
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Invoke-RestMethod]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Invoke-RestMethod]
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : CALLING EndProcessing
+ParameterBinding Information: 0 : BIND PIPELINE object to parameters: [Set-XIOVolume]
+ParameterBinding Information: 0 :     PIPELINE object TYPE = [System.Management.Automation.PSCustomObject]
+ParameterBinding Information: 0 :     RESTORING pipeline parameter's original values
+ParameterBinding Information: 0 : BIND PIPELINE object to parameters: [Out-Default]
+ParameterBinding Information: 0 :     PIPELINE object TYPE = [System.Management.Automation.ErrorRecord]
+ParameterBinding Information: 0 :     RESTORING pipeline parameter's original values
+ParameterBinding Information: 0 :     Parameter [InputObject] PIPELINE INPUT ValueFromPipeline NO COERCION
+ParameterBinding Information: 0 :     BIND arg [The input object cannot be bound to any parameters for the command either because the command does not take pipeline input or the input and its properties do not match any of the parameters that take pipeline input.] to parameter [InputObject]
+ParameterBinding Information: 0 :         BIND arg [The input object cannot be bound to any parameters for the command either because the command does not take pipeline input or the input and its properties do not match any of the parameters that take pipeline input.] to param [InputObject] SUCCESSFUL
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Out-Default]
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Out-LineOutput]
+ParameterBinding Information: 0 :     BIND arg [Microsoft.PowerShell.Commands.Internal.Format.ConsoleLineOutput] to parameter [LineOutput]
+ParameterBinding Information: 0 :         COERCE arg to [System.Object]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         BIND arg [Microsoft.PowerShell.Commands.Internal.Format.ConsoleLineOutput] to param [LineOutput] SUCCESSFUL
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Out-LineOutput]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Out-LineOutput]
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : BIND PIPELINE object to parameters: [Out-LineOutput]
+ParameterBinding Information: 0 :     PIPELINE object TYPE = [System.Management.Automation.ErrorRecord]
+ParameterBinding Information: 0 :     RESTORING pipeline parameter's original values
+ParameterBinding Information: 0 :     Parameter [InputObject] PIPELINE INPUT ValueFromPipeline NO COERCION
+ParameterBinding Information: 0 :     BIND arg [The input object cannot be bound to any parameters for the command either because the command does not take pipeline input or the input and its properties do not match any of the parameters that take pipeline input.] to parameter [InputObject]
+ParameterBinding Information: 0 :         BIND arg [The input object cannot be bound to any parameters for the command either because the command does not take pipeline input or the input and its properties do not match any of the parameters that take pipeline input.] to param [InputObject] SUCCESSFUL
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [out-lineoutput]
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Format-Default]
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Format-Default]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Format-Default]
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : BIND PIPELINE object to parameters: [Format-Default]
+ParameterBinding Information: 0 :     PIPELINE object TYPE = [System.Management.Automation.ErrorRecord]
+ParameterBinding Information: 0 :     RESTORING pipeline parameter's original values
+ParameterBinding Information: 0 :     Parameter [InputObject] PIPELINE INPUT ValueFromPipeline NO COERCION
+ParameterBinding Information: 0 :     BIND arg [The input object cannot be bound to any parameters for the command either because the command does not take pipeline input or the input and its properties do not match any of the parameters that take pipeline input.] to parameter [InputObject]
+ParameterBinding Information: 0 :         BIND arg [The input object cannot be bound to any parameters for the command either because the command does not take pipeline input or the input and its properties do not match any of the parameters that take pipeline input.] to param [InputObject] SUCCESSFUL
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [format-default]
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Set-StrictMode]
+ParameterBinding Information: 0 :     BIND arg [1] to parameter [Version]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [Microsoft.PowerShell.Commands.SetStrictModeCommand+ArgumentToVersionTransformationAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 1.0
+ParameterBinding Information: 0 :         COERCE arg to [System.Version]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         Executing VALIDATION metadata: [Microsoft.PowerShell.Commands.SetStrictModeCommand+ValidateVersionAttribute]
+ParameterBinding Information: 0 :         BIND arg [1.0] to param [Version] SUCCESSFUL
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Set-StrictMode]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Set-StrictMode]
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : CALLING EndProcessing
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Set-StrictMode]
+ParameterBinding Information: 0 :     BIND arg [1] to parameter [Version]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [Microsoft.PowerShell.Commands.SetStrictModeCommand+ArgumentToVersionTransformationAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 1.0
+ParameterBinding Information: 0 :         COERCE arg to [System.Version]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         Executing VALIDATION metadata: [Microsoft.PowerShell.Commands.SetStrictModeCommand+ValidateVersionAttribute]
+ParameterBinding Information: 0 :         BIND arg [1.0] to param [Version] SUCCESSFUL
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Set-StrictMode]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Set-StrictMode]
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : CALLING EndProcessing
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Set-StrictMode]
+ParameterBinding Information: 0 :     BIND arg [1] to parameter [Version]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [Microsoft.PowerShell.Commands.SetStrictModeCommand+ArgumentToVersionTransformationAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 1.0
+ParameterBinding Information: 0 :         COERCE arg to [System.Version]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         Executing VALIDATION metadata: [Microsoft.PowerShell.Commands.SetStrictModeCommand+ValidateVersionAttribute]
+ParameterBinding Information: 0 :         BIND arg [1.0] to param [Version] SUCCESSFUL
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Set-StrictMode]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Set-StrictMode]
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : CALLING EndProcessing
+ParameterBinding Information: 0 : BIND NAMED cmd line args [Set-StrictMode]
+ParameterBinding Information: 0 :     BIND arg [1] to parameter [Version]
+ParameterBinding Information: 0 :         Executing DATA GENERATION metadata: [Microsoft.PowerShell.Commands.SetStrictModeCommand+ArgumentToVersionTransformationAttribute]
+ParameterBinding Information: 0 :             result returned from DATA GENERATION: 1.0
+ParameterBinding Information: 0 :         COERCE arg to [System.Version]
+ParameterBinding Information: 0 :             Parameter and arg types the same, no coercion is needed.
+ParameterBinding Information: 0 :         Executing VALIDATION metadata: [Microsoft.PowerShell.Commands.SetStrictModeCommand+ValidateVersionAttribute]
+ParameterBinding Information: 0 :         BIND arg [1.0] to param [Version] SUCCESSFUL
+ParameterBinding Information: 0 : BIND POSITIONAL cmd line args [Set-StrictMode]
+ParameterBinding Information: 0 : MANDATORY PARAMETER CHECK on cmdlet [Set-StrictMode]
+ParameterBinding Information: 0 : CALLING BeginProcessing
+ParameterBinding Information: 0 : CALLING EndProcessing
+ParameterBinding Information: 0 : CALLING EndProcessing
+ParameterBinding Information: 0 : CALLING EndProcessing
