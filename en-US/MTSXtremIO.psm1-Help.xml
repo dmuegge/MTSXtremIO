@@ -679,7 +679,7 @@ used and the proper CA cert was installed</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Cluster Information</maml:para>
+			<maml:para>Get list of XtremIO clusters or details of an XtremIO cluster</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -797,7 +797,7 @@ Get-XIOCluster X1</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Brick Information</maml:para>
+			<maml:para>Get list of XtremIO brick or details of an XtremIO bricks</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -903,7 +903,7 @@ Get-XIOCluster X1</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Xenvs Information</maml:para>
+			<maml:para>Get list of XtremIO XEnv or details of an XtremIO Xenv</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -1008,232 +1008,73 @@ Get-XIOXenvs X1</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Get-XIOVolume</command:name>
+			<command:name>Get-XIOXms</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Volume Information</maml:para>
+				<maml:para>Get XtremIO XMS Information</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
-			<command:noun>XIOVolume</command:noun>
+			<command:noun>XIOXms</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Volume Information</maml:para>
+			<maml:para>Get list of XtremIO XMS or details of an XtremIO XMS</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Get-XIOVolume</maml:name>
+				<maml:name>Get-XIOXms</maml:name>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Get-XIOVolume</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Get-XIOXms</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
 					<maml:name>Name</maml:name>
 					<maml:description>
-						<maml:para>Name String for Volume Info Query by name</maml:para>
+						<maml:para/>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false"/>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Get-XIOVolume</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Get-XIOXms</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
 					<maml:name>ID</maml:name>
 					<maml:description>
-						<maml:para>ID String for Volume Info Query by index</maml:para>
+						<maml:para/>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false"/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Name</maml:name>
-				<maml:description>
-					<maml:para>Name String for Volume Info Query by name</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>ID</maml:name>
-				<maml:description>
-					<maml:para>ID String for Volume Info Query by index</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!-- Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>System.String</maml:name>
-					<maml:uri/>
-				</dev:type>
 				<maml:description>
 					<maml:para/>
 				</maml:description>
-			</command:inputType>
-		</command:inputTypes>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
 				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
 				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
+					<maml:para>PS C:\&gt;</maml:para>
 				</maml:introduction>
-				<dev:code>Get XtremIO Volume Info by index</dev:code>
-				<dev:remarks>
-					<maml:para>Get-XIOVolume -ID 1</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get XtremIO Volume Info by name</dev:code>
-				<dev:remarks>
-					<maml:para>Get-XIOVolume -Name X1
-Get-XIOVolume X1</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-XIOVolume</dev:code>
-				<dev:remarks>
-					<maml:para>
-					</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!-- Command-->
-		<command:details>
-			<command:name>Get-XIOVolumeFolder</command:name>
-			<maml:description>
-				<maml:para>Get XtremIO volume folder info</maml:para>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Get</command:verb>
-			<command:noun>XIOVolumeFolder</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para>Get XtremIO volume folder info</maml:para>
-		</maml:description>
-		<command:syntax>
-			<!-- Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Get-XIOVolumeFolder</maml:name>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Get-XIOVolumeFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-					<maml:name>Name</maml:name>
-					<maml:description>
-						<maml:para>String for name of folder</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Get-XIOVolumeFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>ID</maml:name>
-					<maml:description>
-						<maml:para>String for ID of folder</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-		</command:syntax>
-		<command:parameters>
-			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-				<maml:name>Name</maml:name>
-				<maml:description>
-					<maml:para>String for name of folder</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>ID</maml:name>
-				<maml:description>
-					<maml:para>String for ID of folder</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!-- Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>System.String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-			</command:inputType>
-		</command:inputTypes>
-		<command:examples>
-			<!-- Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get volume folder by ID</dev:code>
-				<dev:remarks>
-					<maml:para>Get-XIOVolumeFolder -ID 1</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get volume folder by name</dev:code>
-				<dev:remarks>
-					<maml:para>Get-XIOVolumeFolder -Name &quot;Test01&quot;
-Get-XIOVolumeFolder &quot;Test01&quot;</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-XIOVolumeFolder</dev:code>
+				<dev:code>Get-XIOXms</dev:code>
 				<dev:remarks>
 					<maml:para>
 					</maml:para>
@@ -1246,7 +1087,7 @@ Get-XIOVolumeFolder &quot;Test01&quot;</maml:para>
 		<command:details>
 			<command:name>Get-XIOStorageController</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO storage controller info</maml:para>
+				<maml:para>Get XtremIO storage controller information</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -1256,7 +1097,7 @@ Get-XIOVolumeFolder &quot;Test01&quot;</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO storage controller info</maml:para>
+			<maml:para>Get list of XtremIO storage controllers or details of an XtremIO storage controller</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -1364,7 +1205,7 @@ Get-XIOStorageController &quot;Test01&quot;</maml:para>
 		<command:details>
 			<command:name>Get-XIODataProtectionGroup</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Data Protection Group info</maml:para>
+				<maml:para>Get XtremIO Data Protection Group information</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -1374,7 +1215,7 @@ Get-XIOStorageController &quot;Test01&quot;</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Data Protection Group info</maml:para>
+			<maml:para>Get list of XtremIO Data Protection Groups or details of an XtremIO Data Protection Group</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -1480,9 +1321,213 @@ Get-XIODataProtectionGroup &quot;Test01&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
+			<command:name>Get-XIOTag</command:name>
+			<maml:description>
+				<maml:para>Get XtremIO Tag information</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOTag</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get list of XtremIO Tags or details of an XtremIO Tag</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOTag</maml:name>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOTag</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>String for name of folder</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>String for name of folder</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get tag by name</dev:code>
+				<dev:remarks>
+					<maml:para>Get-XIOTag -Name &quot;Test01&quot;
+Get-XIOTag &quot;Test01&quot;</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOTag</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOVolume</command:name>
+			<maml:description>
+				<maml:para>Get list of XtremIO Volumes or detail information for an XtremIO Volume</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOVolume</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get list of XtremIO Volumes or detail information for an XtremIO Volume</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOVolume</maml:name>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOVolume</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Volume Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOVolume</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Volume Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Volume Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Volume Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get XtremIO Volume Info by index</dev:code>
+				<dev:remarks>
+					<maml:para>Get-XIOVolume -ID 1</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get XtremIO Volume Info by name</dev:code>
+				<dev:remarks>
+					<maml:para>Get-XIOVolume -Name X1
+Get-XIOVolume X1</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOVolume</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
 			<command:name>Get-XIOSnapshot</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Snapshot Information</maml:para>
+				<maml:para>Get list of XtremIO Snapshots or detail information for an XtremIO Snapshot</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -1492,7 +1537,7 @@ Get-XIODataProtectionGroup &quot;Test01&quot;</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Snapshot Information</maml:para>
+			<maml:para>Get list of XtremIO Snapshots or detail information for an XtremIO Snapshot</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -1600,7 +1645,7 @@ Get-XIOSnapshot X1</maml:para>
 		<command:details>
 			<command:name>Get-XIOInitiator</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Initiator Information</maml:para>
+				<maml:para>Get list of XtremIO Initiators or detail information for an XtremIO Initiator</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -1610,7 +1655,7 @@ Get-XIOSnapshot X1</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Initiator Information</maml:para>
+			<maml:para>Get list of XtremIO Initiators or detail information for an XtremIO Initiator</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -1718,7 +1763,7 @@ Get-XIOInitiator X1</maml:para>
 		<command:details>
 			<command:name>Get-XIOInitiatorGroup</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Initiator Group info</maml:para>
+				<maml:para>Get list of XtremIO Initiator Groups or detail information for an XtremIO Initiator Groups</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -1728,7 +1773,7 @@ Get-XIOInitiator X1</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Initiator Group info</maml:para>
+			<maml:para>Get list of XtremIO Initiator Groups or detail information for an XtremIO Initiator Groups</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -1834,127 +1879,103 @@ Get-XIOInitiatorGroup &quot;Test01&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Get-XIOInitiatorGroupFolder</command:name>
+			<command:name>Get-XIOPerformance</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Initiator Group folder info</maml:para>
+				<maml:para>Retrieve performance information for XtremIO Object</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
-			<command:noun>XIOInitiatorGroupFolder</command:noun>
+			<command:noun>XIOPerformance</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Initiator Group folder info</maml:para>
+			<maml:para>Retrieve performance information for XtremIO Object</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Get-XIOInitiatorGroupFolder</maml:name>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Get-XIOInitiatorGroupFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-					<maml:name>Name</maml:name>
-					<maml:description>
-						<maml:para>String for name of Initiator Group folder</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Get-XIOInitiatorGroupFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>ID</maml:name>
-					<maml:description>
-						<maml:para>String for ID of Initiator Group folder</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-				<maml:name>Name</maml:name>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>Entity</maml:name>
 				<maml:description>
-					<maml:para>String for name of Initiator Group folder</maml:para>
+					<maml:para>Object to retrieve performance information</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>ID</maml:name>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>Aggregation</maml:name>
 				<maml:description>
-					<maml:para>String for ID of Initiator Group folder</maml:para>
+					<maml:para>Data aggregation type
+
+Need to figure out what values are allowed in this parameter</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>ExportFile</maml:name>
+				<maml:description>
+					<maml:para>Save results to a file
+
+? path to a results file</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>FromTime</maml:name>
+				<maml:description>
+					<maml:para>The from data to show show records</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>ToTime</maml:name>
+				<maml:description>
+					<maml:para>The to data to show show records</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
 			</command:parameter>
 		</command:parameters>
-		<command:inputTypes>
-			<!-- Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>System.String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-			</command:inputType>
-		</command:inputTypes>
-		<command:examples>
-			<!-- Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get Initiator Group folder by ID</dev:code>
-				<dev:remarks>
-					<maml:para>Get-XIOInitiatorGroupFolder -ID 1</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get Initiator Group folder by name</dev:code>
-				<dev:remarks>
-					<maml:para>Get-XIOInitiatorGroupFolder -Name &quot;Test01&quot;
-Get-XIOInitiatorGroupFolder &quot;Test01&quot;</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-XIOInitiatorGroupFolder</dev:code>
-				<dev:remarks>
-					<maml:para>
-					</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOUserAccount</command:name>
+			<maml:description>
+				<maml:para>Get list of user accounts or details of a user account</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOUserAccount</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get list of user accounts or details of a user account</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
 			<command:name>Get-XIOTarget</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Target Information</maml:para>
+				<maml:para>Get list of XtremIO Targets or detail information for an XtremIO Target</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -1964,7 +1985,7 @@ Get-XIOInitiatorGroupFolder &quot;Test01&quot;</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Target Information</maml:para>
+			<maml:para>Get list of XtremIO Targets or detail information for an XtremIO Target</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -2072,7 +2093,7 @@ Get-XIOTarget X1</maml:para>
 		<command:details>
 			<command:name>Get-XIOTargetGroup</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Target Group info</maml:para>
+				<maml:para>Get list of XtremIO Target Groups or detail information for an XtremIO Target Groups</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -2082,7 +2103,7 @@ Get-XIOTarget X1</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Target Group info</maml:para>
+			<maml:para>Get list of XtremIO Target Groups or detail information for an XtremIO Target Groups</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -2308,7 +2329,7 @@ Get-XIOIscsiPortal &quot;Test01&quot;</maml:para>
 		<command:details>
 			<command:name>Get-XIOIscsiRoute</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO iSCSI Route info</maml:para>
+				<maml:para>Get XtremIO iSCSI Route information</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -2424,9 +2445,30 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
+			<command:name>Get-XIOStorageControllerPSU</command:name>
+			<maml:description>
+				<maml:para>Get Storage Controller Power Supply Unit Information</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOStorageControllerPSU</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get list of Storage Controller Power Supply Units or details of a Storage Controller Power Supply Unit</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
 			<command:name>Get-XIOLunMap</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Lun Map info</maml:para>
+				<maml:para>Get XtremIO LUN Map info</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -2436,7 +2478,7 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Lun Map info</maml:para>
+			<maml:para>Get list of LUN Maps or details of a LUN Map</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
@@ -2660,6 +2702,534 @@ Get-XIOSSD X1</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
+			<command:name>Get-XIOSnapshotSet</command:name>
+			<maml:description>
+				<maml:para>Get list of XtremIO Snapshot Sets or detail information for an XtremIO Snapshot Set</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOSnapshotSet</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get list of XtremIO Snapshot Sets or detail information for an XtremIO Snapshot Set</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOConsistencyGroup</command:name>
+			<maml:description>
+				<maml:para>Get list of XtremIO Consistency Groups or detail information for an XtremIO Consistency Group</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOConsistencyGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get list of XtremIO Consistency Groups or detail information for an XtremIO Consistency Group</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOConsistencyGroup</maml:name>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOConsistencyGroup</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOEvent</command:name>
+			<maml:description>
+				<maml:para>Get XtremIO Event Information</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOEvent</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get XtremIO Event Information</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOEvent</maml:name>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOEvent</maml:name>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>FromDateTime</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false">DateTime</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>ToDateTime</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false">DateTime</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<maml:alertSet>
+			<!-- Notes-->
+		</maml:alertSet>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOEvent</dev:code>
+				<dev:remarks>
+					<maml:para>Get All Events</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime(&apos;7/1/2015&apos;)) -ToDateTime ([System.convert]::ToDateTime(&apos;7/30/2015&apos;))</dev:code>
+				<dev:remarks>
+					<maml:para>Get Events for specified period of time</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOScheduler</command:name>
+			<maml:description>
+				<maml:para>Get list of XtremIO Schedulers or detail information for an XtremIO Scheduler</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOScheduler</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get list of XtremIO Schedulers or detail information for an XtremIO Scheduler</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOConsistencyGroupVolume</command:name>
+			<maml:description>
+				<maml:para>Get list of XtremIO Consistency Group Volumes or detail information for an XtremIO Consistency Group Volume</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOConsistencyGroupVolume</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Get list of XtremIO Consistency Group Volumes or detail information for an XtremIO Consistency Group Volume</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOSlot</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOSlot</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOLocalDisk</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOLocalDisk</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOBBU</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOBBU</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIODAE</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIODAE</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIODAEPSU</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIODAEPSU</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>GetXIODAEController</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>GetXIODAEController</command:verb>
+			<command:noun/>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOInfinibandSwitch</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOInfinibandSwitch</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOLDAPConfiguration</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOLDAPConfiguration</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOAlert</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOAlert</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOAlertDefinition</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOAlertDefinition</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOEmailNotifier</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOEmailNotifier</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOSNMPNotifier</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOSNMPNotifier</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOSYRNotifier</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOSYRNotifier</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOSyslogNotifier</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOSyslogNotifier</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
 			<command:name>New-XIOVolume</command:name>
 			<maml:description>
 				<maml:para>Create New XtremIO Volume</maml:para>
@@ -2833,46 +3403,53 @@ than one cluster is defined</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>New-XIOVolumeFolder</command:name>
+			<command:name>New-XIOSnapshot</command:name>
 			<maml:description>
-				<maml:para>Create new XtremIO volume folder</maml:para>
+				<maml:para>Create New XtremIO Snapshot</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>New</command:verb>
-			<command:noun>XIOVolumeFolder</command:noun>
+			<command:noun>XIOSnapshot</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Create new XtremIO volume folder</maml:para>
+			<maml:para>Create New XtremIO Snapshot</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>New-XIOVolumeFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
-					<maml:name>Caption</maml:name>
+				<maml:name>New-XIOSnapshot</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+					<maml:name>Name</maml:name>
 					<maml:description>
-						<maml:para>String for name of new folder</maml:para>
+						<maml:para/>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
-					<maml:name>ParentFolderName</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+					<maml:name>SnapName</maml:name>
 					<maml:description>
-						<maml:para>String for folder name of parent folder</maml:para>
+						<maml:para>Snapshot’s name</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+					<maml:name>FolderID</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
-				<maml:name>Caption</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para>String for name of new folder</maml:para>
+					<maml:para/>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				<dev:type>
@@ -2881,16 +3458,162 @@ than one cluster is defined</maml:para>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
-				<maml:name>ParentFolderName</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>SnapName</maml:name>
 				<maml:description>
-					<maml:para>String for folder name of parent folder</maml:para>
+					<maml:para>Snapshot’s name</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				<dev:type>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>FolderID</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>New XtremIO snapshot</dev:code>
+				<dev:remarks>
+					<maml:para>New-XIOSnapshot -VolName &quot;DTest01&quot; -SnapName (&quot;DTest01_&quot; + (Get-Date -Format
+yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>New-XIOTag</command:name>
+			<maml:description>
+				<maml:para>Create XtremIO tag</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>New</command:verb>
+			<command:noun>XIOTag</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Create XtremIO tag</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>New-XIOConsistencyGroup</command:name>
+			<maml:description>
+				<maml:para>Create new XtremIO consistency group</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>New</command:verb>
+			<command:noun>XIOConsistencyGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Create new XtremIO consistency group</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>New-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ClusterID</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>TagList</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolList</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ClusterID</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>TagList</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>VolList</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
 				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
@@ -2899,25 +3622,101 @@ than one cluster is defined</maml:para>
 			<command:example>
 				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
 				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
+					<maml:para>PS C:\&gt;</maml:para>
 				</maml:introduction>
-				<dev:code>Create new top level folder</dev:code>
+				<dev:code>New-XIOConsistencyGroup -Name SQLDataVols</dev:code>
 				<dev:remarks>
-					<maml:para>New-XIOVolumeFolder -Caption &quot;Test01&quot; -ParentFolderName &quot;/&quot;</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Create new subfolder under &quot;/Test01&quot;</dev:code>
-				<dev:remarks>
-					<maml:para>New-XIOVolumeFolder -Caption &quot;Test&quot; -ParentFolderName &quot;/Test01&quot;</maml:para>
+					<maml:para>
+					</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
 	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>New-XIOUserAccount</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>New</command:verb>
+			<command:noun>XIOUserAccount</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>New-XIOScheduler</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>New</command:verb>
+			<command:noun>XIOScheduler</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>New-XIOInitiator</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>New</command:verb>
+			<command:noun>XIOInitiator</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>New-XIOInitiatorGroup</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>New</command:verb>
+			<command:noun>XIOInitiatorGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<!-- Generated by: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
@@ -3181,317 +3980,65 @@ are currently supported)</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>New-XIOSnapshot</command:name>
+			<command:name>New-XIOIscsiPortal</command:name>
 			<maml:description>
-				<maml:para>Create New XtremIO Snapshot</maml:para>
+				<maml:para/>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>New</command:verb>
-			<command:noun>XIOSnapshot</command:noun>
+			<command:noun>XIOIscsiPortal</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Create New XtremIO Snapshot</maml:para>
+			<maml:para/>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>New-XIOSnapshot</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-					<maml:name>Name</maml:name>
-					<maml:description>
-						<maml:para/>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>SnapName</maml:name>
-					<maml:description>
-						<maml:para>Snapshot’s name</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>FolderID</maml:name>
-					<maml:description>
-						<maml:para/>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
 		</command:syntax>
-		<command:parameters>
-			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-				<maml:name>Name</maml:name>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>SnapName</maml:name>
-				<maml:description>
-					<maml:para>Snapshot’s name</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>FolderID</maml:name>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!-- Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>System.String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-			</command:inputType>
-		</command:inputTypes>
-		<command:examples>
-			<!-- Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>New XtremIO snapshot</dev:code>
-				<dev:remarks>
-					<maml:para>New-XIOSnapshot -VolName &quot;DTest01&quot; -SnapName (&quot;DTest01_&quot; + (Get-Date -Format
-yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>New-XIOIGFolder</command:name>
+			<command:name>New-XIOIscsiRoute</command:name>
 			<maml:description>
-				<maml:para>Create new XtremIO initiator group folder</maml:para>
+				<maml:para/>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>New</command:verb>
-			<command:noun>XIOIGFolder</command:noun>
+			<command:noun>XIOIscsiRoute</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Create new XtremIO initiator group folder</maml:para>
+			<maml:para/>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>New-XIOIGFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
-					<maml:name>Caption</maml:name>
-					<maml:description>
-						<maml:para>String for name of new folder</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
-					<maml:name>ParentFolderName</maml:name>
-					<maml:description>
-						<maml:para>String for folder name of parent folder</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
 		</command:syntax>
-		<command:parameters>
-			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
-				<maml:name>Caption</maml:name>
-				<maml:description>
-					<maml:para>String for name of new folder</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
-				<maml:name>ParentFolderName</maml:name>
-				<maml:description>
-					<maml:para>String for folder name of parent folder</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:examples>
-			<!-- Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Create new top level folder</dev:code>
-				<dev:remarks>
-					<maml:para>New-XIOIGFolder -Caption &quot;Test01&quot; -ParentFolderName &quot;/&quot;</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Create new subfolder under &quot;/Test01&quot;</dev:code>
-				<dev:remarks>
-					<maml:para>New-XIOIGFolder -Caption &quot;Test&quot; -ParentFolderName &quot;/Test01&quot;</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Set-XIOVolumeFolder</command:name>
+			<command:name>Set-XIOTag</command:name>
 			<maml:description>
-				<maml:para>Rename XtremIO volume folder</maml:para>
+				<maml:para>Set XtremIO tag name</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Set</command:verb>
-			<command:noun>XIOVolumeFolder</command:noun>
+			<command:noun>XIOTag</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Rename XtremIO volume folder</maml:para>
+			<maml:para>Set XtremIO tag name</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolumeFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>Caption</maml:name>
-					<maml:description>
-						<maml:para/>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>FolderName</maml:name>
-					<maml:description>
-						<maml:para>String for folder name of folder</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolumeFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>Caption</maml:name>
-					<maml:description>
-						<maml:para/>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>FolderID</maml:name>
-					<maml:description>
-						<maml:para>String for folder ID of folder</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
 		</command:syntax>
-		<command:parameters>
-			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>Caption</maml:name>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>FolderName</maml:name>
-				<maml:description>
-					<maml:para>String for folder name of folder</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>FolderID</maml:name>
-				<maml:description>
-					<maml:para>String for folder ID of folder</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:examples>
-			<!-- Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Rename top level folder</dev:code>
-				<dev:remarks>
-					<maml:para>Rename-XIOVolumeFolder -Caption &quot;Test01&quot; -FolderID 1</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Rename subfolder &quot;/Test&quot;</dev:code>
-				<dev:remarks>
-					<maml:para>Rename-XIOVolumeFolder -Caption &quot;Test01&quot; -FolderName &quot;/Test&quot;</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -3804,55 +4351,370 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 			</command:example>
 		</command:examples>
 	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Set-XIOIGFolder</command:name>
+			<command:name>Set-XIOConsistencyGroup</command:name>
 			<maml:description>
-				<maml:para>Rename XtremIO initiator group folder</maml:para>
+				<maml:para>Set name of XtremIO consistency group</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Set</command:verb>
-			<command:noun>XIOIGFolder</command:noun>
+			<command:noun>XIOConsistencyGroup</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Rename XtremIO initiator group folder</maml:para>
+			<maml:para>Set name of XtremIO consistency group</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Set-XIOIGFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>Caption</maml:name>
+				<maml:name>Set-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Name</maml:name>
 					<maml:description>
 						<maml:para/>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false"/>
 				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>FolderName</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
 					<maml:description>
-						<maml:para>String for folder name of folder</maml:para>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Set-XIOConsistencyGroup -Name &lt;NewName&gt; -ID &lt;cg-id&gt;</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOSnapshot</command:name>
+			<maml:description>
+				<maml:para>Set XtremIO snapshot volume properties</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOSnapshot</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Allows changing name of snapshot and size of snapshot
+Also will allow changing the flags for Small IO Alerts, Unaligned IO Alerts, and VAAI TP Alerts</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Update-XIOSnapshot</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Update</command:verb>
+			<command:noun>XIOSnapshot</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOScheduler</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOScheduler</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOInitiator</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOInitiator</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOInitiatorGroup</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOInitiatorGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Add-XIOConsistencyGroupVolume</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Add</command:verb>
+			<command:noun>XIOConsistencyGroupVolume</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOLDAPConfiguration</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOLDAPConfiguration</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOAlertDefinition</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOAlertDefinition</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOEmailNotifier</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOEmailNotifier</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOSNMPNotifier</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOSNMPNotifier</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOSYRNotifier</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOSYRNotifier</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Set-XIOSyslogNotifier</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Set</command:verb>
+			<command:noun>XIOSyslogNotifier</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Remove-XIOSnapshot</command:name>
+			<maml:description>
+				<maml:para>Remove XtremIO Snapshot</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOSnapshot</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Remove XtremIO Snapshot</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Remove-XIOSnapshot</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String to Remove Volume/Snapshot by name</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Set-XIOIGFolder</maml:name>
+				<maml:name>Remove-XIOSnapshot</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>Caption</maml:name>
+					<maml:name>ID</maml:name>
 					<maml:description>
-						<maml:para/>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>FolderID</maml:name>
-					<maml:description>
-						<maml:para>String for folder ID of folder</maml:para>
+						<maml:para>ID String to Remove Volume/Snapshot by index</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
@@ -3860,10 +4722,10 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 		</command:syntax>
 		<command:parameters>
 			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>Caption</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
 				<maml:description>
-					<maml:para/>
+					<maml:para>Name String to Remove Volume/Snapshot by name</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				<dev:type>
@@ -3873,21 +4735,9 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>FolderName</maml:name>
+				<maml:name>ID</maml:name>
 				<maml:description>
-					<maml:para>String for folder name of folder</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>FolderID</maml:name>
-				<maml:description>
-					<maml:para>String for folder ID of folder</maml:para>
+					<maml:para>ID String to Remove Volume/Snapshot by index</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				<dev:type>
@@ -3897,6 +4747,18 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -3904,9 +4766,9 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				<maml:introduction>
 					<maml:para>C:\PS&gt;</maml:para>
 				</maml:introduction>
-				<dev:code>Rename top level folder</dev:code>
+				<dev:code>Remove XtremIO Volume/Snapshot by index</dev:code>
 				<dev:remarks>
-					<maml:para>Rename-XIOIGFolder -Caption &quot;Test01&quot; -FolderID 1</maml:para>
+					<maml:para>Remove-XIOSnapshot -VolID 1</maml:para>
 				</dev:remarks>
 			</command:example>
 			<command:example>
@@ -3914,9 +4776,9 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 				<maml:introduction>
 					<maml:para>C:\PS&gt;</maml:para>
 				</maml:introduction>
-				<dev:code>Rename subfolder &quot;/Test&quot;</dev:code>
+				<dev:code>Remove XtremIO Volume/Snapshot by name</dev:code>
 				<dev:remarks>
-					<maml:para>Rename-XIOIGFolder -Caption &quot;Test01&quot; -FolderName &quot;/Test&quot;</maml:para>
+					<maml:para>Remove-XIOSnapshot -VolName X1</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
@@ -4027,105 +4889,119 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Remove-XIOVolumeFolder</command:name>
+			<command:name>Remove-XIOConsistencyGroup</command:name>
 			<maml:description>
-				<maml:para>Remove XtremIO VolumeFolder</maml:para>
+				<maml:para>Remove XtremIO Consistency Group</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Remove</command:verb>
-			<command:noun>XIOVolumeFolder</command:noun>
+			<command:noun>XIOConsistencyGroup</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Remove XtremIO VolumeFolder</maml:para>
+			<maml:para>Remove XtremIO Consistency Group</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Remove-XIOVolumeFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Remove-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
 					<maml:name>Name</maml:name>
 					<maml:description>
 						<maml:para/>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Remove-XIOVolumeFolder</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Remove-XIOConsistencyGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
 					<maml:name>ID</maml:name>
 					<maml:description>
 						<maml:para/>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false"/>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para/>
+					</maml:description>
+					<command:parameterValue required="false"/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Name</maml:name>
 				<maml:description>
 					<maml:para/>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
+				<command:parameterValue required="false"/>
 				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>ID</maml:name>
 				<maml:description>
 					<maml:para/>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
+				<command:parameterValue required="false"/>
 				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
-		<command:inputTypes>
-			<!-- Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>System.String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-			</command:inputType>
-		</command:inputTypes>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
 				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
 				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
+					<maml:para>PS C:\&gt;</maml:para>
 				</maml:introduction>
-				<dev:code>Remove XtremIO Volume Folder by index</dev:code>
+				<dev:code>Remove-XIOConsistencyGroup</dev:code>
 				<dev:remarks>
-					<maml:para>Remove-XIOVolumeFolder -FolderID 1</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Remove XtremIO Volume Folder by name</dev:code>
-				<dev:remarks>
-					<maml:para>Remove-XIOVolumeFolder -FolderName X1</maml:para>
+					<maml:para>
+					</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Remove-XIOUserAccount</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOUserAccount</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4233,183 +5109,153 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Remove-XIOSnapshot</command:name>
+			<command:name>Remove-XIOTag</command:name>
 			<maml:description>
-				<maml:para>Remove XtremIO Snapshot</maml:para>
+				<maml:para>Remove XtremIO tag</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Remove</command:verb>
-			<command:noun>XIOSnapshot</command:noun>
+			<command:noun>XIOTag</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Remove XtremIO Snapshot</maml:para>
+			<maml:para>Remove XremIO tag</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Remove-XIOSnapshot</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-					<maml:name>Name</maml:name>
-					<maml:description>
-						<maml:para>Name String to Remove Volume/Snapshot by name</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Remove-XIOSnapshot</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>ID</maml:name>
-					<maml:description>
-						<maml:para>ID String to Remove Volume/Snapshot by index</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
 		</command:syntax>
-		<command:parameters>
-			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-				<maml:name>Name</maml:name>
-				<maml:description>
-					<maml:para>Name String to Remove Volume/Snapshot by name</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>ID</maml:name>
-				<maml:description>
-					<maml:para>ID String to Remove Volume/Snapshot by index</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!-- Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>System.String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-			</command:inputType>
-		</command:inputTypes>
-		<command:examples>
-			<!-- Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Remove XtremIO Volume/Snapshot by index</dev:code>
-				<dev:remarks>
-					<maml:para>Remove-XIOSnapshot -VolID 1</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>C:\PS&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Remove XtremIO Volume/Snapshot by name</dev:code>
-				<dev:remarks>
-					<maml:para>Remove-XIOSnapshot -VolName X1</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
 	</command:command>
-	<!-- Generated by: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
-			<command:name>Get-XIOEvent</command:name>
+			<command:name>Remove-XIOScheduler</command:name>
 			<maml:description>
-				<maml:para>Get XtremIO Event Information</maml:para>
+				<maml:para/>
 			</maml:description>
 			<maml:copyright>
-				<maml:para>
-				</maml:para>
+				<maml:para/>
 			</maml:copyright>
-			<command:verb>Get</command:verb>
-			<command:noun>XIOEvent</command:noun>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOScheduler</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Get XtremIO Event Information</maml:para>
+			<maml:para/>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Get-XIOEvent</maml:name>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Get-XIOEvent</maml:name>
-			</command:syntaxItem>
 		</command:syntax>
-		<command:parameters>
-			<!-- All Parameters-->
-			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>FromDateTime</maml:name>
-				<maml:description>
-					<maml:para>
-					</maml:para>
-				</maml:description>
-				<command:parameterValue required="false">DateTime</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
-			</command:parameter>
-			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>ToDateTime</maml:name>
-				<maml:description>
-					<maml:para>
-					</maml:para>
-				</maml:description>
-				<command:parameterValue required="false">DateTime</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
-			</command:parameter>
-		</command:parameters>
-		<maml:alertSet>
-			<!-- Notes-->
-		</maml:alertSet>
-		<command:examples>
-			<!-- Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-XIOEvent</dev:code>
-				<dev:remarks>
-					<maml:para>Get All Events</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime(&apos;7/1/2015&apos;)) -ToDateTime ([System.convert]::ToDateTime(&apos;7/30/2015&apos;))</dev:code>
-				<dev:remarks>
-					<maml:para>Get Events for specified period of time</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Remove-XIOInitiator</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOInitiator</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Remove-XIOInitiatorGroup</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOInitiatorGroup</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Remove-XIOConsistencyGroupVolume</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOConsistencyGroupVolume</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Remove-XIOIscsiPortal</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOIscsiPortal</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Remove-XIOIscsiRoute</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOIscsiRoute</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
 	</command:command>
 	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
 </helpItems>
