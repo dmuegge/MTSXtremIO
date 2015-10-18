@@ -1407,6 +1407,125 @@ Get-XIOTag &quot;Test01&quot;</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
+			<command:name>Get-XIOPerformance</command:name>
+			<maml:description>
+				<maml:para>Retrieve performance information for XtremIO Object</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOPerformance</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Retrieve performance information for XtremIO Object</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="e">
+				<maml:name>Entity</maml:name>
+				<maml:description>
+					<maml:para>Object to retrieve performance information</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="ft">
+				<maml:name>FromTime</maml:name>
+				<maml:description>
+					<maml:para>The begining of the time period to show data records</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="tt">
+				<maml:name>ToTime</maml:name>
+				<maml:description>
+					<maml:para>The end of the time period to show data records</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="ol">
+				<maml:name>ObjectList</maml:name>
+				<maml:description>
+					<maml:para>List of objects for which data will be returned</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String[]</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="g">
+				<maml:name>Granularity</maml:name>
+				<maml:description>
+					<maml:para>Specifies counter interval granularity to retrieve
+
+Optional values(&apos;one_minute&apos;,&apos;ten_minutes&apos;,&apos;one_hour&apos;,&apos;one_day&apos;,&apos;auto&apos;,&apos;raw&apos;)
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>ten_minutes</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="l">
+				<maml:name>RecordLimit</maml:name>
+				<maml:description>
+					<maml:para>Specify maximum number of records to be returned</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">Int</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<maml:alertSet>
+			<maml:title>Output Counter Names</maml:title>
+			<!-- Notes-->
+			<maml:alert>
+				<maml:para>avg__logical_space_in_use
+
+avg__avg_latency
+avg__wr_latency
+avg__rd_latency
+
+avg__iops
+avg__wr_iops
+avg__rd_iops
+
+avg__bw
+avg__wr_bw
+avg__rd_bw
+
+avg__small_io_ratio
+
+avg__small_iops
+avg__small_wr_iops
+avg__small_rd_iops
+
+avg__small_bw
+avg__small_wr_bw
+avg__small_rd_bw
+
+avg__unaligned_io_ratio
+
+avg__unaligned_iops
+avg__unaligned_wr_iops
+avg__unaligned_rd_iops
+
+avg__unaligned_bw
+avg__unaligned_wr_bw
+avg__unaligned_rd_bw</maml:para>
+			</maml:alert>
+		</maml:alertSet>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
 			<command:name>Get-XIOVolume</command:name>
 			<maml:description>
 				<maml:para>Get list of XtremIO Volumes or detail information for an XtremIO Volume</maml:para>
@@ -1875,79 +1994,6 @@ Get-XIOInitiatorGroup &quot;Test01&quot;</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!-- Command-->
-		<command:details>
-			<command:name>Get-XIOPerformance</command:name>
-			<maml:description>
-				<maml:para>Retrieve performance information for XtremIO Object</maml:para>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Get</command:verb>
-			<command:noun>XIOPerformance</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para>Retrieve performance information for XtremIO Object</maml:para>
-		</maml:description>
-		<command:syntax>
-			<!-- Parameter Sets-->
-		</command:syntax>
-		<command:parameters>
-			<!-- All Parameters-->
-			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>Entity</maml:name>
-				<maml:description>
-					<maml:para>Object to retrieve performance information</maml:para>
-				</maml:description>
-				<command:parameterValue required="false">String</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
-			</command:parameter>
-			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>Aggregation</maml:name>
-				<maml:description>
-					<maml:para>Data aggregation type
-
-Need to figure out what values are allowed in this parameter</maml:para>
-				</maml:description>
-				<command:parameterValue required="false">String</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
-			</command:parameter>
-			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>ExportFile</maml:name>
-				<maml:description>
-					<maml:para>Save results to a file
-
-? path to a results file</maml:para>
-				</maml:description>
-				<command:parameterValue required="false">String</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
-			</command:parameter>
-			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>FromTime</maml:name>
-				<maml:description>
-					<maml:para>The from data to show show records</maml:para>
-				</maml:description>
-				<command:parameterValue required="false">String</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
-			</command:parameter>
-			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>ToTime</maml:name>
-				<maml:description>
-					<maml:para>The to data to show show records</maml:para>
-				</maml:description>
-				<command:parameterValue required="false">String</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
-			</command:parameter>
-		</command:parameters>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -2462,6 +2508,38 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 		<command:syntax>
 			<!-- Parameter Sets-->
 		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-XIOTagObject</command:name>
+			<maml:description>
+				<maml:para>Get objects assigned to tags</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>XIOTagObject</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Will return objects assigned to on or more tags</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4061,251 +4139,97 @@ are currently supported)</maml:para>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolID</maml:name>
-					<maml:description>
-						<maml:para>ID String for Volume Info Query by index</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VaaiTpAlerts</maml:name>
-					<maml:description>
-						<maml:para>String for state of volume VAAI TP alerts</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolID</maml:name>
-					<maml:description>
-						<maml:para>ID String for Volume Info Query by index</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>UnalignedIOAlerts</maml:name>
-					<maml:description>
-						<maml:para>String for state of volume unaligned IO alerts</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolID</maml:name>
-					<maml:description>
-						<maml:para>ID String for Volume Info Query by index</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>SmallIOAlerts</maml:name>
-					<maml:description>
-						<maml:para>String for state of volume small IO alerts</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolID</maml:name>
-					<maml:description>
-						<maml:para>ID String for Volume Info Query by index</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>NewVolSize</maml:name>
-					<maml:description>
-						<maml:para>Size String for new volume size</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolID</maml:name>
-					<maml:description>
-						<maml:para>ID String for Volume Info Query by index</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>NewVolName</maml:name>
-					<maml:description>
-						<maml:para>Name String for new volume name</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolName</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByPropertyName, ByValue)" globbing="false" position="named" aliases="n">
+					<maml:name>Name</maml:name>
 					<maml:description>
 						<maml:para>Name String for Volume Info Query by name</maml:para>
 					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="true">String</command:parameterValue>
+					<dev:defaultValue/>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VaaiTpAlerts</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Property</maml:name>
 					<maml:description>
-						<maml:para>String for state of volume VAAI TP alerts</maml:para>
+						<maml:para>Volume property to update</maml:para>
 					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="true">String</command:parameterValue>
 				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolName</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<!--Dynamic-->
+					<maml:name>Value</maml:name>
 					<maml:description>
-						<maml:para>Name String for Volume Info Query by name</maml:para>
+						<maml:para>Value of property update</maml:para>
 					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="true">String</command:parameterValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>UnalignedIOAlerts</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named" aliases="c">
+					<maml:name>Cluster</maml:name>
 					<maml:description>
-						<maml:para>String for state of volume unaligned IO alerts</maml:para>
+						<maml:para>Name or ID of cluster</maml:para>
 					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolName</maml:name>
-					<maml:description>
-						<maml:para>Name String for Volume Info Query by name</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>SmallIOAlerts</maml:name>
-					<maml:description>
-						<maml:para>String for state of volume small IO alerts</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false">Object</command:parameterValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolName</maml:name>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="i">
+					<maml:name>ID</maml:name>
 					<maml:description>
-						<maml:para>Name String for Volume Info Query by name</maml:para>
+						<maml:para>Volume Index</maml:para>
 					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false" variableLength="false">Integer</command:parameterValue>
+					<dev:defaultValue/>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>NewVolSize</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Property</maml:name>
 					<maml:description>
-						<maml:para>Size String for new volume size</maml:para>
+						<maml:para>Volume property to update</maml:para>
 					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="true">String</command:parameterValue>
 				</command:parameter>
-			</command:syntaxItem>
-			<command:syntaxItem>
-				<maml:name>Set-XIOVolume</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>VolName</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<!--Dynamic-->
+					<maml:name>Value</maml:name>
 					<maml:description>
-						<maml:para>Name String for Volume Info Query by name</maml:para>
+						<maml:para>Value of property update</maml:para>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="true">String</command:parameterValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>NewVolName</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named" aliases="c">
+					<maml:name>Cluster</maml:name>
 					<maml:description>
-						<maml:para>Name String for new volume name</maml:para>
+						<maml:para>Name or ID of cluster</maml:para>
 					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false">Object</command:parameterValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>VolID</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="i">
+				<maml:name>ID</maml:name>
 				<maml:description>
-					<maml:para>ID String for Volume Info Query by index</maml:para>
+					<maml:para>Volume Index</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<command:parameterValue required="true" variableLength="false">Integer</command:parameterValue>
 				<dev:type>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>VaaiTpAlerts</maml:name>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
 				<maml:description>
-					<maml:para>String for state of volume VAAI TP alerts</maml:para>
+					<maml:para>Name or ID of cluster</maml:para>
 				</maml:description>
-				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
+				<command:parameterValue required="false">Object</command:parameterValue>
 				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>UnalignedIOAlerts</maml:name>
-				<maml:description>
-					<maml:para>String for state of volume unaligned IO alerts</maml:para>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>SmallIOAlerts</maml:name>
-				<maml:description>
-					<maml:para>String for state of volume small IO alerts</maml:para>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>NewVolSize</maml:name>
-				<maml:description>
-					<maml:para>Size String for new volume size</maml:para>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>NewVolName</maml:name>
-				<maml:description>
-					<maml:para>Name String for new volume name</maml:para>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>VolName</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="n">
+				<maml:name>Name</maml:name>
 				<maml:description>
 					<maml:para>Name String for Volume Info Query by name</maml:para>
 				</maml:description>
@@ -4316,6 +4240,23 @@ are currently supported)</maml:para>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="false" position="named" aliases="p">
+				<maml:name>Property</maml:name>
+				<maml:description>
+					<maml:para>Volume property to update</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="false" position="named" aliases="v">
+				<!--Dynamic-->
+				<maml:name>Value</maml:name>
+				<maml:description>
+					<maml:para>Value of property update</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:examples>
 			<!-- Examples-->
@@ -4324,9 +4265,9 @@ are currently supported)</maml:para>
 				<maml:introduction>
 					<maml:para>C:\PS&gt;</maml:para>
 				</maml:introduction>
-				<dev:code>Update XtremIO Volume Info by index</dev:code>
+				<dev:code>Set XtremIO Volume Info by index</dev:code>
 				<dev:remarks>
-					<maml:para>Update-XIOVolume -VolID 1 -NewVolName &quot;X01&quot;</maml:para>
+					<maml:para>Set-XIOVolume -ID 1 -Property Name -Value &apos;NewName&apos;</maml:para>
 				</dev:remarks>
 			</command:example>
 			<command:example>
@@ -4334,9 +4275,9 @@ are currently supported)</maml:para>
 				<maml:introduction>
 					<maml:para>C:\PS&gt;</maml:para>
 				</maml:introduction>
-				<dev:code>Update XtremIO Volume Info by name</dev:code>
+				<dev:code>Set XtremIO Volume Info by name</dev:code>
 				<dev:remarks>
-					<maml:para>Update-XIOVolume -VolName &quot;X1&quot; -NewVolName &quot;X01&quot;</maml:para>
+					<maml:para>Set-XIOVolume -Name &quot;X1&quot; -Property Name -Value &apos;NeName&apos;</maml:para>
 				</dev:remarks>
 			</command:example>
 			<command:example>
@@ -4344,9 +4285,9 @@ are currently supported)</maml:para>
 				<maml:introduction>
 					<maml:para>C:\PS&gt;</maml:para>
 				</maml:introduction>
-				<dev:code>Update XtremIO Volume Info by name</dev:code>
+				<dev:code>Set XtremIO Volume Info by name</dev:code>
 				<dev:remarks>
-					<maml:para>Update-XIOVolume -VolName &quot;X1&quot; -VaaiTpAlerts enable</maml:para>
+					<maml:para>Set-XIOVolume -Name &quot;X1&quot; -Property VaaiTpAlerts -Value enable</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
@@ -4531,6 +4472,62 @@ Also will allow changing the flags for Small IO Alerts, Unaligned IO Alerts, and
 		<command:syntax>
 			<!-- Parameter Sets-->
 		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Add-XIOTagObject</command:name>
+			<maml:description>
+				<maml:para>Assign and object to a tag</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Add</command:verb>
+			<command:noun>XIOTagObject</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Assign and object to a tag</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>TagName</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>TagID</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Type</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
 	</command:command>
 	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
@@ -5175,6 +5172,62 @@ Also will allow changing the flags for Small IO Alerts, Unaligned IO Alerts, and
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
+			<command:name>Remove-XIOTagObject</command:name>
+			<maml:description>
+				<maml:para>Unassign an object from a tag</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Remove</command:verb>
+			<command:noun>XIOTagObject</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>Unassign an object from a tag</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>TagName</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>TagID</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Type</maml:name>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<command:parameterValue required="false"/>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
 			<command:name>Remove-XIOInitiatorGroup</command:name>
 			<maml:description>
 				<maml:para/>
@@ -5257,5 +5310,6 @@ Also will allow changing the flags for Small IO Alerts, Unaligned IO Alerts, and
 			<!-- Parameter Sets-->
 		</command:syntax>
 	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.15-->
 	<!-- Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.13-->
 </helpItems>

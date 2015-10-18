@@ -92,7 +92,7 @@ Get-XIOCluster
 Get-XIOCluster -Name $Clusters[0] | Select-Object name,index,sys-psnt-serial-number,sys-sw-version | FT
 Get-XIOCluster -ID 1 | Select-Object name,index,sys-psnt-serial-number,sys-sw-version | FT
 $Clusters[0] | Get-XIOCluster | Select-Object name,sys-psnt-serial-number,sys-sw-version | FT
-$Clusters | Get-XIOCluster | Select-Object name,sys-psnt-serial-number,sys-sw-version | FT
+$Clusters | Get-XIOCluster | Select-Object name,sys-psnt-serial-number,sys-sw-version | FT -AutoSize
 #endregion
 
 
@@ -178,19 +178,31 @@ Get-XIOVolume | foreach-object{ $_.Name }
 (Get-XIOVolume -Name 'DAM01').GetType()
 
 
+Get-XIOVolume -Name 'DAM01' | select name,small-io-alerts | Export-Csv Test.csv
+
+
 $Volumes | Get-XIOVolume -Name 'DAM01' | Get-Member
 Get-XIOVolume -Name 'DAM01' | Set-XIOVolume -SmallIOAlerts enable
 
 
 $Volumes = @('DAM03','DAM04')
-$Volumes | Get-XIOVolume | Set-XIOVolume -SmallIOAlerts enable
+$Volumes | Get-XIOVolume | Set-XIOVolume -SmallIOAlerts disable
 
 Set-XIOVolume -Name 'DAM04' -SmallIOAlerts enable 
 
 
  
 $Volumes | Get-XIOVolume | Set-XIOVolume -SmallIOAlerts enable
-trace-command -name ParameterBinding -expression{Get-XIOVolume -Name 'DAM01' | Set-XIOVolume -SmallIOAlerts enable} -pshost -FilePath debug.txt
+
+$tnames = @(
+'ParameterBinderBase',
+'ParameterBinderController',
+'ParameterBinding',
+'TypeConversion'
+
+)
+
+trace-command -name ParameterBinding -expression{Get-XIOVolume -Name 'DAM01' | Select-Object name | Set-XIOVolume -SmallIOAlerts enable} -pshost -FilePath debug.txt
 
 Get-XIOVolume -Name 'DAM01.snap.0001' | Write-Output
 
@@ -674,7 +686,7 @@ $UriString += ($UriObject + '/?entity=target')
 
 Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
 
-Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/v2/types/performance?entity=Volume&limit=100' -Headers $Global:XIOAPIHeaders
+Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/v2/types/performance?entity=Volume&limit=100&obj-list=DAM01&obj-list=DAM02&from-time=2015-10-01%2012:00:00&to-time=2015-10-02%2012:00:00' -Headers $Global:XIOAPIHeaders
 
 
 $JSoNBody = New-Object -TypeName psobject
