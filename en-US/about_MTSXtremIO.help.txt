@@ -6,7 +6,114 @@ SHORT DESCRIPTION
 	REST API.
 
 LONG DESCRIPTION
-    
+    The module has full coverage over the 2.0 version of the XtremIO REST API(XtremIO 4.x)
+
+	The first four Cmdlets are to setup a connection to the XtremIO XMS, which is how you connect to the REST API. One XMS can manage multiple XtremIO clusters. 
+	- New-PasswordFile
+	- Get-PasswordFromFile
+	- Disable-CertificateValidation
+	- Set-XIOAPIConnectionInfo
+
+	There are 42 Cmdlets to retrieve information about XtremIO objects.	 
+	- Get-XIOPerformance
+	- Get-XIOAlert
+	- Get-XIOAlertDefinition
+	- Get-XIOAPITypes
+	- Get-XIOBBU
+	- Get-XIOBrick
+	- Get-XIOCluster
+	- Get-XIOConsistencyGroup
+	- Get-XIOConsistencyGroupVolume
+	- Get-XIODAE
+	- Get-XIODAEController
+	- Get-XIODAEPSU
+	- Get-XIODataProtectionGroup
+	- Get-XIOEmailNotifier
+	- Get-XIOEvent
+	- Get-XIOInfinibandSwitch
+	- Get-XIOInitiator
+	- Get-XIOInitiatorGroup
+	- Get-XIOIscsiPortal
+	- Get-XIOIscsiRoute
+	- Get-XIOItem
+	- Get-XIOLDAPConfiguration
+	- Get-XIOLocalDisk
+	- Get-XIOLunMap
+	- Get-XIOPerformance
+	- Get-XIOScheduler
+	- Get-XIOSlot
+	- Get-XIOSnapshot
+	- Get-XIOSnapshotSet
+	- Get-XIOSNMPNotifier
+	- Get-XIOSSD
+	- Get-XIOStorageController
+	- Get-XIOStorageControllerPSU
+	- Get-XIOSYRNotifier
+	- Get-XIOSyslogNotifier
+	- Get-XIOTag
+	- Get-XIOTagObject
+	- Get-XIOTarget
+	- Get-XIOTargetGroup
+	- Get-XIOUserAccount
+	- Get-XIOVolume
+	- Get-XIOXenvs
+	- Get-XIOXms
+	
+	There are 11 Cmdlets for creating XtremIO objects.
+	- New-XIOConsistencyGroup
+	- New-XIOInitiator
+	- New-XIOInitiatorGroup
+	- New-XIOIscsiPortal
+	- New-XIOIscsiRoute
+	- New-XIOLunMap
+	- New-XIOScheduler
+	- New-XIOSnapshot
+	- New-XIOTag
+	- New-XIOUserAccount
+	- New-XIOVolume
+
+	There are 14 Cmdlets for removing XtremIO objects.
+	- Remove-XIOConsistencyGroup
+	- Remove-XIOConsistencyGroupVolume
+	- Remove-XIOInitiator
+	- Remove-XIOInitiatorGroup
+	- Remove-XIOIscsiPortal
+	- Remove-XIOIscsiRoute
+	- Remove-XIOLunMap
+	- Remove-XIOScheduler
+	- Remove-XIOSnapshot
+	- Remove-XIOSnapshotSet
+	- Remove-XIOTag
+	- Remove-XIOTagObject
+	- Remove-XIOUserAccount
+	- Remove-XIOVolume
+
+	There are 17 Cmdlets for changing various XtremIO objects. 
+
+	- Add-XIOConsistencyGroupVolume
+	- Set-XIOAlertDefinition
+	- Set-XIOConsistencyGroup
+	- Set-XIOEmailNotifier
+	- Set-XIOInitiator
+	- Set-XIOInitiatorGroup
+	- Set-XIOLDAPConfiguration
+	- Set-XIOScheduler
+	- Set-XIOSnapshot
+	- Set-XIOSNMPNotifier
+	- Set-XIOSYRNotifier
+	- Set-XIOSyslogNotifier
+	- Set-XIOTag
+	- Add-XIOTagObject
+	- Set-XIOTarget
+	- Set-XIOVolume
+	- Update-XIOSnapshot
+
+
+	Requirements
+	-------------------
+	PowerShell Version 4
+	Should work under PowerShell 3.0 but has not been tested yet
+	Primary requirement is Invoke-RestMethod Cmdlet introduced in PowerShell 3.0
 
 
 SEE ALSO

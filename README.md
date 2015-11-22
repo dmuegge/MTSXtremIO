@@ -17,7 +17,7 @@ The first four Cmdlets are to setup a connection to the XtremIO XMS, which is ho
 - Set-XIOAPIConnectionInfo
 
 
-There are 41 Cmdlets to retrieve information about XtremIO objects.
+There are 42 Cmdlets to retrieve information about XtremIO objects.
  
 - Get-XIOPerformance
 - Get-XIOAlert
@@ -55,6 +55,7 @@ There are 41 Cmdlets to retrieve information about XtremIO objects.
 - Get-XIOSYRNotifier
 - Get-XIOSyslogNotifier
 - Get-XIOTag
+- Get-XIOTagObject
 - Get-XIOTarget
 - Get-XIOTargetGroup
 - Get-XIOUserAccount
@@ -76,7 +77,7 @@ There are 11 Cmdlets for creating XtremIO objects.
 - New-XIOUserAccount
 - New-XIOVolume
 
-There are 13 Cmdlets for removing XtremIO objects.
+There are 14 Cmdlets for removing XtremIO objects.
 
 - Remove-XIOConsistencyGroup
 - Remove-XIOConsistencyGroupVolume
@@ -89,10 +90,11 @@ There are 13 Cmdlets for removing XtremIO objects.
 - Remove-XIOSnapshot
 - Remove-XIOSnapshotSet
 - Remove-XIOTag
+- Remove-XIOTagObject
 - Remove-XIOUserAccount
 - Remove-XIOVolume
 
-There are 16 Cmdlets for changing various XtremIO objects. 
+There are 17 Cmdlets for changing various XtremIO objects. 
 
 - Add-XIOConsistencyGroupVolume
 - Set-XIOAlertDefinition
@@ -107,6 +109,7 @@ There are 16 Cmdlets for changing various XtremIO objects.
 - Set-XIOSYRNotifier
 - Set-XIOSyslogNotifier
 - Set-XIOTag
+- Add-XIOTagObject
 - Set-XIOTarget
 - Set-XIOVolume
 - Update-XIOSnapshot
@@ -138,6 +141,40 @@ Version
 - 0.30.0 2015-09-12 - Renamed MTSXtremIO_SmokeTest.ps1, Code optimizations with UriString, add tests, add help.
 
 - 0.40.0 2015-09-29 - Added 4.0 cmdlets and updated help
+
+- 0.41.0 2015-10-17 - Added Tag Object Cmdlets, updated Get-XIOPerformance, pipeline improvements, started adding SupportsShouldProcess, and updated help
+
+- 0.42.0 2015-11-22 - Add Multi-Cluster support to Get-XIOBrick, Get-XIOEnvs, Get-XIOStorageController, Get-XIOStorageControllerPSU, Get-XIODataProtectionGroup, Get-XIOTag, Get-XIOTagObject, Get-XIOVolume, Get-XIOSnapshotSet, Get-XIOScheduler, Get-XIOInitiator. Added ability to do adhoc authentication with Set-XIOAPIConnectionInfo. Corrected implementation of cmdlet aliases. Updated help.   
+
+
+Notes
+------
+
+All Cmdlets have help information, but additional details need to be added.
+
+Improvements in pipeline functionality for some Cmdlets needs to be completed. 
+
+Pipeline functionality needs to be added to some Cmdlets.
+
+SupportsShouldProcess functionality needs to be added to some Cmdlets.
+
+Multiple Cluster functionality needs to be added to some Cmdlets.
+
+Functions and/or options to control snapshot backup functionality needs to be added.
+
+Improvements to be made on error handling messages and information messages.
+
+Authentication and certificates improvements - Client certificate authentication
+
+Possibly adjust ID parameters to Index - Need to do more testing of piping gets to new,set, and remove commands
+
+Need to refactor some repeating code
+
+Plan is to move version number to 1.0.0 when above improvements have been completed and code tested as well as possible with limited testing resources.
+
+Future plan to complete automated testing using Pester.
+
+Would welcome any assistance testing and providing feedback on issues.
 
 
 Disclaimer/License
