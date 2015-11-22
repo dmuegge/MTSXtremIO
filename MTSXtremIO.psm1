@@ -20,6 +20,16 @@
 
 # Helper functions not exported
 function Test-ClusterID{
+<#
+    .SYNOPSIS
+        Helper function to test if cluster value is string or integer
+    
+    .DESCRIPTION
+        Used with functions to support multiple cluster functionality
+
+    .PARAMETER TestValue
+        Name of the dynamic parameter
+#>
 [CmdletBinding()]
 param ($TestValue)
     $value = 0
@@ -274,6 +284,23 @@ param(
 } # New-DynamicParam
 
 Function ConvertFrom-EpochDateTime{
+<#
+    .SYNOPSIS
+        Convert unix epoch time to standard time
+    
+    .DESCRIPTION
+        Convert unix epoch time to standard time
+
+    .PARAMETER EpochDateTime
+        Epoch time value
+
+    .PARAMETER InSeconds
+        Time value specified in seconds
+
+    .PARAMETER InMilliseconds
+        Time value specified in milliseconds
+
+#>
     [cmdletbinding()]
     param
     (
@@ -289,6 +316,63 @@ Function ConvertFrom-EpochDateTime{
 } # ConvertFrom-EpochDateTime
 
 
+
+<## TODO - Refactor repeating code into functions
+
+
+Cluster Parameter code on get functions is a repeating pattern - determine best method to refactor
+
+Begin{
+        $UriObject = 'volumes'
+    }
+    Process{
+        # Return details of volume names passed by parameter or pipeline
+        if($Name){
+            $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+
+            }
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+        }
+    }
+    End{
+        # Return detail of specific volume by ID
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+        }
+        # No parameters passed return details of all volumes
+        if($PSCmdlet.ParameterSetName -eq 'AllVolumes'){
+
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
+        }
+    }
+
+
+
+#>
 
 
 # Base and connection functions
@@ -318,10 +402,9 @@ function New-PasswordFile{
 function Get-PasswordFromFile{
 [CmdletBinding()]
 	param ( 
-		[Parameter(Mandatory=$True)][Alias('f')][string]$FullPath
+		[Parameter(Mandatory=$True,position=0)][Alias('f')][string]$FullPath
 	)
 
-    
     # Test file existence and retrieve file object
     If(Test-Path -Path $FullPath){
 
@@ -366,34 +449,59 @@ using System.Security.Cryptography.X509Certificates;
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOAPIConnectionInfo{
 	[CmdletBinding()]
-	param ([Parameter(Mandatory=$True)][Alias('u')][string]$username,
-           [Parameter(Mandatory=$True)][Alias('p')][string]$passwordfile,
-           [Parameter(Mandatory=$True)][Alias('h')][string]$hostname,
-           [Parameter(Mandatory=$False)][ValidateNotNullOrEmpty()][Alias('c')][string]$certpath=$null,
-           [Parameter(Mandatory=$False)][ValidateNotNullOrEmpty()][Alias('t')][string]$certthumbprint=$null           
+	param ([Parameter(Mandatory=$True,ParameterSetName='AuthByPwdFile')][Alias('u')][string]$Username,
+           [Parameter(Mandatory=$True,ParameterSetName='AuthByPwdFile')][Alias('p')][string]$PasswordFile,
+           [Parameter(Mandatory=$True,ParameterSetName='AuthByCred')][Alias('c')]$Credential,
+           [Parameter(Mandatory=$True)][Alias('h')][string]$Hostname
+           
+           <#
+           ,
+           [Parameter(Mandatory=$False)][ValidateNotNullOrEmpty()][Alias('c')][string]$CertPath,
+           [Parameter(Mandatory=$False)][ValidateNotNullOrEmpty()][Alias('t')][string]$certthumbprint        
+           #>
            )
-
-    # Encode basic authorization header
-    $upassword = Get-PasswordFromFile -FullPath $passwordfile
-    $auth = $username + ':' + $upassword
-    $Encoded = [System.Text.Encoding]::UTF8.GetBytes($auth)
-    $EncodedPassword = [System.Convert]::ToBase64String($Encoded)
 
     # set base uri
     $baseuri = 'https://' + $hostname + '/api/json/v2/types/'
 
-    # Define global connection variables
-    New-Variable -Name XIOAPIBaseUri -Value $baseuri -Scope Global -Force
-    New-Variable -Name XIOAPIHeaders -Value @{'Authorization'="Basic $($EncodedPassword)"} -Scope Global -Force
+    switch ($PSCmdlet.ParameterSetName)
+    {
+        'AuthByPwdFile' {
 
-    
-    if($certpath){
+            # Encode basic authorization header
+            $upassword = Get-PasswordFromFile -FullPath $passwordfile
+            $auth = $username + ':' + $upassword
+            $Encoded = [System.Text.Encoding]::UTF8.GetBytes($auth)
+            $EncodedPassword = [System.Convert]::ToBase64String($Encoded)
+
             
+            # Define global connection variables
+            New-Variable -Name XIOAPIBaseUri -Value $baseuri -Scope Global -Force
+            New-Variable -Name XIOAPIHeaders -Value @{'Authorization'="Basic $($EncodedPassword)"} -Scope Global -Force    
+    
+        }
+        'AuthByCred' {
+
+            $BSTR = [System.Runtime.InteropServices.marshal]::SecureStringToBSTR($Credential.Password)
+            $upassword = [System.Runtime.InteropServices.marshal]::PtrToStringAuto($BSTR)
+            [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
+
+            $auth = ($Credential.UserName) + ':' + $upassword
+            $Encoded = [System.Text.Encoding]::UTF8.GetBytes($auth)
+            $EncodedPassword = [System.Convert]::ToBase64String($Encoded)
+
+
+            # Define global connection variables
+            New-Variable -Name XIOAPIBaseUri -Value $BaseUri -Scope Global -Force
+            New-Variable -Name XIOAPIHeaders -Value @{'Authorization'="Basic $($EncodedPassword)"} -Scope Global -Force
+        
+        }
+        'AuthByCert' {
+
+            # TODO - Create option to use client certificate authentication
+
+        }
     }
-
-    # TODO - Setup root certificate validation - this requires installation of root certificate in client store
-
-
 } # Set-XIOAPIConnectionInfo
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -422,26 +530,36 @@ function Get-XIOItem{
 function Get-XIOPerformance{
 [CmdletBinding()]
 Param([Parameter( Mandatory=$true)]
-        [ValidateSet('InfinibandSwitch','DAE','Initiator','BatteryBackupUnit','Scheduler','StorageController','DataProtectionGroup','X-Brick','Volume','Cluster','InitiatorGroup','SSD','SnapshotSet','ConsistencyGroup','Target')]
+        [ValidateSet('Cluster','DataProtectionGroup','Initiator','InitiatorGroup','SnapshotGroup','SSD','Tag','Target','Volume','XEnv','Xms')]
         [Alias('e')][string]$Entity,
         [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
         [Alias('ol')][string[]]$ObjectList,
         [Parameter(Mandatory=$false)]
+        [ValidateNotNull()]
         [Alias('ft')][datetime]$FromTime,
         [Parameter(Mandatory=$false)]
+        [ValidateNotNull()]
         [Alias('tt')][datetime]$ToTime,
         [Parameter(Mandatory=$false)]
         [ValidateSet('one_minute','ten_minutes','one_hour','one_day','auto','raw')]
         [Alias('g')][string]$Granularity,
         [Parameter(Mandatory=$false)]
-        [Alias('l')][int]$RecordLimit
+        [ValidateNotNull()]
+        [Alias('l')][int]$RecordLimit,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('pl')][string[]]$PropertyList,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 
 
         <#
         TODO - Complete this function - still need to figure out use of some parameters
 
-        [Parameter(Mandatory=$false)]
-        [Alias('pl')][string[]]$PropertyList,
+        ,
         [Parameter(Mandatory=$false)]
         [Alias('a')][string]$Aggregation,
         [Parameter(Mandatory=$false)]
@@ -484,6 +602,15 @@ Param([Parameter( Mandatory=$true)]
         }
     }
     if($Vertical){$UriString = $UriString + '&vertical=' + $Vertical}
+    if($Cluster){
+        if(Test-ClusterID -TestValue $Cluster){
+            $UriString = $UriString + '&cluster-id=' + $Cluster
+        }Else{
+            # $UriString = $UriString + '&cluster-name=' + $Cluster
+            # NOTE - cluster-name doest not seem to work - Ignoring for now
+        }
+
+    }
     
     $data = Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
     $members = $data.members
@@ -504,9 +631,6 @@ Param([Parameter( Mandatory=$true)]
     }
     $dataarray | Sort-Object 'timestamp'
 
-    # TODO - Need to test all entity types
-
-
 } # Get-XIOPerformance
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -516,9 +640,9 @@ param ( [Parameter( Mandatory=$true,
                     ValueFromPipeline=$true,
                     Position=0, 
                     ParameterSetName='XMSByName')]
-        [Alias('n')][string]$Name=$null,
+        [Alias('n')][string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='XMSByID')]
-        [Alias('i')][string]$ID=$null
+        [Alias('i')][int]$ID
         
 )
 
@@ -542,8 +666,8 @@ param ( [Parameter( Mandatory=$true,
 
         # No parameters passed return details of all Objects
         if($PSCmdlet.ParameterSetName -eq 'AllXmss'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ('/' + $UriObject)
+            (Get-XIOItem -UriString $UriObject).xmss | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
         }
         
     }  
@@ -557,11 +681,11 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='UserAccountByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='UserAccountByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [int]$ID
 )
     Begin{
         $UriObject = 'user-accounts'
@@ -636,11 +760,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='BrickByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true, 
                     ParameterSetName='BrickByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
         
 )
     Begin{
@@ -650,6 +778,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of object names passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         
@@ -659,31 +794,51 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific object by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
 
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllBricks'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
-        }
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
 
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }
+            else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }   
+        }
     }
 } # Get-XIOBrick
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
-function Get-XIOXenvs{
+function Get-XIOXenv{
 [CmdletBinding(DefaultParameterSetName='AllXEnvs')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true, 
                     Position=0,
                     ParameterSetName='XenvsByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='XenvsByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
    
     Begin{
@@ -695,6 +850,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of object names passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
                 
         }
@@ -705,18 +867,33 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific object by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
 
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllXEnvs'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
-        }
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
 
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
+        }
     }
     
-} # Get-XIOXenvs
+} # Get-XIOXenv
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOStorageController{
@@ -726,10 +903,14 @@ param ( [Parameter(Mandatory=$true,
                    Position=0, 
                    ParameterSetName='SCByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='SCByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'storage-controllers'
@@ -738,6 +919,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of object names passed by parameter or pipeline             
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
@@ -745,12 +933,28 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific object by ID  
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllControllers'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
 } # Get-XIOStorageController
@@ -763,10 +967,14 @@ param ( [Parameter(Mandatory=$true,
                    Position=0, 
                    ParameterSetName='SCByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='SCByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'storage-controller-psus'
@@ -775,6 +983,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of object names passed by parameter or pipeline             
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
@@ -782,12 +997,29 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific object by ID  
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllControllers'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
 } # Get-XIOStorageControllerPSU
@@ -800,10 +1032,14 @@ param ( [Parameter(Mandatory=$true,
                    Position=0, 
                    ParameterSetName='DPGByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='DPGByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'data-protection-groups'
@@ -812,6 +1048,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of data protection group by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
@@ -819,17 +1062,30 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific data protection group by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         # No parameters passed return details of all data protection groups
         if($PSCmdlet.ParameterSetName -eq 'AllDPGroups'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIODataProtectionGroup
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -839,7 +1095,11 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='TagByName',
                    ValueFromPipeline=$true, 
                    Position=0)]
         [Alias('n')] 
-        [string]$Name=$null
+        [string]$Name,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'tags'
@@ -849,6 +1109,13 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='TagByName',
         # Return details of tag names passed by parameter or pipeline       
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
@@ -856,8 +1123,18 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='TagByName',
         
         # No parameters passed return details of all tags
         if($PSCmdlet.ParameterSetName -eq 'AllTags'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
 } # Get-XIOTag
@@ -869,7 +1146,11 @@ param ( [Parameter(Mandatory=$true,
                    ValueFromPipeline=$true,
                    ValueFromPipelineByPropertyName=$true)]
         [Alias('n')] 
-        [string]$Name
+        [string]$Name,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'tags'
@@ -879,6 +1160,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of tag names passed by parameter or pipeline       
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             $XIOTag = (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content | Select-Object Name,direct-list
             
             $AllTagObjects = @()
@@ -937,8 +1225,7 @@ param ( [Parameter(Mandatory=$true,
                 }
 
             }
-            $ReturnObj = (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
-            $ReturnObj
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
     End{
@@ -947,32 +1234,30 @@ param ( [Parameter(Mandatory=$true,
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
                 if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
                 }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
                 }
             }
-            $ReturnObj = (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
-            $ReturnObj
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         # No parameters passed return details of all volumes
         if($PSCmdlet.ParameterSetName -eq 'AllVolumes'){
-            $UriString = ($UriObject + '/')
+
+            $UriString = ($UriObject)
             if($Cluster){
                 if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
                 }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
                 }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
-            $ReturnObj = (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriObject + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
-            $ReturnObj
         }
     }
-
-    # TODO - Test multiple cluster support
-
-} # Get-XIOVolume - Note: This is to be used for multi cluster testing
+} # Get-XIOVolume
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOSnapshot{
@@ -982,11 +1267,17 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='SnapshotByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='SnapshotByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
+
+
 )
     Begin{
         $UriObject = 'snapshots'
@@ -995,6 +1286,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of snapshot by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
@@ -1002,17 +1300,31 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific snapshot by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         # No parameters passed return details of all snapshots
         if($PSCmdlet.ParameterSetName -eq 'AllSnapshots'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOSnapshot
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1023,11 +1335,16 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='SnapSetByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='SnapSetByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
+
 )
     Begin{
         $UriObject = 'snapshot-sets'
@@ -1036,6 +1353,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of snapshot by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
@@ -1043,17 +1367,31 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific snapshot by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         # No parameters passed return details of all snapshots
         if($PSCmdlet.ParameterSetName -eq 'AllSnapSets'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOSnapshotSet
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1064,11 +1402,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='SchedulerByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='SchedulerByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'schedulers'
@@ -1077,6 +1419,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of scheduler by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
@@ -1084,17 +1433,31 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific scheduler by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         # No parameters passed return details of all snapshots
         if($PSCmdlet.ParameterSetName -eq 'AllSchedulers'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOScheduler
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1105,11 +1468,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='InitiatorByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='InitiatorByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'initiators'
@@ -1118,6 +1485,13 @@ param ( [Parameter(Mandatory=$true,
         # Return details of initiator by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
     }
@@ -1125,17 +1499,30 @@ param ( [Parameter(Mandatory=$true,
         # Return detail of specific initiator by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
         }
         # No parameters passed return details of all initiator
         if($PSCmdlet.ParameterSetName -eq 'AllInitiators'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+                }Else{
+                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+                }
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOInitiator
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -2313,7 +2700,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SnapByCG')]
     if($SnapType){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $SnapType}
 
 
-    $JSoNBody | ConvertTo-Json
+    #$JSoNBody | ConvertTo-Json
 
 
     Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
@@ -4618,7 +5005,8 @@ Export-ModuleMember -Function Get-XIOXms
 Export-ModuleMember -Function Get-XIOUserAccount
 Export-ModuleMember -Function Get-XIOCluster
 Export-ModuleMember -Function Get-XIOBrick
-Export-ModuleMember -Function Get-XIOXenvs
+New-Alias -Name Get-XIOXenvs -Value Get-XIOXenv
+Export-ModuleMember -Alias Get-XIOXenvs -Function Get-XIOXenv
 Export-ModuleMember -Function Get-XIOStorageController
 Export-ModuleMember -Function Get-XIOStorageControllerPSU
 Export-ModuleMember -Function Get-XIODataProtectionGroup
@@ -4668,18 +5056,18 @@ Export-ModuleMember -Function New-XIOIscsiRoute
 Export-ModuleMember -Function New-XIOLunMap
 
 
-Export-ModuleMember -Function Set-XIOTag
 New-Alias -Name Rename-XIOTag -Value Set-XIOTag
+Export-ModuleMember -Alias Rename-XIOTag -Function Set-XIOTag
 Export-ModuleMember -Function Add-XIOTagObject
 Export-ModuleMember -Function Set-XIOVolume
 Export-ModuleMember -Function Set-XIOSnapshot
 Export-ModuleMember -Function Update-XIOSnapshot
 Export-ModuleMember -Function Set-XIOScheduler
 Export-ModuleMember -Function Set-XIOInitiator
-Export-ModuleMember -Function Set-XIOInitiatorGroup
 New-Alias -Name Rename-XIOInitiatorGroup -Value Set-XIOInitiatorGroup
-Export-ModuleMember -Function Set-XIOConsistencyGroup
+Export-ModuleMember -Alias Rename-XIOInitiatorGroup -Function Set-XIOInitiatorGroup
 New-Alias -Name Rename-XIOConsistencyGroup -Value Set-XIOConsistencyGroup
+Export-ModuleMember -Alias Rename-XIOConsistencyGroup -Function Set-XIOConsistencyGroup
 Export-ModuleMember -Function Add-XIOConsistencyGroupVolume
 Export-ModuleMember -Function Set-XIOTarget
 Export-ModuleMember -Function Set-XIOLDAPConfiguration

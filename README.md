@@ -142,7 +142,9 @@ Version
 
 - 0.40.0 2015-09-29 - Added 4.0 cmdlets and updated help
 
-- 0.41.0 2015-10-17 - Added Tag Object Cmdlets, updated Get-XIOPerformance, pipeline improvements, started adding SupportsShouldProcess, and updated help 
+- 0.41.0 2015-10-17 - Added Tag Object Cmdlets, updated Get-XIOPerformance, pipeline improvements, started adding SupportsShouldProcess, and updated help
+
+- 0.42.0 2015-11-22 - Add Multi-Cluster support to Get-XIOBrick, Get-XIOEnvs, Get-XIOStorageController, Get-XIOStorageControllerPSU, Get-XIODataProtectionGroup, Get-XIOTag, Get-XIOTagObject, Get-XIOVolume, Get-XIOSnapshotSet, Get-XIOScheduler, Get-XIOInitiator. Added ability to do adhoc authentication with Set-XIOAPIConnectionInfo. Corrected implementation of cmdlet aliases. Updated help.   
 
 
 Notes
@@ -165,6 +167,8 @@ Improvements to be made on error handling messages and information messages.
 Authentication and certificates improvements - Client certificate authentication
 
 Possibly adjust ID parameters to Index - Need to do more testing of piping gets to new,set, and remove commands
+
+Need to refactor some repeating code
 
 Plan is to move version number to 1.0.0 when above improvements have been completed and code tested as well as possible with limited testing resources.
 

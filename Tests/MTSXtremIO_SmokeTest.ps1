@@ -11,19 +11,20 @@ DO NOT USE IF YOU DO NOT UNDERSTAND THIS CODE. IT WILL CREATE AND DELETE OBJECTS
 Script has not yet beened designed to run and complete automated tests.
 Is meant to be used for manual testing.
 
-TODO - Create automated pass/fail testing out of this or using Pester
-
 
 #>
 
-Import-Module MTSXtremIO -Force -Verbose
+Import-Module MTSXtremIO -Force 
 
 
 #region Initial Connection
 # XtremIO Connection example
 Disable-CertificateValidation
-#Set-XIOAPIConnectionInfo -username "restapi" -passwordfile "C:\Users\dmuegge\Dropbox\DTools\Scripts\PS\!Passwords\EMCX_pwd.txt" -hostname "10.5.80.64"
+
+# Set-XIOAPIConnectionInfo -Credential (Get-Credential) -hostname "192.168.1.59"
+
 Set-XIOAPIConnectionInfo -username "admin" -passwordfile "C:\Users\dmuegge\Dropbox\DTools\Scripts\PS\!Passwords\RTTLab-admdmuegge-XtremIO.txt" -hostname "192.168.1.59"
+
 #endregion
 
 
@@ -33,27 +34,15 @@ Get-XIOAPITypes | foreach-object {if($_.Name -ne $null){Get-XIOItem -UriString $
 #endregion
 
 
-#region object performance TODO
+#region object performance
 
-$Test = Get-XIOPerformance -Entity Volume -RecordLimit 1000
+Get-XIOPerformance -Entity Volume -RecordLimit 10
 
-$CCount = 28
-$AllCOunters = @()
-foreach($p in $Test.counters){
+Get-XIOPerformance -Entity Volume -FromTime '10/1/2015' -ToTime '10/2/2015' -ObjectList @('lab-datastore') -Granularity one_hour -Cluster RTTXtremIO | Select-Object timestamp,name,avg__iops,avg__avg_latency | FT -AutoSize
 
-    $perf = New-Object -TypeName PSObject
+Get-XIOPerformance -Entity Volume -FromTime '10/1/2015' -ToTime '10/2/2015' -ObjectList @('lab-datastore') -Granularity one_hour -Cluster 1 | Select-Object timestamp,name,avg__iops,avg__avg_latency | FT -AutoSize
 
-    for ($i = 0; $i -lt $CCount; $i++)
-    { 
-        
-        $perf |  Add-Member -MemberType NoteProperty -Name $Test.members[$i] -Value $p[$i]
-    }
-    $AllCounters += $perf
-
-}
-
-
-$AllCounters | where name -eq vdbench008 | Select timestamp,name,avg__iops | ft -AutoSize
+Get-XIOPerformance -Entity Target -FromTime '10/1/2015' -ToTime '10/2/2015' -Granularity one_hour | FT -AutoSize
 
 #endregion
 
@@ -61,24 +50,25 @@ $AllCounters | where name -eq vdbench008 | Select timestamp,name,avg__iops | ft 
 #region XMS (Get)
 $Xmss = @('xms','xms')
 Get-XIOXms
+Get-XIOXms xms
 Get-XIOXms -Name $Xmss[0] | Select-Object name,index,xms-id,version | FT
 Get-XIOXms -ID 1 | Select-Object name,index,xms-id,version | FT
 $Xmss[0] | Get-XIOXms | Select-Object name,index,xms-id,version | FT
-$Xmss | Get-XIOXms | Select-Object name,index,xms-id,version | FT
+$Xmss | Get-XIOXms | Select-Object name,index,xms-id,version | FT -AutoSize
 #endregion
 
 
 #region User Account (Get,New,Remove)
-$Users = @('DAM01','DAM02')
+$Users = @('xms2','xms3')
 New-XIOUserAccount -Name 'dmuegge01' -Role read_only -Password 'p@ssw0rd'
 $Users | New-XIOUserAccount -Role read_only -Password 'p@ssw0rd'
 
 Get-XIOUserAccount
-Get-XIOUserAccount | Select-Object Name,Index,Role
-Get-XIOUserAccount -Name $Users[0] | Select-Object Name,Index,Role
-Get-XIOUserAccount -ID 4 | Select-Object Name,Index,Role
-$Users[0] | Get-XIOUserAccount | Select-Object Name,Index,Role
-$Users | Get-XIOUserAccount | Select-Object Name,Index,Role
+Get-XIOUserAccount | Select-Object Name,Index,Role | FT -AutoSize
+Get-XIOUserAccount -Name $Users[0] | Select-Object Name,Index,Role | FT -AutoSize
+Get-XIOUserAccount -ID 4 | Select-Object Name,Index,Role | FT -AutoSize
+$Users[0] | Get-XIOUserAccount | Select-Object Name,Index,Role | FT -AutoSize
+$Users | Get-XIOUserAccount | Select-Object Name,Index,Role | FT -AutoSize
 
 Remove-XIOUserAccount -Name 'DAM01'
 $Users |  Remove-XIOUserAccount
@@ -102,6 +92,19 @@ Get-XIOBrick
 Get-XIOBrick -Name $Bricks[0]
 Get-XIOBrick -ID 1
 $Bricks | Get-XIOBrick
+
+Get-XIOBrick -Name X1 -Cluster 1
+
+Get-XIOBrick -ID 1 -Cluster 1
+
+Get-XIOBrick -Name X1 -Cluster 'RTTXtremIO'
+
+Get-XIOBrick -ID 1 -Cluster 'RTTXtremIO'
+
+Get-XIOBrick -Cluster 'RTTXtremIO'
+
+Get-XIOBrick -Cluster 1
+
 #endregion
 
 
@@ -112,6 +115,17 @@ Get-XIOXenvs -Name $XEnvs[0] | Select-Object Name,Index,xms-id | FT
 Get-XIOXenvs -ID 1 | Select-Object Name,Index,xms-id | FT
 Get-XIOXenvs | Select-Object Name,Index,xms-id | FT
 $XEnvs| Get-XIOXenvs | Select-Object Name,Index,xms-id | FT
+
+Get-XIOXenvs -ID 1 -Cluster 1
+Get-XIOXenvs -ID 1 -Cluster 'RTTXtremIO'
+
+Get-XIOXenvs -Name 'X1-SC1-E1' -Cluster 1
+Get-XIOXenvs -Name 'X1-SC1-E1' -Cluster 'RTTXtremIO'
+
+Get-XIOXenv -Cluster 1
+Get-XIOXenvs -Cluster 'RTTXtremIO'
+
+
 #endregion
 
 
@@ -121,6 +135,21 @@ Get-XIOStorageController
 Get-XIOStorageController -Name $StorageControllers[0] | Select-Object name,part-number,serial-number,os-version,node-health-state | FT
 Get-XIOStorageController -ID 1 | Select-Object name,part-number,serial-number,os-version,node-health-state | FT
 $StorageControllers | Get-XIOStorageController | Select-Object name,part-number,serial-number,os-version,node-health-state | FT
+
+
+Get-XIOStorageController -Name 'X1-SC1' -Cluster 1
+
+Get-XIOStorageController -Name 'X1-SC1' -Cluster 'RTTXtremIO'
+
+Get-XIOStorageController -ID 1 -Cluster 1
+
+Get-XIOStorageController -ID 1 -Cluster 'RTTXtremIO'
+
+Get-XIOStorageController -Cluster 1
+
+Get-XIOStorageController -Cluster 'RTTXtremIO'
+
+
 #endregion
 
 
@@ -130,6 +159,19 @@ Get-XIOStorageControllerPSU
 Get-XIOStorageControllerPSU -Name $StorageControllers[0] | Select-Object name,index,part-number,serial-number | FT
 Get-XIOStorageControllerPSU -ID 1 | Select-Object name,index,part-number,serial-number | FT
 $StorageControllerPSUs | Get-XIOStorageControllerPSU | Select-Object name,index,part-number,serial-number | FT
+
+Get-XIOStorageControllerPSU -Name 'X1-SC1-PSU-L' -Cluster 1
+
+Get-XIOStorageControllerPSU -Name 'X1-SC1-PSU-L' -Cluster 'RTTXtremIO'
+
+Get-XIOStorageControllerPSU -ID 1 -Cluster 1
+
+Get-XIOStorageControllerPSU -ID 1 -Cluster 'RTTXtremIO'
+
+Get-XIOStorageControllerPSU -Cluster 1
+
+Get-XIOStorageControllerPSU -Cluster 'RTTXtremIO'
+
 #endregion
 
 
@@ -139,6 +181,19 @@ Get-XIODataProtectionGroup
 Get-XIODataProtectionGroup -Name $DataProtectionGroups[0] | Select-Object Name,protection-state | FT
 Get-XIODataProtectionGroup -ID 1 | Select-Object Name,protection-state | FT
 $DataProtectionGroups | Get-XIODataProtectionGroup | Select-Object Name,protection-state | FT
+
+Get-XIODataProtectionGroup -Name 'X1-DPG' -Cluster 1
+
+Get-XIODataProtectionGroup -Name 'X1-DPG' -Cluster 'RTTXtremIO'
+
+Get-XIODataProtectionGroup -ID 1 -Cluster 1
+
+Get-XIODataProtectionGroup -ID 1 -Cluster 'RTTXtremIO'
+
+Get-XIODataProtectionGroup -Cluster 1
+
+Get-XIODataProtectionGroup -Cluster 'RTTXtremIO'
+
 #endregion
 
 
@@ -161,6 +216,32 @@ $Tags | Get-XIOTag | Select-Object Name,caption,object-type,num-of-direct-objs |
 #$Tags | Set-XIOTag - TODO - Experiment more with pipeline options for Set
 
 $Tags | Remove-XIOTag
+
+
+Get-XIOTag -Name '/Volume/DMFolder01' -Cluster 1
+
+Get-XIOTag -Name '/Volume/DMFolder01' -Cluster 'RTTXtremIO'
+
+
+
+Get-XIOTag -Cluster 1
+
+Get-XIOTag -Cluster 'RTTXtremIO'
+
+
+#endregion
+
+#region TagObjects (Get,Add,Remove)
+
+Get-XIOTagObject -Name '/Volume/DMFolder01'
+
+
+Get-XIOTagObject -Name '/Volume/DMFolder01' -Cluster 1
+
+Get-XIOTagObject -Name '/Volume/DMFolder01' -Cluster 'RttXtremIO'
+
+
+
 #endregion
 
 
@@ -223,6 +304,22 @@ $Volumes | Get-XIOVolume | Remove-XIOVolume
 $Volumes | Remove-XIOVolume
 
 
+
+
+Get-XIOVolume -Name 'DAM01' -Cluster 1
+
+Get-XIOVolume -Name 'DAM01' -Cluster 'RTTXtremIO'
+
+Get-XIOVolume -ID 64 -Cluster 1
+
+Get-XIOVolume -ID 64 -Cluster 'RTTXtremIO'
+
+Get-XIOVolume -Cluster 1
+
+Get-XIOVolume -Cluster 'RTTXtremIO'
+
+
+
 # TODO - Need work on parameters via pipeline from Get to set and remove
 #endregion
 
@@ -255,10 +352,25 @@ Get-XIOSnapshot | Where Name -match 'DAM[0-9]{2}.Snap_.*' | Remove-XIOSnapshot
 Remove-XIOSnapshot -Name 'DAM04.Snap_20150920-100827.snapshot.1442758483'
 
 
+
+Get-XIOSnapshot -Name 'DAM01.snapshot.1443023909' -Cluster 1
+
+Get-XIOSnapshot -Name 'DAM01.snapshot.1443023909' -Cluster 'RTTXtremIO'
+
+Get-XIOSnapshot -ID 70 -Cluster 1
+
+Get-XIOSnapshot -ID 70 -Cluster 'RTTXtremIO'
+
+Get-XIOSnapshot -Cluster 1
+
+Get-XIOSnapshot -Cluster 'RTTXtremIO'
+
+
+
 #endregion
 
 
-#region Snapshot Set (Get,Remove)
+#region SnapshotSet (Get,Remove)
 
 $SnapSets = @('DMTestSet','DMTestSet','DMTestSet')
 Get-XIOSnapshotSet
@@ -272,10 +384,26 @@ Remove-XIOSnapshotSet -Name 'SnapshotSet.1442758483'
 Remove-XIOSnapshotSet -ID 7
 Remove-XIOSnapshotSet -ID 7 -Cluster 1
 
+
+Get-XIOSnapshotSet -Name 'SnapshotSet.1445975677' -Cluster 1
+
+Get-XIOSnapshotSet -Name 'SnapshotSet.1445975677' -Cluster 'RTTXtremIO'
+
+Get-XIOSnapshotSet -ID 1 -Cluster 1
+
+Get-XIOSnapshotSet -ID 1 -Cluster 'RTTXtremIO'
+
+Get-XIOSnapshotSet -Cluster 1
+
+Get-XIOSnapshotSet -Cluster 'RTTXtremIO'
+
+
 #endregion
 
 
 #region Schedulers (Get,New,Set,Remove) TODO
+
+# TODO - Test all scheduler functionality
 
 $Schedulers = @('','')
 Get-XIOScheduler
@@ -289,6 +417,21 @@ New-XIOScheduler -ObjectType Volume -Time '12:00:00' -SchedulerType Explicit -Ob
 Set-XIOScheduler -Name DAMTest01 -ObjectID 66 -SchedulerType Explicit -ObjectType Volume -Time '11:00:00' -SnapType ReadOnly
 
 Remove-XIOScheduler -Name DAMTest01 -Cluster 'RTTXtremIO'
+
+
+# TODO - Test multiple cluster support
+Get-XIOScheduler -Name 'SnapshotSet.1445975677' -Cluster 1
+
+Get-XIOScheduler -Name 'SnapshotSet.1445975677' -Cluster 'RTTXtremIO'
+
+Get-XIOScheduler -ID 1 -Cluster 1
+
+Get-XIOScheduler -ID 1 -Cluster 'RTTXtremIO'
+
+Get-XIOScheduler -Cluster 1
+
+Get-XIOScheduler -Cluster 'RTTXtremIO'
+
 
 #endregion
 
@@ -687,6 +830,17 @@ $UriString += ($UriObject + '/?entity=target')
 Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
 
 Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/v2/types/performance?entity=Volume&limit=100&obj-list=DAM01&obj-list=DAM02&from-time=2015-10-01%2012:00:00&to-time=2015-10-02%2012:00:00' -Headers $Global:XIOAPIHeaders
+
+Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/v2/types/volumes/64?cluster-id=1' -Headers $Global:XIOAPIHeaders
+
+Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/v2/types/volumes/64?cluster-name=RTTXtremIO' -Headers $Global:XIOAPIHeaders
+
+
+
+
+Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/v2/types/performance?entity=Target&limit=10&from-time=2015-10-01%2012:00:00&to-time=2015-10-02%2012:00:00&prop=avg__iops&cluster-name=RTTXtremIO' -Headers $Global:XIOAPIHeaders
+
+Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/v2/types/performance?entity=ConsistencyGroup&limit=10&from-time=2015-10-01%2012:00:00&to-time=2015-10-02%2012:00:00' -Headers $Global:XIOAPIHeaders
 
 
 $JSoNBody = New-Object -TypeName psobject
