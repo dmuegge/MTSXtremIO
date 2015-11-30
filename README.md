@@ -144,7 +144,9 @@ Version
 
 - 0.41.0 2015-10-17 - Added Tag Object Cmdlets, updated Get-XIOPerformance, pipeline improvements, started adding SupportsShouldProcess, and updated help
 
-- 0.42.0 2015-11-22 - Add Multi-Cluster support to Get-XIOBrick, Get-XIOEnvs, Get-XIOStorageController, Get-XIOStorageControllerPSU, Get-XIODataProtectionGroup, Get-XIOTag, Get-XIOTagObject, Get-XIOVolume, Get-XIOSnapshotSet, Get-XIOScheduler, Get-XIOInitiator. Added ability to do adhoc authentication with Set-XIOAPIConnectionInfo. Corrected implementation of cmdlet aliases. Updated help.   
+- 0.42.0 2015-11-22 - Add Multi-Cluster support to Get-XIOBrick, Get-XIOEnvs, Get-XIOStorageController, Get-XIOStorageControllerPSU, Get-XIODataProtectionGroup, Get-XIOTag, Get-XIOTagObject, Get-XIOVolume, Get-XIOSnapshotSet, Get-XIOScheduler, Get-XIOInitiator. Added ability to do adhoc authentication with Set-XIOAPIConnectionInfo. Corrected implementation of cmdlet aliases. Updated help.
+
+- 0.43.0 2015-11-30 - Add Multi-Cluster support to remaining applicable Get functions and updated corresponding help documentation. Re-factored some code to reduce repetition. Added other help information. Added multi-cluster support and supports should process to all new,set,and remove cmdlets.   
 
 
 Notes
@@ -152,23 +154,15 @@ Notes
 
 All Cmdlets have help information, but additional details need to be added.
 
-Improvements in pipeline functionality for some Cmdlets needs to be completed. 
+Pipeline functionality needs to be added or improved for some Cmdlets (Mostly New and Set). 
 
-Pipeline functionality needs to be added to some Cmdlets.
-
-SupportsShouldProcess functionality needs to be added to some Cmdlets.
-
-Multiple Cluster functionality needs to be added to some Cmdlets.
-
-Functions and/or options to control snapshot backup functionality needs to be added.
+Functions and/or options to control snapshot backup functionality needs to be added (Maybe? This can be done easily).
 
 Improvements to be made on error handling messages and information messages.
 
 Authentication and certificates improvements - Client certificate authentication
 
 Possibly adjust ID parameters to Index - Need to do more testing of piping gets to new,set, and remove commands
-
-Need to refactor some repeating code
 
 Plan is to move version number to 1.0.0 when above improvements have been completed and code tested as well as possible with limited testing resources.
 

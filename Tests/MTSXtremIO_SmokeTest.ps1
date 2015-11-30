@@ -292,7 +292,7 @@ $Volumes | Get-XIOVolume | Select Name,Index | Remove-XIOVolume
 $Volumes | ForEach-Object{Set-XIOVolume -Name $_ -SmallIOAlerts enable}
 
 
-Get-XIOVolume -Name $Volumes[0] -ClusterName 'test'
+Get-XIOVolume -Name $Volumes[0] -Cluster 1
 Get-XIOVolume | Select-Object Name,index,lb-size,vol-size,logical-space-in-use | FT -AutoSize
 Get-XIOVolume -ID 64 |  Select Name
 $Volumes | Get-XIOVolume | Select-object Name,index,lb-size,vol-size,logical-space-in-use | FT -AutoSize

@@ -326,8 +326,7 @@ file was created</maml:para>
 						<maml:para>Credential object used to authenticate to XtremIO REST API</maml:para>
 					</maml:description>
 					<command:parameterValue required="true">PSCredential</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 					<maml:name>Hostname</maml:name>
@@ -382,8 +381,7 @@ file was created</maml:para>
 					<maml:para>Credential object used to authenticate to XtremIO REST API</maml:para>
 				</maml:description>
 				<command:parameterValue required="true">PSCredential</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -1058,8 +1056,7 @@ Note: This is meant to accept name or ID, but the REST API seems to have an issu
 				</maml:description>
 				<dev:type>
 					<maml:name>System.String</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 			<command:inputType>
@@ -1068,8 +1065,7 @@ Note: This is meant to accept name or ID, but the REST API seems to have an issu
 				</maml:description>
 				<dev:type>
 					<maml:name>System.Int</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -1077,13 +1073,11 @@ Note: This is meant to accept name or ID, but the REST API seems to have an issu
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1207,13 +1201,11 @@ Note: This is meant to accept name or ID, but the REST API seems to have an issu
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1349,8 +1341,7 @@ Get-XIOCluster X1</maml:para>
 					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
 				</maml:description>
 				<command:parameterValue required="false">String | Int</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -1366,13 +1357,11 @@ Get-XIOCluster X1</maml:para>
 			</command:inputType>
 			<command:inputType>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.integer</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -1380,13 +1369,11 @@ Get-XIOCluster X1</maml:para>
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1540,8 +1527,7 @@ Get-XIOCluster X1</maml:para>
 					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
 				</maml:description>
 				<command:parameterValue required="false">String | Int</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -1557,13 +1543,11 @@ Get-XIOCluster X1</maml:para>
 			</command:inputType>
 			<command:inputType>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.Int</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -1571,13 +1555,11 @@ Get-XIOCluster X1</maml:para>
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1749,13 +1731,11 @@ Get-XIOXenv X1</dev:code>
 			</command:inputType>
 			<command:inputType>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.Int</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -1763,13 +1743,11 @@ Get-XIOXenv X1</dev:code>
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1941,13 +1919,11 @@ Get-XIOStorageController &quot;Test01&quot;</maml:para>
 			</command:inputType>
 			<command:inputType>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.Int</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -1955,13 +1931,11 @@ Get-XIOStorageController &quot;Test01&quot;</maml:para>
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -2107,13 +2081,11 @@ Get-XIODataProtectionGroup &quot;Test01&quot;</maml:para>
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -2276,13 +2248,11 @@ Get-XIOTag &quot;Test01&quot;</maml:para>
 			</command:inputType>
 			<command:inputType>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.Int</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -2290,13 +2260,11 @@ Get-XIOTag &quot;Test01&quot;</maml:para>
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -2468,13 +2436,11 @@ Get-XIOVolume X1</maml:para>
 			</command:inputType>
 			<command:inputType>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.Int</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -2482,13 +2448,11 @@ Get-XIOVolume X1</maml:para>
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.PSCustomObject</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -2757,6 +2721,13 @@ Get-XIOInitiator X1</dev:code>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-XIOInitiatorGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOInitiatorGroup</maml:name>
@@ -2767,6 +2738,13 @@ Get-XIOInitiator X1</dev:code>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOInitiatorGroup</maml:name>
@@ -2776,6 +2754,13 @@ Get-XIOInitiator X1</dev:code>
 						<maml:para>String for ID of Initiator Group</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -2805,6 +2790,14 @@ Get-XIOInitiator X1</dev:code>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
 			<!-- Inputs-->
@@ -2817,7 +2810,32 @@ Get-XIOInitiator X1</dev:code>
 					<maml:para/>
 				</maml:description>
 			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -2852,6 +2870,26 @@ Get-XIOInitiatorGroup &quot;Test01&quot;</maml:para>
 					</maml:para>
 				</dev:remarks>
 			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOInitiatorGroup-ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOInitiatorGroup with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOInitiatorGroup -Name &apos;ESX01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOInitiatorGroup with Name of &apos;ESX01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
 		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
@@ -2875,6 +2913,13 @@ Get-XIOInitiatorGroup &quot;Test01&quot;</maml:para>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-XIOTarget</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOTarget</maml:name>
@@ -2885,6 +2930,13 @@ Get-XIOInitiatorGroup &quot;Test01&quot;</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOTarget</maml:name>
@@ -2894,6 +2946,13 @@ Get-XIOInitiatorGroup &quot;Test01&quot;</maml:para>
 						<maml:para>ID String for Target Info Query by index</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -2923,6 +2982,14 @@ Get-XIOInitiatorGroup &quot;Test01&quot;</maml:para>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
 			<!-- Inputs-->
@@ -2935,7 +3002,32 @@ Get-XIOInitiatorGroup &quot;Test01&quot;</maml:para>
 					<maml:para/>
 				</maml:description>
 			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -2970,6 +3062,26 @@ Get-XIOTarget X1</maml:para>
 					</maml:para>
 				</dev:remarks>
 			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOTarget ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOTarget with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOTarget -Name &apos;X1&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOTarget with Name of &apos;X1&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
 		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
@@ -2993,6 +3105,13 @@ Get-XIOTarget X1</maml:para>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-XIOTargetGroup</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOTargetGroup</maml:name>
@@ -3003,6 +3122,13 @@ Get-XIOTarget X1</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOTargetGroup</maml:name>
@@ -3012,6 +3138,13 @@ Get-XIOTarget X1</maml:para>
 						<maml:para>String for ID of Target Group</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -3041,6 +3174,14 @@ Get-XIOTarget X1</maml:para>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
 			<!-- Inputs-->
@@ -3053,7 +3194,32 @@ Get-XIOTarget X1</maml:para>
 					<maml:para/>
 				</maml:description>
 			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -3088,6 +3254,26 @@ Get-XIOTargetGroup &quot;Test01&quot;</maml:para>
 					</maml:para>
 				</dev:remarks>
 			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOTargetGroup ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOTargetGroup with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOTargetGroup -Name &apos;X1&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOTargetGroup with Name of &apos;X1&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
 		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
@@ -3111,6 +3297,13 @@ Get-XIOTargetGroup &quot;Test01&quot;</maml:para>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-XIOIscsiPortal</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOIscsiPortal</maml:name>
@@ -3121,6 +3314,13 @@ Get-XIOTargetGroup &quot;Test01&quot;</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOIscsiPortal</maml:name>
@@ -3130,6 +3330,13 @@ Get-XIOTargetGroup &quot;Test01&quot;</maml:para>
 						<maml:para>String for ID of iSCSI Portal</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -3159,6 +3366,14 @@ Get-XIOTargetGroup &quot;Test01&quot;</maml:para>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
 			<!-- Inputs-->
@@ -3171,7 +3386,32 @@ Get-XIOTargetGroup &quot;Test01&quot;</maml:para>
 					<maml:para/>
 				</maml:description>
 			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -3206,6 +3446,26 @@ Get-XIOIscsiPortal &quot;Test01&quot;</maml:para>
 					</maml:para>
 				</dev:remarks>
 			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOIscsiPortal ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOIscsiPortal with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOIscsiPortal-Name &apos;X1&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOIscsiPortal with Name of &apos;X1&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
 		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
@@ -3229,6 +3489,13 @@ Get-XIOIscsiPortal &quot;Test01&quot;</maml:para>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-XIOIscsiRoute</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOIscsiRoute</maml:name>
@@ -3239,6 +3506,13 @@ Get-XIOIscsiPortal &quot;Test01&quot;</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOIscsiRoute</maml:name>
@@ -3248,6 +3522,13 @@ Get-XIOIscsiPortal &quot;Test01&quot;</maml:para>
 						<maml:para>String for ID of iSCSI Route</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -3277,6 +3558,14 @@ Get-XIOIscsiPortal &quot;Test01&quot;</maml:para>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
 			<!-- Inputs-->
@@ -3289,7 +3578,32 @@ Get-XIOIscsiPortal &quot;Test01&quot;</maml:para>
 					<maml:para/>
 				</maml:description>
 			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -3324,6 +3638,26 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 					</maml:para>
 				</dev:remarks>
 			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOIscsiRoute -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOIscsiRoute with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOIscsiRoute -Name &apos;X1&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOIscsiRoute with Name of &apos;X1&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
 		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
@@ -3345,7 +3679,174 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOStorageControllerPSU</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOStorageControllerPSU</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>String for name of iSCSI Route</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOStorageControllerPSU</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>String for ID of iSCSI Route</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>String for name of iSCSI Route</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>String for ID of iSCSI Route</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get XIOStorageControllerPSU Route by ID</dev:code>
+				<dev:remarks>
+					<maml:para>Get-XIOStorageControllerPSU -ID 1</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get iSCSI Route by name</dev:code>
+				<dev:remarks>
+					<maml:para>Get-XIOStorageControllerPSU -Name &quot;Test01&quot;
+Get-XIOStorageControllerPSU &quot;Test01&quot;</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOStorageControllerPSU</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOStorageControllerPSU -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOStorageControllerPSU with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOStorageControllerPSU -Name &apos;X1&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO  XIOStorageControllerPSU with Name of &apos;X1&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -3377,7 +3878,74 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 				<command:parameterValue required="false"/>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOTagObject</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get iSCSI Route by name</dev:code>
+				<dev:remarks>
+					<maml:para>Get-XIOTagObject -Name &quot;Test01&quot;
+Get-XIOTagObject &quot;Test01&quot;</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOTagObject -Name &apos;X1&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO  XIOTagObject with Name of &apos;X1&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -3400,6 +3968,13 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-XIOLunMap</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOLunMap</maml:name>
@@ -3410,6 +3985,13 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOLunMap</maml:name>
@@ -3419,6 +4001,13 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 						<maml:para>String for ID of Lun Map</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -3448,6 +4037,14 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
 			<!-- Inputs-->
@@ -3460,7 +4057,28 @@ Get-XIOIscsiRoute &quot;Test01&quot;</maml:para>
 					<maml:para/>
 				</maml:description>
 			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -3495,6 +4113,26 @@ Get-XIOLunMap &quot;Test01&quot;</maml:para>
 					</maml:para>
 				</dev:remarks>
 			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLunMap -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLunMap with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLunMap -Name &apos;X1&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO  XIOLunMap with Name of &apos;X1&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
 		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
@@ -3518,6 +4156,13 @@ Get-XIOLunMap &quot;Test01&quot;</maml:para>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-XIOSSD</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOSSD</maml:name>
@@ -3528,6 +4173,13 @@ Get-XIOLunMap &quot;Test01&quot;</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-XIOSSD</maml:name>
@@ -3537,6 +4189,13 @@ Get-XIOLunMap &quot;Test01&quot;</maml:para>
 						<maml:para>ID String for SSD Info Query by index</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -3566,6 +4225,14 @@ Get-XIOLunMap &quot;Test01&quot;</maml:para>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
 			<!-- Inputs-->
@@ -3578,7 +4245,28 @@ Get-XIOLunMap &quot;Test01&quot;</maml:para>
 					<maml:para/>
 				</maml:description>
 			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -3611,6 +4299,26 @@ Get-XIOSSD X1</maml:para>
 				<dev:remarks>
 					<maml:para>
 					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSSD -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSSD with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSSD -Name &apos;X1&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO  XIOSSD with Name of &apos;X1&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
@@ -4011,8 +4719,7 @@ Get-XIOSnapshotSet X1</dev:code>
 						<maml:para>Name String for Scheduler Info Query by name</maml:para>
 					</maml:description>
 					<command:parameterValue required="true">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
 					<maml:name>Cluster</maml:name>
@@ -4030,8 +4737,7 @@ Get-XIOSnapshotSet X1</dev:code>
 						<maml:para>ID String for Scheduler Info Query by index</maml:para>
 					</maml:description>
 					<command:parameterValue required="true">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
 					<maml:name>Cluster</maml:name>
@@ -4054,8 +4760,7 @@ Get-XIOSnapshotSet X1</dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>ID</maml:name>
@@ -4067,8 +4772,7 @@ Get-XIOSnapshotSet X1</dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
 				<maml:name>Cluster</maml:name>
@@ -4208,7 +4912,174 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOSlot</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOSlot</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOSlot</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSlot -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSlot Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get- XIOSlot -Name X1
+Get-XIOSlot X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSlot Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSlot </dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSlot -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSlot with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSlot -Name &apos;SnapSet01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSlot with Name of &apos;SnapSet01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4229,7 +5100,174 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOLocalDisk</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOLocalDisk</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOLocalDisk</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLocalDisk -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLocalDisk Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get- XIOLocalDisk -Name X1
+Get-XIOLocalDisk X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLocalDisk Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLocalDisk</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLocalDisk -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLocalDisk with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLocalDisk -Name &apos;LD01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLocalDisk with Name of &apos;LD01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4250,7 +5288,174 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOBBU</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOBBU</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOBBU</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOBBU -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOBBU Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get- XIOBBU -Name X1
+Get-XIOBBU X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOBBU Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOBBU</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOBBU -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOBBU with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOBBU -Name &apos;LD01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOBBU with Name of &apos;LD01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4271,7 +5476,174 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIODAE</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIODAE</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIODAE</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAE -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAE Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAE -Name X1
+Get-XIODAE X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAE Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAE</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAE -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAE with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAE -Name &apos;LD01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAE with Name of &apos;LD01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4292,15 +5664,181 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIODAEPSU</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIODAEPSU</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIODAEPSU</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEPSU -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAEPSU Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEPSU -Name X1
+Get-XIODAEPSU X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAEPSU Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEPSU</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEPSU -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAEPSU with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEPSU -Name &apos;LD01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAEPSU with Name of &apos;LD01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
 		<command:details>
 			<command:name>Get-XIODAEController</command:name>
 			<maml:description>
-				<maml:para>
-				</maml:para>
+				<maml:para/>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -4310,12 +5848,178 @@ Get-XIOScheduler X1</dev:code>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>
-			</maml:para>
+			<maml:para/>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIODAEController</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIODAEController</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIODAEController</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEController -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAEController Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEController -Name X1
+Get-XIODAEController X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAEPSU Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEController</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEController -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAEController with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIODAEController -Name &apos;LD01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIODAEController with Name of &apos;LD01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4336,7 +6040,174 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOInfinibandSwitch</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOInfinibandSwitch</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOInfinibandSwitch</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOInfinibandSwitch -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOInfinibandSwitch Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOInfinibandSwitch -Name X1
+Get-XIOInfinibandSwitch X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOInfinibandSwitch Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOInfinibandSwitch</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOInfinibandSwitch -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOInfinibandSwitch with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOInfinibandSwitch -Name &apos;LD01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOInfinibandSwitch with Name of &apos;LD01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4357,7 +6228,174 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOLDAPConfiguration</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOLDAPConfiguration</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOLDAPConfiguration</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Cluster</maml:name>
+					<maml:description>
+						<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String | Int</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="c">
+				<maml:name>Cluster</maml:name>
+				<maml:description>
+					<maml:para>Cluster ID or Name for multi-cluster systems</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String | Int</command:parameterValue>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLDAPConfiguration -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLDAPConfiguration Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLDAPConfiguration -Name X1
+Get-XIOLDAPConfiguration X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLDAPConfiguration Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLDAPConfiguration</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLDAPConfiguration -ID 1 Cluster 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLDAPConfiguration with ID of 1 in Cluster with ID of 1 </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOLDAPConfiguration -Name &apos;LD01&apos; Cluster &apos;Test01&apos;</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOLDAPConfiguration with Name of &apos;LD01&apos; in Cluster with Name of &apos;Test01&apos;</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4378,7 +6416,122 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOAlert</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOAlert</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOAlert -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOAlert Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOAlert -Name X1
+Get-XIOAlert X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOAlert Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOAlert</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4399,7 +6552,122 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOAlertDefinition</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOAlertDefinition</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOAlertDefinition -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOAlertDefinition Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOAlertDefinition -Name X1
+Get-XIOAlertDefinition X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOAlertDefinition Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOAlertDefinition</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4420,7 +6688,122 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOEmailNotifier</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOEmailNotifier</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOEmailNotifier -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOEmailNotifier Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOEmailNotifier -Name X1
+Get-XIOEmailNotifier X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOEmailNotifier Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOEmailNotifier</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4441,7 +6824,122 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOSNMPNotifier</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOSNMPNotifier</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSNMPNotifier -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSNMPNotifier Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSNMPNotifier -Name X1
+Get-XIOSNMPNotifier X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSNMPNotifier Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSNMPNotifier</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4462,7 +6960,122 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOSYRNotifier</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOSYRNotifier</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSYRNotifier -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSYRNotifier Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSYRNotifier -Name X1
+Get-XIOSYRNotifier X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSYRNotifier Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSYRNotifier</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4483,7 +7096,122 @@ Get-XIOScheduler X1</dev:code>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-XIOSyslogNotifier</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-XIOSyslogNotifier</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>ID</maml:name>
+					<maml:description>
+						<maml:para>ID String for Snapshot Info Query by index</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>ID</maml:name>
+				<maml:description>
+					<maml:para>ID String for Snapshot Info Query by index</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSyslogNotifier -ID 1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSyslogNotifier Info by index</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSyslogNotifier -Name X1
+Get-XIOSyslogNotifier X1</dev:code>
+				<dev:remarks>
+					<maml:para>Get XtremIO XIOSyslogNotifier Info by name</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>C:\PS&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-XIOSyslogNotifier </dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4787,7 +7515,89 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>New-XIOTag</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByPropertyName, ByValue)" globbing="false" position="0" aliases="n">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name of new tag</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
+				</command:parameter>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Type</maml:name>
+					<maml:description>
+						<maml:para>Type of tag
+
+&apos;InfinibandSwitch&apos;,&apos;DAE&apos;,&apos;Initiator&apos;,&apos;BatteryBackupUnit&apos;,&apos;Scheduler&apos;,&apos;StorageController&apos;,&apos;DataProtectionGroup&apos;,&apos;X-Brick&apos;,&apos;Volume&apos;,&apos;Cluster&apos;,&apos;InitiatorGroup&apos;,&apos;SSD&apos;,&apos;SnapshotSet&apos;,&apos;ConsistencyGroup&apos;,&apos;Target&apos;</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="n">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name of new tag</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="false" position="named" aliases="t">
+				<maml:name>Type</maml:name>
+				<maml:description>
+					<maml:para>Type of tag
+
+&apos;InfinibandSwitch&apos;,&apos;DAE&apos;,&apos;Initiator&apos;,&apos;BatteryBackupUnit&apos;,&apos;Scheduler&apos;,&apos;StorageController&apos;,&apos;DataProtectionGroup&apos;,&apos;X-Brick&apos;,&apos;Volume&apos;,&apos;Cluster&apos;,&apos;InitiatorGroup&apos;,&apos;SSD&apos;,&apos;SnapshotSet&apos;,&apos;ConsistencyGroup&apos;,&apos;Target&apos;</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>New-XIOTag -Name Test01 -Type Volume</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -4909,7 +7719,186 @@ yyyyMMdd-HHmmss)) -FolderID &quot;/DMTest&quot;</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>New-XIOUserAccount</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Role</maml:name>
+					<maml:description>
+						<maml:para>Role to assign to user
+read_only
+admin
+configuration
+technician</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>TimeoutMins</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">Int</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Password</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>New-XIOUserAccount</maml:name>
+				<command:parameter required="true" pipelineinput="True (ByValue)" globbing="false" position="named">
+					<maml:name>Name</maml:name>
+					<maml:description>
+						<maml:para>Name String for Snapshot Info Query by name</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Role</maml:name>
+					<maml:description>
+						<maml:para>Role to assign to user
+read_only
+admin
+configuration
+technician</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>TimeoutMins</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">Int</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>PublicKey</maml:name>
+					<maml:description>
+						<maml:para>
+						</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
 		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
+				<maml:name>Name</maml:name>
+				<maml:description>
+					<maml:para>Name String for Snapshot Info Query by name</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="false" position="named" aliases="r">
+				<maml:name>Role</maml:name>
+				<maml:description>
+					<maml:para>Role to assign to user
+read_only
+admin
+configuration
+technician</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="t">
+				<maml:name>TimeoutMins</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">Int</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="pw">
+				<maml:name>Password</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="pk">
+				<maml:name>PublicKey</maml:name>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!-- Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>New-XIOUserAccount -Name jsmith -password Password1 -Role admin</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!-- Command-->
@@ -5210,7 +8199,28 @@ are currently supported)</maml:para>
 					<maml:para/>
 				</maml:description>
 			</command:inputType>
+			<command:inputType>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Int</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.PSCustomObject</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>

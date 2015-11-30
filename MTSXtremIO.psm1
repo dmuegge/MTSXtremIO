@@ -317,6 +317,113 @@ Function ConvertFrom-EpochDateTime{
 
 
 
+
+
+function Select-RequestOnCluster{
+<#
+.Synopsis
+    
+
+.Description
+    
+     
+
+.Example
+    
+
+.Example
+    
+
+.Parameter path
+    
+
+.Parameter name
+    
+
+.Parameter create
+    
+
+.inputs
+    [string]
+
+.outputs
+    [string]
+
+.Notes
+    
+
+.Link
+
+
+#Requires -Version 4.0
+
+#>
+[CmdletBinding()]
+Param([Parameter(Mandatory=$False)]
+      [ValidateSet('Name','ID','All')]
+      [String]$Property,
+      [Parameter(Mandatory=$False)]
+      $Cluster,
+      [Parameter(Mandatory=$True)]
+      [String]$UriString,
+      [Parameter(Mandatory=$True)]
+      
+      [String]$UriObject)
+
+
+    switch ($Property)
+    {
+        'Name' {
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '&cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '&cluster-name=' + $Cluster
+                }
+
+            }
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+        
+        
+        }
+        'ID' {
+        
+            if($Cluster){
+                if(Test-ClusterID -TestValue $Cluster){
+                    $UriString = $UriString + '?cluster-id=' + $Cluster
+                }Else{
+                    $UriString = $UriString + '?cluster-name=' + $Cluster
+                }
+            }
+            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+        
+        }
+        'All' {
+
+            
+            if(Test-ClusterID -TestValue $Cluster){
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+
+            }Else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
+            }
+            
+
+        }
+    }
+
+    
+
+
+}
+
+
+					
+
+				
+
+
+
 <## TODO - Refactor repeating code into functions
 
 
@@ -779,45 +886,37 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
-        }
-        
+            else
+            {
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
+        }   
     }
     End{
         
         # Return detail of specific object by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+            if($Cluster){    
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else
+            {
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }    
         }
 
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllBricks'){
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject    
             }
             else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
-            }   
+            }  
         }
     }
 } # Get-XIOBrick
@@ -851,13 +950,11 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
                 
         }
         
@@ -868,25 +965,18 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
 
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllXEnvs'){
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -920,13 +1010,11 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -934,24 +1022,17 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllControllers'){
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -984,13 +1065,11 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -998,25 +1077,18 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllControllers'){
             
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -1049,13 +1121,11 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -1063,24 +1133,17 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all data protection groups
         if($PSCmdlet.ParameterSetName -eq 'AllDPGroups'){
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -1110,13 +1173,11 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='TagByName',
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -1126,12 +1187,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='TagByName',
             
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -1218,14 +1274,12 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
 
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -1233,25 +1287,18 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all volumes
         if($PSCmdlet.ParameterSetName -eq 'AllVolumes'){
 
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -1287,13 +1334,11 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -1301,25 +1346,18 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all snapshots
         if($PSCmdlet.ParameterSetName -eq 'AllSnapshots'){
 
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -1354,13 +1392,11 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -1368,25 +1404,18 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all snapshots
         if($PSCmdlet.ParameterSetName -eq 'AllSnapSets'){
 
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -1420,13 +1449,11 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -1434,25 +1461,18 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all snapshots
         if($PSCmdlet.ParameterSetName -eq 'AllSchedulers'){
 
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -1486,13 +1506,11 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
@@ -1500,24 +1518,17 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '?cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '?cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all initiator
         if($PSCmdlet.ParameterSetName -eq 'AllInitiators'){
             $UriString = ($UriObject)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-id=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-
-                }Else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name) + '&cluster-name=' + $Cluster) -Headers $Global:XIOAPIHeaders).Content}
-                }
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }else{
                 (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
             }
@@ -1536,7 +1547,11 @@ param ( [Parameter(Mandatory=$true,
         [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='IGByIndex')]
         [Alias('i')] 
-        [int]$ID
+        [int]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'initiator-groups'
@@ -1545,23 +1560,36 @@ param ( [Parameter(Mandatory=$true,
         # Return details of initiator group by name passed by parameter or pipeline          
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of specific initiator group by ID
         if($ID){ 
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all initiator groups
         if($PSCmdlet.ParameterSetName -eq 'AllInitiatorGroups'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
 
 } # Get-XIOInitiatorGroup
 
@@ -1573,11 +1601,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='TargetByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='TargetByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'targets'
@@ -1585,26 +1617,57 @@ param ( [Parameter(Mandatory=$true,
     Process{
         # Return details of target by name passed by parameter or pipeline
         if($Name){
+
+            <#
             $UriString = ($UriObject + '/?name=' + $Name)
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            #>
+
+            $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of specific target by ID
         if($ID){
+            
+            <#
             $UriString = ($UriObject + '/' + $ID)
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            #>
+
+            $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
+
+
         }
         
         # No parameters passed return details of all targets
         if($PSCmdlet.ParameterSetName -eq 'AllTargets'){
+            
+            <#
             $UriString = ($UriObject + '/')
             (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            #>
+
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOTarget
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1615,10 +1678,14 @@ param ( [Parameter(Mandatory=$true,
                    Position=0, 
                    ParameterSetName='TGByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='TGByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'target-groups'
@@ -1627,24 +1694,63 @@ param ( [Parameter(Mandatory=$true,
         
         # Return details of target group by name passed by parameter or pipeline
         if($Name){
+            
+            <#
             $UriString = ($UriObject + '/?name=' + $Name)
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            #>
+            
+            $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of specific target group by ID   
         if($ID){
+            
+            <#
             $UriString = ($UriObject + '/' + $ID)
             (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            #>
+
+
+            $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
+
+
         }
         # No parameters passed return details of all target groups
         if($PSCmdlet.ParameterSetName -eq 'AllTargetGroups'){
+            
+            <#
             $UriString = ($UriObject + '/')
             (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            #>
+
+
+
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
+
+
         }
     }
 
-    # TODO - Add multiple cluster support
+    
 
 } # Get-XIOTargetGroup
 
@@ -1675,14 +1781,12 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
             }
         }
-        (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
     }
     
     End{
@@ -1690,34 +1794,23 @@ param ( [Parameter(Mandatory=$true,
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
             if($Cluster){
-                if(Test-ClusterID -TestValue $Cluster){
-                    $UriString = $UriString + '&cluster-id=' + $Cluster
-                }Else{
-                    $UriString = $UriString + '&cluster-name=' + $Cluster
-                }
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
             }
-            <#
-            if($Cluster){
-                $JSoNBody = New-Object -TypeName psobject
-                if(Test-ClusterID -TestValue $Cluster){
-                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                }Else{
-                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-name -Value $Cluster
-                }
-                if($JSoNBody){
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)).Content}
-                }else{
-                    (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}    
-                }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
             }
-            #>
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+
+
             
         }
         # No parameters passed return details of all target groups
         if($PSCmdlet.ParameterSetName -eq 'AllConsistencyGroups'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}    
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
 
@@ -1735,7 +1828,11 @@ param ( [Parameter(Mandatory=$true,
         [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='CGVOlumesByIndex')]
         [Alias('i')] 
-        [string]$ID
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
 
     Begin{
@@ -1746,23 +1843,35 @@ param ( [Parameter(Mandatory=$true,
         # Return details of target group by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of specific target group by ID   
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all target groups
         if($PSCmdlet.ParameterSetName -eq 'AllCGVolumes'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
 
 } # Get-XIOConsistencyGroupVolume
 
@@ -1778,7 +1887,11 @@ param ( [Parameter(Mandatory=$true,
         [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='IsPortalByIndex')]
         [Alias('i')] 
-        [string]$ID
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'iscsi-portals'
@@ -1787,24 +1900,35 @@ param ( [Parameter(Mandatory=$true,
         # Return details of iscsi portal by name passed by parameter or pipeline                
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of specific iscsi portal by ID
         if($ID){ 
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all iscsi portals
         if($PSCmdlet.ParameterSetName -eq 'AllISCSIPortals'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOIscsiPortal
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1815,10 +1939,14 @@ param ( [Parameter(Mandatory=$true,
                    Position=0, 
                    ParameterSetName='IsRouteByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='IsRouteByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
 
     Begin{
@@ -1828,24 +1956,35 @@ param ( [Parameter(Mandatory=$true,
         # Return details of iscsi route by name passed by parameter or pipeline           
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of specific iscsi route by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all iscsi routes
         if($PSCmdlet.ParameterSetName -eq 'AllISCSIRoutes'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOIscsiRoute
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1856,10 +1995,14 @@ param ( [Parameter(Mandatory=$true,
                    Position=0, 
                    ParameterSetName='LunMapByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,ParameterSetName='LunMapByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
 
     Begin{
@@ -1869,24 +2012,35 @@ param ( [Parameter(Mandatory=$true,
         # Return details of lun map by name passed by parameter or pipeline                
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of specific lun map by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         # No parameters passed return details of all lun maps
         if($PSCmdlet.ParameterSetName -eq 'AllLunMaps'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOLunMap
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1910,37 +2064,92 @@ param ( [Parameter(Mandatory=$true,
         # Return details of ssd by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of ssd by ID
         if($ID){
                 $UriString = ($UriObject + '/' + $ID)
-                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+                if($Cluster){
+                    Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+                }
+                else{
+                    (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+                }
             }
         # No parameters passed return details of all ssds
         if($PSCmdlet.ParameterSetName -eq 'AllSSDs'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOSSD
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOSlot{
+
 [CmdletBinding(DefaultParameterSetName='AllSlots')]
-param ()
-    
-    # No parameters passed return details of all ssds
-    if($PSCmdlet.ParameterSetName -eq 'AllSlots'){
-        $UriString = 'slots'
-        (Get-XIOItem -UriString 'slots').slots | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+param ( [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true,
+                   Position=0, 
+                   ParameterSetName='SlotByName')]
+        [Alias('n')] 
+        [string]$Name,
+        [Parameter(Mandatory=$true,ParameterSetName='SlotByIndex')]
+        [Alias('i')] 
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
+)
+
+    Begin{
+        $UriObject = 'slots'
     }
-    
+    Process{
+        # Return details of lun map by name passed by parameter or pipeline                
+        if($Name){
+            $UriString = ($UriObject + '/?name=' + $Name)
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
+        }
+    }
+    End{
+        # Return detail of specific lun map by ID
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
+        }
+        # No parameters passed return details of all lun maps
+        if($PSCmdlet.ParameterSetName -eq 'AllSlots'){
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
+        }
+    }
 } # Get-XIOSlot
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1951,11 +2160,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='DisksByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='DisksByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'local-disks'
@@ -1964,25 +2177,36 @@ param ( [Parameter(Mandatory=$true,
         # Return details of local disk by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of local disk by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         
         # No parameters passed return details of all local disks
         if($PSCmdlet.ParameterSetName -eq 'AllLocalDisks'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOLocalDisk
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -1993,11 +2217,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='BBUByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='BBUByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'bbus'
@@ -2006,25 +2234,36 @@ param ( [Parameter(Mandatory=$true,
         # Return details of BBU by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of BBU by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         
         # No parameters passed return details of all BBUs
         if($PSCmdlet.ParameterSetName -eq 'AllBBUs'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOBBU
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -2035,11 +2274,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='DAEByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='DAEByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'daes'
@@ -2048,25 +2291,36 @@ param ( [Parameter(Mandatory=$true,
         # Return details of DAE by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of DAE by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         
         # No parameters passed return details of all DAEs
         if($PSCmdlet.ParameterSetName -eq 'AllDAEs'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIODAE
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -2077,11 +2331,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='DAEControllerByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='DAEControllerByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'dae-controllers'
@@ -2090,25 +2348,36 @@ param ( [Parameter(Mandatory=$true,
         # Return details of DAE Controller by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of DAE Controller by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         
         # No parameters passed return details of all DAE Controllers
         if($PSCmdlet.ParameterSetName -eq 'AllDAEControllers'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIODAEController
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -2119,11 +2388,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='DAEPSUByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='DAEPSUByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'dae-psus'
@@ -2132,25 +2405,36 @@ param ( [Parameter(Mandatory=$true,
         # Return details of DAE PSU by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of DAE PSU by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         
         # No parameters passed return details of all DAE PSUs
         if($PSCmdlet.ParameterSetName -eq 'AllDAEPSUs'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIODAEPSU
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -2161,11 +2445,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='IBSwitchByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='IBSwitchByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'infiniband-switches'
@@ -2174,25 +2462,36 @@ param ( [Parameter(Mandatory=$true,
         # Return details of object by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of object by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllInfinibandSwitches'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOInfinibandSwitch
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -2203,11 +2502,15 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='LDAPConfigByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='LDAPConfigByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'ldap-configs'
@@ -2216,25 +2519,36 @@ param ( [Parameter(Mandatory=$true,
         # Return details of object by name passed by parameter or pipeline
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property Name -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
     }
     End{
         # Return detail of object by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            if($Cluster){
+                Select-RequestOnCluster -Property ID -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }
+            else{
+                (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).content
+            }
         }
         
         # No parameters passed return details of all objects
         if($PSCmdlet.ParameterSetName -eq 'AllLDAPConfigs'){
-            $UriString = ($UriObject + '/')
-            (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            $UriString = ($UriObject)
+            if($Cluster){
+                Select-RequestOnCluster -Property All -Cluster $Cluster -UriString $UriString -UriObject $UriObject
+            }else{
+                (Get-XIOItem -UriString $UriObject).$UriObject | ForEach-Object{(Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString + '?name=' + ($_.Name)) -Headers $Global:XIOAPIHeaders).Content}
+            }
         }
     }
-
-    # TODO - Add multiple cluster support
-
 } # Get-XIOLDAPConfiguration
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
@@ -2245,11 +2559,11 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='AlertByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='AlertByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID
 )
     Begin{
         $UriObject = 'alerts'
@@ -2285,11 +2599,11 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='AlertByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='AlertByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID
 )
     Begin{
         $UriObject = 'alert-definitions'
@@ -2325,11 +2639,11 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='ENotifyByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='ENotifyByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID
 )
     Begin{
         $UriObject = 'email-notifier'
@@ -2365,11 +2679,11 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='SNMPNotifyByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='SNMPNotifyByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID
 )
     Begin{
         $UriObject = 'snmp-notifier'
@@ -2405,11 +2719,11 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='SYRNotifyByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='SYRNotifyByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID
 )
     Begin{
         $UriObject = 'syr-notifier'
@@ -2445,11 +2759,11 @@ param ( [Parameter(Mandatory=$true,
                     Position=0,
                     ParameterSetName='SyslogNotifyByName')]
         [Alias('n')] 
-        [string]$Name=$null,
+        [string]$Name,
         [Parameter(Mandatory=$true,
                     ParameterSetName='SyslogNotifyByIndex')]
         [Alias('i')] 
-        [string]$ID=$null
+        [string]$ID
 )
     Begin{
         $UriObject = 'syslog-notifier'
@@ -2524,7 +2838,7 @@ param ( [Parameter(Mandatory=$true,
 # New functions
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOUserAccount{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,
                     ValueFromPipeline=$true,
                     ValueFromPipelineByPropertyName=$true)] 
@@ -2552,18 +2866,29 @@ param ( [Parameter(Mandatory=$true,
     Process{
 
         $UriString = $UriObject
-        $JSoNBody = New-Object -TypeName psobject
+        if($PSCmdlet.ShouldProcess($Name,"Creating user account $($Name)")){
 
-        # Required Parameters
-        $JSoNBody | Add-Member -MemberType NoteProperty -Name usr-name -Value $Name
-        $JSoNBody | Add-Member -MemberType NoteProperty -Name role -Value $Role
+            <#
+            $JSoNBody = New-Object -TypeName psobject
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name entity -Value $Type
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name entity-details -Value $Name
+            Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            #>
+
+            $JSoNBody = New-Object -TypeName psobject
+
+            # Required Parameters
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name usr-name -Value $Name
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name role -Value $Role
         
-        # Optional Parameters
-        if($TimeoutMins){$JSoNBody | Add-Member -MemberType NoteProperty -Name inactivity-timeout -Value $TimeoutMins}
-        if($Password){$JSoNBody | Add-Member -MemberType NoteProperty -Name password -Value $Password}
-        if($PublicKey){$JSoNBody | Add-Member -MemberType NoteProperty -Name public-key -Value $PublicKey}    
+            # Optional Parameters
+            if($TimeoutMins){$JSoNBody | Add-Member -MemberType NoteProperty -Name inactivity-timeout -Value $TimeoutMins}
+            if($Password){$JSoNBody | Add-Member -MemberType NoteProperty -Name password -Value $Password}
+            if($PublicKey){$JSoNBody | Add-Member -MemberType NoteProperty -Name public-key -Value $PublicKey}    
 
-        Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+        }
 
     }
     
@@ -2571,7 +2896,7 @@ param ( [Parameter(Mandatory=$true,
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOTag{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
                     ValueFromPipelineByPropertyName=$true)]
@@ -2580,26 +2905,34 @@ param ( [Parameter(Mandatory=$true,
         [Parameter(Mandatory=$true)]
         [ValidateSet('InfinibandSwitch','DAE','Initiator','BatteryBackupUnit','Scheduler','StorageController','DataProtectionGroup','X-Brick','Volume','Cluster','InitiatorGroup','SSD','SnapshotSet','ConsistencyGroup','Target')]
         [Alias('t')] 
-        [string]$Type
+        [string]$Type,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
     )
     Begin{
         $UriObject = 'tags'
     }
     Process{
+
         $UriString = $UriObject
-        $JSoNBody = New-Object -TypeName psobject
-        $JSoNBody | Add-Member -MemberType NoteProperty -Name entity -Value $Type
-        $JSoNBody | Add-Member -MemberType NoteProperty -Name tag-name -Value $Name        
+        if($PSCmdlet.ShouldProcess($Name,"Creating tag /$($Type)/$($Name)")){
+            
+            $JSoNBody = New-Object -TypeName psobject
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name entity -Value $Type
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name tag-name -Value $Name  
+            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}      
 
-        (Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)).Links
-
+            (Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)).Links
+        }
     }
     
 } # New-XIOTag
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOVolume{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$false, 
                     ValueFromPipeline=$true,
                     ValueFromPipelineByPropertyName=$true,
@@ -2618,51 +2951,61 @@ param ( [Parameter(Mandatory=$false,
         [ValidateNotNullOrEmpty()]
         [ValidateSet('0','1','2','3','4','5','6','7')]
         [Alias('of')] 
-        [string]$Offset=$null,
+        [string]$Offset,
         [Parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [ValidateSet('512','4096')]
         [Alias('lbs')] 
-        [string]$LBSize=$null,
+        [string]$LBSize,
         [Parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [Alias('sid')] 
-        [string]$SysID=$null,
+        [string]$SysID,
         [Parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [Alias('pf')] 
-        [string]$ParentFolderID=$null
+        [string]$ParentFolderID,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
     Begin{
         $UriObject = 'volumes'
     }
     Process{
         $UriString = $UriObject
-        $JSoNBody = New-Object -TypeName psobject
-        $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-size -Value $Size 
-        if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-name -Value $Name}
-        if($LBSize){
-            switch ($LBSize)
-            {
-                '512' {
+
+        if($PSCmdlet.ShouldProcess($Name,"Creating volume $($Size)")){
+
+            $JSoNBody = New-Object -TypeName psobject
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-size -Value $Size 
+            if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-name -Value $Name}
+            if($LBSize){
+                switch ($LBSize)
+                {
+                                '512' {
                     $JSoNBody | Add-Member -MemberType NoteProperty -Name lb-size -Value $LBSize
                     if($Offset){$JSoNBody | Add-Member -MemberType NoteProperty -Name alignment-offset -Value $Offset}
                 }
-                '4096' {
+                            '4096' {
                     $JSoNBody | Add-Member -MemberType NoteProperty -Name lb-size -Value $LBSize
                 }
+                }
             }
-        }
-        if($SysID){$JSoNBody | Add-Member -MemberType NoteProperty -Name sys-id -Value $SysID}
-        if($ParentFolderID){$JSoNBody | Add-Member -MemberType NoteProperty -Name parent-folder-id -Value $ParentFolderID}
+            if($SysID){$JSoNBody | Add-Member -MemberType NoteProperty -Name sys-id -Value $SysID}
+            if($ParentFolderID){$JSoNBody | Add-Member -MemberType NoteProperty -Name parent-folder-id -Value $ParentFolderID}
+            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
 
-        Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+        }
     }
 } # New-XIOVolume
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOSnapshot{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='SnapByCG')]
         [Alias('cid')]
         [Int]$CGID,
@@ -2686,34 +3029,50 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SnapByCG')]
         [Parameter(Mandatory=$false)]
         [ValidateSet('ReadWrite','ReadOnly')]
         [Alias('st')]
-        [string]$SnapType
+        [string]$SnapType,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
 
-    $UriString = 'snapshots'
-    $JSoNBody = New-Object -TypeName psobject
-    if($CGID){$JSoNBody | Add-Member -MemberType NoteProperty -Name consistency-group-id -Value $CGID}        
-    if($SnapSetID){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-set-id -Value $SnapSetID}
-    if($VolList){$JSoNBody | Add-Member -MemberType NoteProperty -Name volume-list -Value $VolList}
-    if($TagList){$JSoNBody | Add-Member -MemberType NoteProperty -Name tag-list -Value $TagList}
-    if($SnapSuffix){$JSoNBody | Add-Member -MemberType NoteProperty -Name snap-suffix -Value $SnapSuffix}
-    if($SnapSetName){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-set-name -Value $SnapSetName}
-    if($SnapType){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $SnapType}
+    Begin{
+        $UriString = 'snapshots'
+    }
+    Process{
 
 
-    #$JSoNBody | ConvertTo-Json
+        if($PSCmdlet.ShouldProcess($Name,"Creating volume $($Size)")){
+
+        
+            $JSoNBody = New-Object -TypeName psobject
+            if($CGID){$JSoNBody | Add-Member -MemberType NoteProperty -Name consistency-group-id -Value $CGID}        
+            if($SnapSetID){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-set-id -Value $SnapSetID}
+            if($VolList){$JSoNBody | Add-Member -MemberType NoteProperty -Name volume-list -Value $VolList}
+            if($TagList){$JSoNBody | Add-Member -MemberType NoteProperty -Name tag-list -Value $TagList}
+            if($SnapSuffix){$JSoNBody | Add-Member -MemberType NoteProperty -Name snap-suffix -Value $SnapSuffix}
+            if($SnapSetName){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-set-name -Value $SnapSetName}
+            if($SnapType){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $SnapType}
+            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
 
 
-    Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            
+            #$JSoNBody | ConvertTo-Json
+
+
+            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+    
+        }       
+    
+    } 
     
     # TODO - Does not implement REST API functionality to complete snapshot of set of volumes, but easily done using PowerShell features
-    # TODO - Add multiple cluster support
+    
 
 } # New-XIOSnapshot
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOScheduler{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='KeepNumber')]
         [Alias('skn')]
         [int]$SnapsToKeepNumber,
@@ -2758,28 +3117,34 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='KeepNumber')]
 )
 
     $UriString = 'schedulers'
-    $JSoNBody = New-Object -TypeName psobject
 
-    # Required Parameters
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name scheduler-type -Value $SchedulerType
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-object-id -Value $ObjectID
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-object-type -Value $ObjectType
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name time -Value $Time
 
-    # Optional Parameters
-    if($Suffix){$JSoNBody | Add-Member -MemberType NoteProperty -Name suffix -Value $Suffix}
-    if($SnapType){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $SnapType}
-    if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-    if($SnapsToKeepNumber){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $SnapsToKeepNumber}
-    if($SnapsToKeepTime){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $SnapsToKeepTime}
+    if($PSCmdlet.ShouldProcess($ObjectType,"Creating scheduler $($SchedulerType)")){
+
+        $JSoNBody = New-Object -TypeName psobject
+
+        # Required Parameters
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name scheduler-type -Value $SchedulerType
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-object-id -Value $ObjectID
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-object-type -Value $ObjectType
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name time -Value $Time
+
+        # Optional Parameters
+        if($Suffix){$JSoNBody | Add-Member -MemberType NoteProperty -Name suffix -Value $Suffix}
+        if($SnapType){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $SnapType}
+        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+        if($SnapsToKeepNumber){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $SnapsToKeepNumber}
+        if($SnapsToKeepTime){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $SnapsToKeepTime}
     
-    Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+    }
     
 } # New-XIOScheduler
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOInitiator{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true)]
         [Alias('ig')]
         [int]$IgID,
@@ -2790,10 +3155,6 @@ param ( [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [Alias('n')] 
         [string]$Name,
-        [Parameter(Mandatory=$false)]
-        [ValidateNotNullOrEmpty()]
-        [Alias('cid')] 
-        [string]$ClusterID,
         [Parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [Alias('ccau')] 
@@ -2825,41 +3186,51 @@ param ( [Parameter(Mandatory=$true)]
         [Parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [Alias('cidp')] 
-        [string]$ChapInitiatorDiscoverPassword
+        [string]$ChapInitiatorDiscoverPassword,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 
 
 
 )
 
     $UriString = 'Initiators'
-    $JSoNBody = New-Object -TypeName psobject
 
-    # Required Parameters
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name ig-id -Value $IgID
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name port-address -Value $PortAddress
+    if($PSCmdlet.ShouldProcess($PortAddress,"Creating Initiator $($IgID)")){
+
+
+        $JSoNBody = New-Object -TypeName psobject
+
+        # Required Parameters
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name ig-id -Value $IgID
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name port-address -Value $PortAddress
     
 
-    # Optional Parameters
-    if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name initiator-name -Value $Name}
-    if($ClusterID){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $ClusterID}
-    if($ChapClusterAuthUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $ChapClusterAuthUser}
-    if($ChapClusterAuthPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $ChapClusterAuthPassword}
-    if($ChapClusterDiscoverUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapClusterDiscoverUser}
-    if($ChapClusterDiscoverPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapClusterDiscoverPassword}
-    if($ChapInitiatorAuthUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $ChapInitiatorAuthUser}
-    if($ChapInitiatorAuthPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $ChapInitiatorAuthPassword}
-    if($ChapInitiatorDiscoverUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapInitiatorDiscoverUser}
-    if($ChapInitiatorDiscoverPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapInitiatorDiscoverPassword}
+        # Optional Parameters
+        if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name initiator-name -Value $Name}
+        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+        if($ChapClusterAuthUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $ChapClusterAuthUser}
+        if($ChapClusterAuthPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $ChapClusterAuthPassword}
+        if($ChapClusterDiscoverUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapClusterDiscoverUser}
+        if($ChapClusterDiscoverPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapClusterDiscoverPassword}
+        if($ChapInitiatorAuthUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $ChapInitiatorAuthUser}
+        if($ChapInitiatorAuthPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $ChapInitiatorAuthPassword}
+        if($ChapInitiatorDiscoverUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapInitiatorDiscoverUser}
+        if($ChapInitiatorDiscoverPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapInitiatorDiscoverPassword}
     
 
-    Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
     
+
+    }
 
 } # New-XIOInitiator
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOInitiatorGroup{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true)]
         [Alias('n')] 
         [string]$Name,
@@ -2878,24 +3249,30 @@ param ( [Parameter(Mandatory=$true)]
 )
     
         $UriString = 'initiator-groups'
-        $JSoNBody = New-Object -TypeName psobject
 
-        # Required Parameters
-        $JSoNBody | Add-Member -MemberType NoteProperty -Name ig-name -Value $Name
+        if($PSCmdlet.ShouldProcess($Name,"Creating InitiatorGroup $($Name)")){
 
-        # Optional Parameters
-        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-        if($InitiatorList){$JSoNBody | Add-Member -MemberType NoteProperty -Name initiator-list -Value $InitiatorList}
-        if($ParentTag){$JSoNBody | Add-Member -MemberType NoteProperty -Name parent-tag-id -Value $ParentTag}
 
-        (Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)).Links
+            $JSoNBody = New-Object -TypeName psobject
+
+            # Required Parameters
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name ig-name -Value $Name
+
+            # Optional Parameters
+            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+            if($InitiatorList){$JSoNBody | Add-Member -MemberType NoteProperty -Name initiator-list -Value $InitiatorList}
+            if($ParentTag){$JSoNBody | Add-Member -MemberType NoteProperty -Name parent-tag-id -Value $ParentTag}
+
+            (Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)).Links
         
+
+        }
 
 } # New-XIOInitiatorGroup
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOConsistencyGroup{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true)]
         [Alias('n')] 
         [string]$Name,
@@ -2914,24 +3291,31 @@ param ( [Parameter(Mandatory=$true)]
 )
     
         $UriString = 'consistency-groups'
-        $JSoNBody = New-Object -TypeName psobject
 
-        # Required Parameters
-        $JSoNBody | Add-Member -MemberType NoteProperty -Name consistency-group-name -Value $Name
+        if($PSCmdlet.ShouldProcess($Name,"Creating Consistency Group $($Name)")){
 
-        # Optional Parameters
-        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-        if($VolList){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-list -Value $VolList}
-        if($TagList){$JSoNBody | Add-Member -MemberType NoteProperty -Name tag-list -Value $TagList}
 
-        (Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)).Links
+            $JSoNBody = New-Object -TypeName psobject
+
+            # Required Parameters
+            $JSoNBody | Add-Member -MemberType NoteProperty -Name consistency-group-name -Value $Name
+
+            # Optional Parameters
+            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+            if($VolList){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-list -Value $VolList}
+            if($TagList){$JSoNBody | Add-Member -MemberType NoteProperty -Name tag-list -Value $TagList}
+
+            (Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)).Links
         
+
+        }
+
 
 } # New-XIOConsistencyGroup
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOIscsiPortal{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='TargetByName',
                     ValueFromPipeline=$true, 
                     Position=0)] 
@@ -2959,41 +3343,51 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='TargetByName',
     Process{
         if($Name){
             $UriString = $UriObject
-            $JSoNBody = New-Object -TypeName psobject
 
-            # Required Parameters
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name tar-id -Value $Name
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name ip-addr -Value $IPAddress
+            if($PSCmdlet.ShouldProcess($Name,"Creating Iscsi Portal $($Name)")){
+
+                $JSoNBody = New-Object -TypeName psobject
+
+                # Required Parameters
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name tar-id -Value $Name
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name ip-addr -Value $IPAddress
         
-            # Optional Parameters
-            if($Vlan){$JSoNBody | Add-Member -MemberType NoteProperty -Name vlan -Value $Vlan}
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                # Optional Parameters
+                if($Vlan){$JSoNBody | Add-Member -MemberType NoteProperty -Name vlan -Value $Vlan}
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
             
-            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+            }
         }
     }
     End{
         if($ID){
             
             $UriString = $UriObject
-            $JSoNBody = New-Object -TypeName psobject
 
-            # Required Parameters
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name tar-id -Value $ID
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name ip-addr -Value $IPAddress
+            if($PSCmdlet.ShouldProcess($Name,"Creating Iscsi Portal $($Name)")){
+
+                $JSoNBody = New-Object -TypeName psobject
+
+                # Required Parameters
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name tar-id -Value $ID
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name ip-addr -Value $IPAddress
         
-            # Optional Parameters
-            if($Vlan){$JSoNBody | Add-Member -MemberType NoteProperty -Name vlan -Value $Vlan}
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                # Optional Parameters
+                if($Vlan){$JSoNBody | Add-Member -MemberType NoteProperty -Name vlan -Value $Vlan}
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
             
-            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+            }
         }
     }
 } # New-XIOIscsiPortal
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOIscsiRoute{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true)] 
         [Alias('dn')]
         [string]$DestNetwok,
@@ -3003,32 +3397,40 @@ param ( [Parameter(Mandatory=$true)]
         [Parameter(Mandatory=$false)]
         [ValidateNotNull()]
         [Alias('n')] 
-        [int]$Name
+        [int]$Name,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 
 )
 
     $UriObject = 'iscsi-routes'
-    
-    $UriString = $UriObject
-    $JSoNBody = New-Object -TypeName psobject
 
-    # Required Parameters
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name destination-network-and-mask -Value $DestNetwok
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name gateway -Value $Gateway
+    if($PSCmdlet.ShouldProcess($Name,"Creating Iscsi Route $($Name)")){
+    
+        $UriString = $UriObject
+        $JSoNBody = New-Object -TypeName psobject
+
+        # Required Parameters
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name destination-network-and-mask -Value $DestNetwok
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name gateway -Value $Gateway
         
-    # Optional Parameters
-    if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name iscsi-route-name -Value $Name}
+        # Optional Parameters
+        if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name iscsi-route-name -Value $Name}
+        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
                
 
-    Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
 
-    # TODO - Add multiple cluster support
+
+    }
     
 } # New-XIOIscsiRoute
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function New-XIOLunMap{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,
                     ValueFromPipeline=$true, 
                     Position=0,
@@ -3056,15 +3458,18 @@ param ( [Parameter(Mandatory=$true,
         }
         Process{
             
-            $JSoNBody = New-Object -TypeName psobject
-            if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $Name} # Note error in EMC documentation - specified vol-name as parameter but vol-id must be used with string as type
-            if($ID){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $ID}
-            if($InitiatorGroup){$JSoNBody | Add-Member -MemberType NoteProperty -Name ig-id -Value $InitiatorGroup} # Note error in EMC documentation - specifies name or id can be used but only ID appears to work
-            if($HostID){$JSoNBody | Add-Member -MemberType NoteProperty -Name lun -Value $HostID}
-            if($TargetGroup){$JSoNBody | Add-Member -MemberType NoteProperty -Name tg-id -Value $TargetGroup}
-            
-            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            if($PSCmdlet.ShouldProcess($InitiatorGroup,"Creating LUN Map $($Name)")){
 
+                $JSoNBody = New-Object -TypeName psobject
+                if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $Name} # Note error in EMC documentation - specified vol-name as parameter but vol-id must be used with string as type
+                if($ID){$JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $ID}
+                if($InitiatorGroup){$JSoNBody | Add-Member -MemberType NoteProperty -Name ig-id -Value $InitiatorGroup} # Note error in EMC documentation - specifies name or id can be used but only ID appears to work
+                if($HostID){$JSoNBody | Add-Member -MemberType NoteProperty -Name lun -Value $HostID}
+                if($TargetGroup){$JSoNBody | Add-Member -MemberType NoteProperty -Name tg-id -Value $TargetGroup}
+            
+                Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+            }
 
         }
 
@@ -3086,39 +3491,13 @@ param ( [Parameter(Mandatory=$true,
         [string]$ID,
         [Parameter(Mandatory=$true)]
         [Alias('nn')] 
-        [string]$NewName
-
-
-
-        <#
-        [Parameter(Mandatory=$true)]
-        [ValidateSet('Name','Object')]
-        [Alias('p')] 
-        [string]$Property
-        #>
+        [string]$NewName,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 
        )
-    <#
-    DynamicParam{
-        switch ($Property)
-        {
-            'Name' {
-                New-DynamicParam -Name 'Value' -Alias 'v' -Mandatory
-            }
-            'Object' {
-
-                #Create the RuntimeDefinedParameterDictionary
-                $paramDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-
-                New-DynamicParam -Name 'Type' -Alias 't' -ValidateSet @('InfinibandSwitch','DAE','Initiator','BatteryBackupUnit','Scheduler','StorageController','DataProtectionGroup','X-Brick','Volume','Cluster','InitiatorGroup','SSD','SnapshotSet','ConsistencyGroup','Target') -Mandatory -DPDictionary $paramDictionary
-                New-DynamicParam -Name 'Action' -Alias 'a' -ValidateSet @('Add','Remove') -Mandatory -DPDictionary $paramDictionary
-                New-DynamicParam -Name 'Value' -Alias 'v' -Mandatory -DPDictionary $paramDictionary
-
-                return $paramDictionary
-            }
-        }
-    }
-    #>
     Begin{
         $UriObject = 'tags'
     }
@@ -3126,34 +3505,13 @@ param ( [Parameter(Mandatory=$true,
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
             if($PSCmdlet.ShouldProcess($Name,'Updating Tag')){
+
                 $JSoNBody = New-Object -TypeName psobject
                 $JSoNBody | Add-Member -MemberType NoteProperty -Name caption -Value $NewName
+
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+
                 Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-
-
-                <#
-                switch ($Property)
-                {
-                    'Name' {
-                        $JSoNBody | Add-Member -MemberType NoteProperty -Name caption -Value $PSBoundParameters.Value
-                        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-                    }
-                    'Object' {
-                        $JSoNBody | Add-Member -MemberType NoteProperty -Name entity -Value $PSBoundParameters.Type
-                        $JSoNBody | Add-Member -MemberType NoteProperty -Name entity-details -Value $PSBoundParameters.Value
-                        switch ($PSBoundParameters.Action)
-                        {
-                            'Add' {
-                                Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-                            }
-                            'Remove' {
-                                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-                            }
-                        }
-                    }
-                }
-                #>
-
 
             }
         }
@@ -3164,31 +3522,10 @@ param ( [Parameter(Mandatory=$true,
             if($PSCmdlet.ShouldProcess($Name,'Updating Tag')){
                 $JSoNBody = New-Object -TypeName psobject
                 $JSoNBody | Add-Member -MemberType NoteProperty -Name caption -Value $NewName
+
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+
                 Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-
-
-                <#
-                switch ($Property)
-                {
-                    'Name' {
-                        $JSoNBody | Add-Member -MemberType NoteProperty -Name caption -Value $PSBoundParameters.Value
-                        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-                    }
-                    'Object' {
-                        $JSoNBody | Add-Member -MemberType NoteProperty -Name entity -Value $PSBoundParameters.Type
-                        $JSoNBody | Add-Member -MemberType NoteProperty -Name entity-details -Value $PSBoundParameters.Value
-                        switch ($PSBoundParameters.Action)
-                        {
-                            'Add' {
-                                Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-                            }
-                            'Remove' {
-                                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-                            }
-                        }
-                    }
-                }
-                #>
 
             }
         }
@@ -3395,8 +3732,28 @@ param ( [Parameter(Mandatory=$true,
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOSnapshot{
-[CmdletBinding()]
-param ( [Parameter(Mandatory=$true)]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
+param ( [Parameter(Mandatory=$true,
+            ValueFromPipeline=$true,
+            ValueFromPipelineByPropertyName=$true,
+            ParameterSetName='VolUpdateByName')]
+        [Alias('n')]
+        [String]$Name,
+        [Parameter(Mandatory=$true,ParameterSetName='VolUpdateByIndex')]
+        [Alias('i')]
+        [int]$ID,
+        [Parameter(Mandatory=$true)]
+        [ValidateSet('Name','Size','SmallIOAlerts','UnalignedIOAlerts','VaaiTpAlerts')]
+        [Alias('p')]
+        [string]$Property,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
+
+
+<#
+[Parameter(Mandatory=$true)]
         [Parameter(ParameterSetName='SnapNameUpdateByIndex')]
         [Parameter(ParameterSetName='SnapSizeUpdateByIndex')]
         [Parameter(ParameterSetName='SmallIOAlertUpdateByIndex')]
@@ -3438,9 +3795,145 @@ param ( [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [string]$VaaiTpAlerts=$null
 
+#>
+
 )
     
-    
+ DynamicParam{
+        # Create value parameter attribute
+        $valueAttribute = New-Object System.Management.Automation.ParameterAttribute
+        $ValueAttribute.Mandatory = $true
+        switch ($Property)
+        {
+            'Name' {
+                # Create attribute collection and add attribute
+                $attributeCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+                $attributeCollection.Add($ValueAttribute)
+            }
+            'Size' {
+                # Create attribute collection and add attribute
+                $attributeCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+                $attributeCollection.Add($ValueAttribute)
+            }
+            'SmallIOAlerts' {
+                # Create attribute collection and add attribute
+                $attributeCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+                $attributeCollection.Add($ValueAttribute)
+
+                # Generate and set the ValidateSet 
+                $arrSet = @('enabled','disabled')
+                $ValidateSetAttribute = New-Object System.Management.Automation.ValidateSetAttribute($arrSet)
+
+                # Add the ValidateSet to the attributes collection
+                $attributeCollection.Add($ValidateSetAttribute)                
+            }
+            'UnalignedIOAlerts' {
+                # Create attribute collection and add attribute
+                $attributeCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+                $attributeCollection.Add($ValueAttribute)
+                
+                # Generate and set the ValidateSet 
+                $arrSet = @('enabled','disabled')
+                $ValidateSetAttribute = New-Object System.Management.Automation.ValidateSetAttribute($arrSet)
+
+                # Add the ValidateSet to the attributes collection
+                $attributeCollection.Add($ValidateSetAttribute)
+            }
+            'VaaiTpAlerts' {
+                # Create attribute collection and add attribute
+                $attributeCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+                $attributeCollection.Add($ValueAttribute)
+
+                # Generate and set the ValidateSet 
+                $arrSet = @('enabled','disabled')
+                $ValidateSetAttribute = New-Object System.Management.Automation.ValidateSetAttribute($arrSet)
+
+                # Add the ValidateSet to the attributes collection
+                $attributeCollection.Add($ValidateSetAttribute)
+            }
+        }
+        $ValueParam = New-Object System.Management.Automation.RuntimeDefinedParameter('Value', [String], $attributeCollection)
+
+        #expose the name of our parameter
+        $paramDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+        $paramDictionary.Add('Value', $ValueParam)
+        return $paramDictionary
+
+    }
+
+    Begin{
+        $UriObject = 'snapshots'
+    }
+    Process{
+        if($Name){
+            $UriString = ($UriObject + '/?name=' + $Name)
+
+            if($PSCmdlet.ShouldProcess($Name,'Updating Snapshot')){
+                $JSoNBody = New-Object -TypeName psobject
+
+                # Optional Parameters
+                switch ($Property)
+                {
+                    'Name' {    
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-name -Value $PSBoundParameters.Value
+                    }
+                    'Size' {
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-size -Value $PSBoundParameters.Value
+                    }
+                    'SmallIOAlerts' {
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name small-io-alerts -Value $PSBoundParameters.Value
+                    }
+                    'UnalignedIOAlerts' {
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name unaligned-io-alerts -Value $PSBoundParameters.Value
+                    }
+                    'VaaiTpAlerts' {
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name vaai-tp-alerts -Value $PSBoundParameters.Value
+                    }
+                }
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+
+                Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
+        }
+    }     
+    End{
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
+
+            if($PSCmdlet.ShouldProcess($Name,'Updating Snapshot')){
+                $JSoNBody = New-Object -TypeName psobject
+            
+                # Optional Parameters
+                switch ($Property)
+                {
+                    'Name' {    
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-name -Value $PSBoundParameters.Value
+                    }
+                    'Size' {
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-size -Value $PSBoundParameters.Value
+                    }
+                    'SmallIOAlerts' {
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name small-io-alerts -Value $PSBoundParameters.Value
+                    }
+                    'UnalignedIOAlerts' {
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name unaligned-io-alerts -Value $PSBoundParameters.Value
+                    }
+                    'VaaiTpAlerts' {
+                        $JSoNBody | Add-Member -MemberType NoteProperty -Name vaai-tp-alerts -Value $PSBoundParameters.Value
+                    }
+                }
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+
+                Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
+        }
+    }   
+
+
+      
+      
+      
+    <#  
         
     $UriString = 'snapshots/'
     if($VolID){
@@ -3477,13 +3970,13 @@ param ( [Parameter(Mandatory=$true)]
     }
 
     Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-    
+    #>
 
 } # Set-XIOSnapshot
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Update-XIOSnapshot{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='SnapByCG')]
         [Alias('scg')]
         [string]$SourceCG,
@@ -3512,27 +4005,37 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SnapByCG')]
         [Parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [Alias('ssn')] 
-        [string]$SnapSetName
+        [string]$SnapSetName,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        $Cluster
 )
 
     
     $UriString = 'snapshots'
-    $JSoNBody = New-Object -TypeName psobject
-    if($SourceCG){$JSoNBody | Add-Member -MemberType NoteProperty -Name from-consistency-group-id -Value $SourceCG}
-    if($SourceSnapSet){$JSoNBody | Add-Member -MemberType NoteProperty -Name from-snapshot-set-id -Value $SourceSnapSet}
-    if($SourceVol){$JSoNBody | Add-Member -MemberType NoteProperty -Name from-volume-id -Value $SourceVol}
-    if($DestCG){$JSoNBody | Add-Member -MemberType NoteProperty -Name to-consistency-group-id -Value $DestCG}
-    if($DestSnapSet){$JSoNBody | Add-Member -MemberType NoteProperty -Name to-snapshot-set-id -Value $DestSnapSet}
-    if($DestVol){$JSoNBody | Add-Member -MemberType NoteProperty -Name to-volume-id -Value $DestVol}
-    if($NoBackup){$JSoNBody | Add-Member -MemberType NoteProperty -Name no-backup -Value $true}
-    if($BackupSnapSuffix){$JSoNBody | Add-Member -MemberType NoteProperty -Name backup-snap-suffix -Value $BackupSnapSuffix}
-    if($SnapSetName){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-set-name -Value $SnapSetName}
 
-    Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+    if($PSCmdlet.ShouldProcess($Name,'Updating Snapshot')){
+    
+        $JSoNBody = New-Object -TypeName psobject
+        if($SourceCG){$JSoNBody | Add-Member -MemberType NoteProperty -Name from-consistency-group-id -Value $SourceCG}
+        if($SourceSnapSet){$JSoNBody | Add-Member -MemberType NoteProperty -Name from-snapshot-set-id -Value $SourceSnapSet}
+        if($SourceVol){$JSoNBody | Add-Member -MemberType NoteProperty -Name from-volume-id -Value $SourceVol}
+        if($DestCG){$JSoNBody | Add-Member -MemberType NoteProperty -Name to-consistency-group-id -Value $DestCG}
+        if($DestSnapSet){$JSoNBody | Add-Member -MemberType NoteProperty -Name to-snapshot-set-id -Value $DestSnapSet}
+        if($DestVol){$JSoNBody | Add-Member -MemberType NoteProperty -Name to-volume-id -Value $DestVol}
+        if($NoBackup){$JSoNBody | Add-Member -MemberType NoteProperty -Name no-backup -Value $true}
+        if($BackupSnapSuffix){$JSoNBody | Add-Member -MemberType NoteProperty -Name backup-snap-suffix -Value $BackupSnapSuffix}
+        if($SnapSetName){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-set-name -Value $SnapSetName}
+        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+
+        Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+    }
 
     
     # TODO - Does not implement REST API functionality to complete snapshot of set of volumes, but easily done using PowerShell features
-    # TODO - Add multiple cluster support
+    
     <#
         
         [Parameter(ParameterSetName='DestSnapByCG')] 
@@ -3548,7 +4051,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SnapByCG')]
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOScheduler{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='SchedulerByName')]
         [Alias('n')] 
         [string]$Name,
@@ -3601,31 +4104,34 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SchedulerByName')]
     
     
     $UriString = 'schedulers'
-    $JSoNBody = New-Object -TypeName psobject
+    if($PSCmdlet.ShouldProcess($Name,'Updating Scheduler')){
 
-    # Required Parameters
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name scheduler-type -Value $SchedulerType
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-object-id -Value $ObjectID
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-object-type -Value $ObjectType
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name time -Value $Time
+        $JSoNBody = New-Object -TypeName psobject
+
+        # Required Parameters
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name scheduler-type -Value $SchedulerType
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-object-id -Value $ObjectID
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-object-type -Value $ObjectType
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name time -Value $Time
 
 
-    # Optional Parameters
-    if($SnapSuffix){$JSoNBody | Add-Member -MemberType NoteProperty -Name suffix -Value $SnapSuffix}
-    if($SnapType){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $SnapType}
-    if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-    if($SnapsToKeepNumber){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $SnapsToKeepNumber}
-    if($SnapsToKeepTime){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $SnapsToKeepTime}
+        # Optional Parameters
+        if($SnapSuffix){$JSoNBody | Add-Member -MemberType NoteProperty -Name suffix -Value $SnapSuffix}
+        if($SnapType){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $SnapType}
+        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+        if($SnapsToKeepNumber){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $SnapsToKeepNumber}
+        if($SnapsToKeepTime){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $SnapsToKeepTime}
     
 
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
 
+    }
 
 } # Set-XIOScheduler
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOInitiator{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='PortAddress')]
         [Parameter(ParameterSetName='InitiatorName')]
         [Parameter(ParameterSetName='ChapClusterAuthUser')]
@@ -3650,7 +4156,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='PortAddress')]
         [Parameter(ParameterSetName='ChapInitiatorDiscoverPassword')]
         [ValidateNotNullOrEmpty()]
         [Alias('cid')] 
-        [string]$ClusterID,
+        $Cluster,
         [Parameter(Mandatory=$true,ParameterSetName='PortAddress')]
         [Alias('p')]
         [string]$PortAddress,
@@ -3694,34 +4200,38 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='PortAddress')]
 )
 
     $UriString = 'Initiators'
-    $JSoNBody = New-Object -TypeName psobject
 
-    # Required Parameters
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name ig-id -Value $IgID
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name port-address -Value $PortAddress
+    if($PSCmdlet.ShouldProcess($Name,'Updating Initiator')){
+
+        $JSoNBody = New-Object -TypeName psobject
+
+        # Required Parameters
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name ig-id -Value $IgID
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name port-address -Value $PortAddress
     
 
-    # Optional Parameters
-    if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name initiator-name -Value $Name}
-    if($ClusterID){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $ClusterID}
-    if($ChapClusterAuthUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $ChapClusterAuthUser}
-    if($ChapClusterAuthPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $ChapClusterAuthPassword}
-    if($ChapClusterDiscoverUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapClusterDiscoverUser}
-    if($ChapClusterDiscoverPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapClusterDiscoverPassword}
-    if($ChapInitiatorAuthUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $ChapInitiatorAuthUser}
-    if($ChapInitiatorAuthPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $ChapInitiatorAuthPassword}
-    if($ChapInitiatorDiscoverUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapInitiatorDiscoverUser}
-    if($ChapInitiatorDiscoverPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapInitiatorDiscoverPassword}
+        # Optional Parameters
+        if($Name){$JSoNBody | Add-Member -MemberType NoteProperty -Name initiator-name -Value $Name}
+        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+        if($ChapClusterAuthUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $ChapClusterAuthUser}
+        if($ChapClusterAuthPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $ChapClusterAuthPassword}
+        if($ChapClusterDiscoverUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapClusterDiscoverUser}
+        if($ChapClusterDiscoverPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapClusterDiscoverPassword}
+        if($ChapInitiatorAuthUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshot-type -Value $ChapInitiatorAuthUser}
+        if($ChapInitiatorAuthPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-number -Value $ChapInitiatorAuthPassword}
+        if($ChapInitiatorDiscoverUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapInitiatorDiscoverUser}
+        if($ChapInitiatorDiscoverPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name snapshots-to-keep-time -Value $ChapInitiatorDiscoverPassword}
     
 
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
     
+    }
 
 } # Set-XIOInitiator
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOInitiatorGroup{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='IGByName')]
         [Alias('n')] 
         [string]$Name,
@@ -3735,26 +4245,30 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='IGByName')]
        )
     
     $UriString = 'initiator-groups/'
-    if($Name){
+
+    if($PSCmdlet.ShouldProcess($Name,'Updating InitiatorGroup')){
+
+        if($Name){
         
-        $UriString += ('?name=' + $Name)
+            $UriString += ('?name=' + $Name)
 
-    }
-    if($ID){
+        }
+        if($ID){
 
-        $UriString += $ID
+            $UriString += $ID
 
-    }
-    $JSoNBody = New-Object -TypeName psobject
-    $JSoNBody | Add-Member -MemberType NoteProperty -Name new-name -Value $NewName
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        }
+        $JSoNBody = New-Object -TypeName psobject
+        $JSoNBody | Add-Member -MemberType NoteProperty -Name new-name -Value $NewName
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
     
+    }
 
 } # Set-XIOInitiatorGroup
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOTarget{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='TargetByName')]
         [Alias('n')] 
         [string]$Name,
@@ -3772,18 +4286,22 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='TargetByName')]
        )
     
     $UriString = 'targets/'
-    $JSoNBody = New-Object -TypeName psobject
+    if($PSCmdlet.ShouldProcess($Name,'Updating Target')){
+    
+        $JSoNBody = New-Object -TypeName psobject
 
-    if($Name){
-        $UriString += ('?name=' + $Name)
-    }
-    if($ID){
-        $UriString += $ID
-    }
-    if($ID){$JSoNBody | Add-Member -MemberType NoteProperty -Name tar-id -Value $ID}
-    if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+        if($Name){
+            $UriString += ('?name=' + $Name)
+        }
+        if($ID){
+            $UriString += $ID
+        }
+        if($ID){$JSoNBody | Add-Member -MemberType NoteProperty -Name tar-id -Value $ID}
+        if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
 
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+    }
 
     # TODO - Documentation ambiguous need to experiment
 
@@ -3791,7 +4309,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='TargetByName')]
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOConsistencyGroup{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName',
                    ValueFromPipeline=$true)]
         [Alias('n')] 
@@ -3812,29 +4330,36 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName',
         $UriObject = 'consistency-groups'
     }
     Process{
-        if($Name){
-            $UriString = ($UriObject + '/?name=' + $Name)
-            $JSoNBody = New-Object -TypeName psobject
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name new-name -Value $NewName
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-            Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+        if($PSCmdlet.ShouldProcess($Name,'Updating Consistency Groups')){
+            if($Name){
+                $UriString = ($UriObject + '/?name=' + $Name)
+                $JSoNBody = New-Object -TypeName psobject
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name new-name -Value $NewName
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
         }
+
 
     }
     End{
-        if($ID){
-            $UriString = ($UriObject + '/' + $ID)
-            $JSoNBody = New-Object -TypeName psobject
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name new-name -Value $NewName
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-            Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-        }   
+
+        if($PSCmdlet.ShouldProcess($Name,'Updating Consistency Groups')){
+            if($ID){
+                $UriString = ($UriObject + '/' + $ID)
+                $JSoNBody = New-Object -TypeName psobject
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name new-name -Value $NewName
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }   
+        }
     }
 } # Set-XIOConsistencyGroup
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Add-XIOConsistencyGroupVolume{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName',
                    ValueFromPipeline=$true,position=0)]
         [Alias('n')] 
@@ -3854,14 +4379,16 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName',
         $UriObject = 'consistency-group-volumes'
     }
     Process{
-        if($Name){
-            $UriString += ($UriObject + '/?name=' + $Name)
-            $JSoNBody = New-Object -TypeName psobject
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $Name
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroup
-            # $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroupID
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-            <#
+        
+        if($PSCmdlet.ShouldProcess($Name,'Updating Consistency Group Volume')){
+            if($Name){
+                $UriString += ($UriObject + '/?name=' + $Name)
+                $JSoNBody = New-Object -TypeName psobject
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $Name
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroup
+                # $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroupID
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                                                <#
             if($Cluster){
                 if(Test-ClusterID -TestValue $Cluster){
                     $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
@@ -3870,18 +4397,21 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName',
                 }
             }
             #>
-            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
         }
     }
     End{
-        if($ID){
-            $UriString = ($UriObject + '/' + $ID)
-            $JSoNBody = New-Object -TypeName psobject
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $ID
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroup
-            # $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroupID
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-            <#
+
+        if($PSCmdlet.ShouldProcess($Name,'Updating Consistency Group Volume')){
+            if($ID){
+                $UriString = ($UriObject + '/' + $ID)
+                $JSoNBody = New-Object -TypeName psobject
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $ID
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroup
+                # $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroupID
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                                                <#
             if($Cluster){
                 if(Test-ClusterID -TestValue $Cluster){
                     $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
@@ -3890,7 +4420,8 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName',
                 }
             }
             #>
-            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
         }
     }
 
@@ -3925,7 +4456,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName',
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOLDAPConfiguration{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='LDAPUpdateByName')]
         [Parameter(ParameterSetName='BindDN')]
         [Parameter(ParameterSetName='BindPW')]
@@ -3998,38 +4529,38 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='LDAPUpdateByName')]
 )
     
     $UriObject = 'ldap-configs'
-     
+    
+    if($PSCmdlet.ShouldProcess($Name,'Updating LDAP Configuration')){ 
 
-    if($ID){
-        $UriString = ($UriObject + '/' + $ID)
-    }
-    if($Name){
-        $UriString += ($UriObject + '/?name=' + $Name)
-    }
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
+        }
+        if($Name){
+            $UriString += ($UriObject + '/?name=' + $Name)
+        }
 
-    $JSoNBody = New-Object -TypeName psobject
-    if($BindDN){$JSoNBody | Add-Member -MemberType NoteProperty -Name binddn -Value $BindDN}
-    if($BindPW){$JSoNBody | Add-Member -MemberType NoteProperty -Name bindpw -Value $BindPW}
-    if($X509Cert){$JSoNBody | Add-Member -MemberType NoteProperty -Name ca-cert-data -Value $X509Cert}
-    if($ExpireHours){$JSoNBody | Add-Member -MemberType NoteProperty -Name cache-expire-hours -Value $ExpireHours}
-    if($Roles){$JSoNBody | Add-Member -MemberType NoteProperty -Name roles -Value $Roles}
-    if($SearchBaseDN){$JSoNBody | Add-Member -MemberType NoteProperty -Name search-base -Value $SearchBaseDN}
-    if($SearchFilter){$JSoNBody | Add-Member -MemberType NoteProperty -Name search-filter -Value $SearchFilter}
-    if($ServerUrls){$JSoNBody | Add-Member -MemberType NoteProperty -Name server-urls -Value $ServerUrls}
-    if($Timeout){$JSoNBody | Add-Member -MemberType NoteProperty -Name timeout -Value $Timeout}
-    if($UserToDNSubstitution){$JSoNBody | Add-Member -MemberType NoteProperty -Name user-to-dn-rule -Value $UserToDNSubstitution}
+        $JSoNBody = New-Object -TypeName psobject
+        if($BindDN){$JSoNBody | Add-Member -MemberType NoteProperty -Name binddn -Value $BindDN}
+        if($BindPW){$JSoNBody | Add-Member -MemberType NoteProperty -Name bindpw -Value $BindPW}
+        if($X509Cert){$JSoNBody | Add-Member -MemberType NoteProperty -Name ca-cert-data -Value $X509Cert}
+        if($ExpireHours){$JSoNBody | Add-Member -MemberType NoteProperty -Name cache-expire-hours -Value $ExpireHours}
+        if($Roles){$JSoNBody | Add-Member -MemberType NoteProperty -Name roles -Value $Roles}
+        if($SearchBaseDN){$JSoNBody | Add-Member -MemberType NoteProperty -Name search-base -Value $SearchBaseDN}
+        if($SearchFilter){$JSoNBody | Add-Member -MemberType NoteProperty -Name search-filter -Value $SearchFilter}
+        if($ServerUrls){$JSoNBody | Add-Member -MemberType NoteProperty -Name server-urls -Value $ServerUrls}
+        if($Timeout){$JSoNBody | Add-Member -MemberType NoteProperty -Name timeout -Value $Timeout}
+        if($UserToDNSubstitution){$JSoNBody | Add-Member -MemberType NoteProperty -Name user-to-dn-rule -Value $UserToDNSubstitution}
     
 
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
 
-    # Note - This is an XMS function - multiple cluster support not applicable
-    # TODO - need to consider and test pipline input scenarios
+    }
 
 } # Set-XIOLDAPConfiguration
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOAlertDefinition{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='AlertDefinitionByName')]
         [Parameter(ParameterSetName='ActivityMode')]
         [Parameter(ParameterSetName='ClearanceMode')]
@@ -4058,31 +4589,31 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='AlertDefinitionByName')]
 )
     
     $UriObject = 'alert-definition'
-     
+    
+    if($PSCmdlet.ShouldProcess($Name,'Updating Alert Definition')){ 
 
-    if($ID){
-        $UriString = ($UriObject + '/' + $ID)
-    }
-    if($Name){
-        $UriString += ($UriObject + '/?name=' + $Name)
-    }
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
+        }
+        if($Name){
+            $UriString += ($UriObject + '/?name=' + $Name)
+        }
 
-    $JSoNBody = New-Object -TypeName psobject
-    if($ActivityMode){$JSoNBody | Add-Member -MemberType NoteProperty -Name binddn -Value $ActivityMode}
-    if($ClearanceMode){$JSoNBody | Add-Member -MemberType NoteProperty -Name bindpw -Value $ClearanceMode}
-    if($Severity){$JSoNBody | Add-Member -MemberType NoteProperty -Name ca-cert-data -Value $Severity}
+        $JSoNBody = New-Object -TypeName psobject
+        if($ActivityMode){$JSoNBody | Add-Member -MemberType NoteProperty -Name binddn -Value $ActivityMode}
+        if($ClearanceMode){$JSoNBody | Add-Member -MemberType NoteProperty -Name bindpw -Value $ClearanceMode}
+        if($Severity){$JSoNBody | Add-Member -MemberType NoteProperty -Name ca-cert-data -Value $Severity}
         
 
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
 
-    # Note - This is an XMS function - multiple cluster support not applicable
-    # TODO - need to consider and test pipline input scenarios
+    }
 
 } # Set-XIOAlertDefinition
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOEmailNotifier{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
         [Alias('n')] 
         [string]$Name,
@@ -4120,46 +4651,48 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
     
     $UriObject = 'email-notifier'
 
-    if($ID){
-        $UriString = ($UriObject + '/' + $ID)
-    }
-    if($Name){
-        $UriString += ($UriObject + '/?name=' + $Name)
-    }
+    if($PSCmdlet.ShouldProcess($Name,'Updating Email Notifier')){ 
 
-    $JSoNBody = New-Object -TypeName psobject
-    if($CompanyName){$JSoNBody | Add-Member -MemberType NoteProperty -Name company-name -Value $CompanyName}
-    if($ContactDetails){$JSoNBody | Add-Member -MemberType NoteProperty -Name contact-details -Value $ContactDetails}
-    if($MailPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name mail-password -Value $MailPassword}
-    if($MailRelayAddress){$JSoNBody | Add-Member -MemberType NoteProperty -Name mail-relay-address -Value $MailRelayAddress}
-    if($MailUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name mail-user -Value $MailUser}
-    if($ProxyAddress){$JSoNBody | Add-Member -MemberType NoteProperty -Name proxy-address -Value $ProxyAddress}
-    if($ProxyPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name proxy-password -Value $ProxyPassword}
-    if($ProxyPort){$JSoNBody | Add-Member -MemberType NoteProperty -Name proxy-port -Value $ProxyPort}
-    if($ProxyUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name proxy-user -Value $ProxyUser}
-    if($RecipientList){$JSoNBody | Add-Member -MemberType NoteProperty -Name recipient-list -Value $RecipientList}
-    if($sender){$JSoNBody | Add-Member -MemberType NoteProperty -Name sender -Value $sender}
-    if($transport){$JSoNBody | Add-Member -MemberType NoteProperty -Name transport -Value $transport}
-
-    if($State){
-        switch ($State)
-        {
-            'enable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name enable -Value $true}
-            'disable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name disable -Value $true}
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
         }
-    }
-    
-    
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        if($Name){
+            $UriString += ($UriObject + '/?name=' + $Name)
+        }
 
-    # Note - This is an XMS function - multiple cluster support not applicable
-    # TODO - need to consider and test pipline input scenarios
+        $JSoNBody = New-Object -TypeName psobject
+        if($CompanyName){$JSoNBody | Add-Member -MemberType NoteProperty -Name company-name -Value $CompanyName}
+        if($ContactDetails){$JSoNBody | Add-Member -MemberType NoteProperty -Name contact-details -Value $ContactDetails}
+        if($MailPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name mail-password -Value $MailPassword}
+        if($MailRelayAddress){$JSoNBody | Add-Member -MemberType NoteProperty -Name mail-relay-address -Value $MailRelayAddress}
+        if($MailUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name mail-user -Value $MailUser}
+        if($ProxyAddress){$JSoNBody | Add-Member -MemberType NoteProperty -Name proxy-address -Value $ProxyAddress}
+        if($ProxyPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name proxy-password -Value $ProxyPassword}
+        if($ProxyPort){$JSoNBody | Add-Member -MemberType NoteProperty -Name proxy-port -Value $ProxyPort}
+        if($ProxyUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name proxy-user -Value $ProxyUser}
+        if($RecipientList){$JSoNBody | Add-Member -MemberType NoteProperty -Name recipient-list -Value $RecipientList}
+        if($sender){$JSoNBody | Add-Member -MemberType NoteProperty -Name sender -Value $sender}
+        if($transport){$JSoNBody | Add-Member -MemberType NoteProperty -Name transport -Value $transport}
+
+        if($State){
+            switch ($State)
+            {
+                'enable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name enable -Value $true}
+                'disable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name disable -Value $true}
+            }
+        }
+    
+    
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+    }
+
 
 } # Set-XIOEmailNotifier
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOSNMPNotifier{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
         [Alias('n')] 
         [string]$Name,
@@ -4191,41 +4724,42 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
     
     $UriObject = 'snmp-notifier'
 
-    if($ID){
-        $UriString = ($UriObject + '/' + $ID)
-    }
-    if($Name){
-        $UriString += ($UriObject + '/?name=' + $Name)
-    }
+    if($PSCmdlet.ShouldProcess($Name,'Updating SNMP Notifier')){ 
 
-    $JSoNBody = New-Object -TypeName psobject
-    if($AuthKey){$JSoNBody | Add-Member -MemberType NoteProperty -Name auth-key -Value $AuthKey}
-    if($AuthProtocol){$JSoNBody | Add-Member -MemberType NoteProperty -Name auth-protocol -Value $AuthProtocol}
-    if($Community){$JSoNBody | Add-Member -MemberType NoteProperty -Name community -Value $Community}
-    if($Port){$JSoNBody | Add-Member -MemberType NoteProperty -Name port -Value $Port}
-    if($PrivateKey){$JSoNBody | Add-Member -MemberType NoteProperty -Name priv-key -Value $PrivateKey}
-    if($PrivateProtocol){$JSoNBody | Add-Member -MemberType NoteProperty -Name priv-protocol -Value $PrivateProtocol}
-    if($RecipientList){$JSoNBody | Add-Member -MemberType NoteProperty -Name recipient-list -Value $RecipientList}
-    if($Username){$JSoNBody | Add-Member -MemberType NoteProperty -Name username -Value $Username}
-    if($Version){$JSoNBody | Add-Member -MemberType NoteProperty -Name version -Value $Version}
-    if($State){
-        switch ($State)
-        {
-            'enable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name enable -Value $true}
-            'disable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name disable -Value $true}
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
         }
-    }
-    
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        if($Name){
+            $UriString += ($UriObject + '/?name=' + $Name)
+        }
 
-    # Note - This is an XMS function - multiple cluster support not applicable
-    # TODO - need to consider and test pipline input scenarios
+        $JSoNBody = New-Object -TypeName psobject
+        if($AuthKey){$JSoNBody | Add-Member -MemberType NoteProperty -Name auth-key -Value $AuthKey}
+        if($AuthProtocol){$JSoNBody | Add-Member -MemberType NoteProperty -Name auth-protocol -Value $AuthProtocol}
+        if($Community){$JSoNBody | Add-Member -MemberType NoteProperty -Name community -Value $Community}
+        if($Port){$JSoNBody | Add-Member -MemberType NoteProperty -Name port -Value $Port}
+        if($PrivateKey){$JSoNBody | Add-Member -MemberType NoteProperty -Name priv-key -Value $PrivateKey}
+        if($PrivateProtocol){$JSoNBody | Add-Member -MemberType NoteProperty -Name priv-protocol -Value $PrivateProtocol}
+        if($RecipientList){$JSoNBody | Add-Member -MemberType NoteProperty -Name recipient-list -Value $RecipientList}
+        if($Username){$JSoNBody | Add-Member -MemberType NoteProperty -Name username -Value $Username}
+        if($Version){$JSoNBody | Add-Member -MemberType NoteProperty -Name version -Value $Version}
+        if($State){
+            switch ($State)
+            {
+                'enable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name enable -Value $true}
+                'disable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name disable -Value $true}
+            }
+        }
+    
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+    }
 
 } # Set-XIOSNMPNotifier
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOSYRNotifier{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
         [Alias('n')] 
         [string]$Name,
@@ -4263,41 +4797,42 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
     
     $UriObject = 'syr-notifier'
 
-    if($ID){
-        $UriString = ($UriObject + '/' + $ID)
-    }
-    if($Name){
-        $UriString += ($UriObject + '/?name=' + $Name)
-    }
+    if($PSCmdlet.ShouldProcess($Name,'Updating SYR Notifier')){ 
 
-    $JSoNBody = New-Object -TypeName psobject
-    if($ConnectionType){$JSoNBody | Add-Member -MemberType NoteProperty -Name connection-type -Value $ConnectionType}
-    if($Frequency){$JSoNBody | Add-Member -MemberType NoteProperty -Name frequency -Value $Frequency}
-    if($SiteName){$JSoNBody | Add-Member -MemberType NoteProperty -Name site-name -Value $SiteName}
-    if($EmailPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name email-password -Value $EmailPassword}
-    if($EmailSender){$JSoNBody | Add-Member -MemberType NoteProperty -Name email-sender -Value $EmailSender}
-    if($EmailServer){$JSoNBody | Add-Member -MemberType NoteProperty -Name email-server -Value $EmailServer}
-    if($EmailUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name email-user -Value $EmailUser}
-    if($ESRSGatewayHost){$JSoNBody | Add-Member -MemberType NoteProperty -Name esrs-gw-host -Value $ESRSGatewayHost}
-    if($ESRSGatewayHostSecondary){$JSoNBody | Add-Member -MemberType NoteProperty -Name esrs-gw-host-secondary -Value $ESRSGatewayHostSecondary}
-    if($State){
-        switch ($State)
-        {
-            'enable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name enable -Value $true}
-            'disable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name disable -Value $true}
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
         }
-    }
-    
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        if($Name){
+            $UriString += ($UriObject + '/?name=' + $Name)
+        }
 
-    # TODO - Add multiple cluster support
-    # TODO - need to consider and test pipline input scenarios
+        $JSoNBody = New-Object -TypeName psobject
+        if($ConnectionType){$JSoNBody | Add-Member -MemberType NoteProperty -Name connection-type -Value $ConnectionType}
+        if($Frequency){$JSoNBody | Add-Member -MemberType NoteProperty -Name frequency -Value $Frequency}
+        if($SiteName){$JSoNBody | Add-Member -MemberType NoteProperty -Name site-name -Value $SiteName}
+        if($EmailPassword){$JSoNBody | Add-Member -MemberType NoteProperty -Name email-password -Value $EmailPassword}
+        if($EmailSender){$JSoNBody | Add-Member -MemberType NoteProperty -Name email-sender -Value $EmailSender}
+        if($EmailServer){$JSoNBody | Add-Member -MemberType NoteProperty -Name email-server -Value $EmailServer}
+        if($EmailUser){$JSoNBody | Add-Member -MemberType NoteProperty -Name email-user -Value $EmailUser}
+        if($ESRSGatewayHost){$JSoNBody | Add-Member -MemberType NoteProperty -Name esrs-gw-host -Value $ESRSGatewayHost}
+        if($ESRSGatewayHostSecondary){$JSoNBody | Add-Member -MemberType NoteProperty -Name esrs-gw-host-secondary -Value $ESRSGatewayHostSecondary}
+        if($State){
+            switch ($State)
+            {
+                'enable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name enable -Value $true}
+                'disable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name disable -Value $true}
+            }
+        }
+    
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+    }
 
 } # Set-XIOSYRNotifier
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Set-XIOSyslogNotifier{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
         [Alias('n')] 
         [string]$Name,
@@ -4313,27 +4848,28 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
     
     $UriObject = 'syslog-notifier'
 
-    if($ID){
-        $UriString = ($UriObject + '/' + $ID)
-    }
-    if($Name){
-        $UriString += ($UriObject + '/?name=' + $Name)
-    }
+    if($PSCmdlet.ShouldProcess($Name,'Updating Syslog Notifier')){ 
 
-    $JSoNBody = New-Object -TypeName psobject
-    if($Targets){$JSoNBody | Add-Member -MemberType NoteProperty -Name targets -Value $Targets}
-    if($State){
-        switch ($State)
-        {
-            'enable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name enable -Value $true}
-            'disable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name disable -Value $true}
+        if($ID){
+            $UriString = ($UriObject + '/' + $ID)
         }
-    }
-    
-    Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+        if($Name){
+            $UriString += ($UriObject + '/?name=' + $Name)
+        }
 
-    # TODO - Add multiple cluster support
-    # TODO - need to consider and test pipline input scenarios
+        $JSoNBody = New-Object -TypeName psobject
+        if($Targets){$JSoNBody | Add-Member -MemberType NoteProperty -Name targets -Value $Targets}
+        if($State){
+            switch ($State)
+            {
+                'enable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name enable -Value $true}
+                'disable' {$JSoNBody | Add-Member -MemberType NoteProperty -Name disable -Value $true}
+            }
+        }
+    
+        Invoke-RestMethod -Method Put -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+
+    }
 
 } # Set-XIOSyslogNotifier
 
@@ -4341,7 +4877,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='NotifierByName')]
 # Remove Functions
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOUserAccount{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true, 
                     Position=0,
@@ -4358,27 +4894,31 @@ param ( [Parameter(Mandatory=$true,
     Begin{
         $UriObject = 'user-accounts'
     }
+    
     Process{
         # Remove Scheduler  by Name
         if($Name){
-            $UriString = ($UriObject + '/?name=' + $Name)
-            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing user account')){
+                $UriString = ($UriObject + '/?name=' + $Name)
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            }
         }
-    
+        
     }
     End{
         # Remove Scheduler by ID
         if($ID){
-            $UriString = ($UriObject + '/' + $ID)
-            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($ID,'Removing user account')){
+                $UriString = ($UriObject + '/' + $ID)
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            }
         }
-    }
-        
+    }      
 } # Remove-XIOUserAccount
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOTag{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true, 
                     ValueFromPipeline=$true,
                     ValueFromPipelineByPropertyName=$true,
@@ -4395,15 +4935,19 @@ param ( [Parameter(Mandatory=$true,
     Process{
         # Remove Volume Folders By Name
         if($Name){
-            $UriString = ($UriObject + '/?name=' + $Name)
-            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing tag')){
+                $UriString = ($UriObject + '/?name=' + $Name)
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            }
         }
     }
     End{
         # Remove Volume Folders By ID
         if($ID){
-            $UriString = ($UriObject + '/' + $ID)
-            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($ID,'Removing tag')){
+                $UriString = ($UriObject + '/' + $ID)
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            }
         }
     }
 } # Remove-XIOTag
@@ -4425,7 +4969,11 @@ Param([Parameter(Mandatory=$true,
         [Parameter(Mandatory=$true)]
         [ValidateSet('InfinibandSwitch','DAE','Initiator','BatteryBackupUnit','Scheduler','StorageController','DataProtectionGroup','X-Brick','Volume','Cluster','InitiatorGroup','SSD','SnapshotSet','ConsistencyGroup','Target')]
         [Alias('t')] 
-        [string]$Type
+        [string]$Type,
+        [Parameter(Mandatory=$false)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('c')] 
+        [string]$Cluster
      )
      Begin{
         $UriObject = 'tags'
@@ -4437,6 +4985,8 @@ Param([Parameter(Mandatory=$true,
                 $JSoNBody = New-Object -TypeName psobject
                 $JSoNBody | Add-Member -MemberType NoteProperty -Name entity -Value $Type
                 $JSoNBody | Add-Member -MemberType NoteProperty -Name entity-details -Value $Name
+
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
                 Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
             }
         }
@@ -4446,6 +4996,9 @@ Param([Parameter(Mandatory=$true,
                 $JSoNBody = New-Object -TypeName psobject
                 $JSoNBody | Add-Member -MemberType NoteProperty -Name entity -Value $Type
                 $JSoNBody | Add-Member -MemberType NoteProperty -Name entity-details -Value $Name
+
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+
                 Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
             }
         }
@@ -4516,7 +5069,7 @@ param ( [Parameter(Mandatory=$true,
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOSnapshot{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName', 
                     ValueFromPipeline=$true, 
                     Position=0)]
@@ -4541,13 +5094,17 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName',
         # Remove Snapshot by Name
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+
+            if($PSCmdlet.ShouldProcess($Name,'Removing Snapshot')){
+
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4555,13 +5112,16 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName',
         # Remove Snapshot by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+
+            if($PSCmdlet.ShouldProcess($ID,'Removing Snapshot')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }    
@@ -4569,7 +5129,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='VolByName',
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOSnapshotSet{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='SnapSetByName', 
                     ValueFromPipeline=$true, 
                     Position=0)]
@@ -4590,13 +5150,17 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SnapSetByName',
         # Remove object by Name
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+
+            if($PSCmdlet.ShouldProcess($Name,'Removing SnapshotSet')){
+
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4604,13 +5168,16 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SnapSetByName',
         # Remove object by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+
+            if($PSCmdlet.ShouldProcess($Name,'Removing SnapshotSet')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }    
@@ -4618,7 +5185,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SnapSetByName',
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOScheduler{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='SchedulerByName', 
                     ValueFromPipeline=$true, 
                     Position=0)]
@@ -4639,13 +5206,15 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SchedulerByName',
         # Remove Scheduler  by Name
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing Scheduler')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4653,13 +5222,15 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SchedulerByName',
         # Remove Scheduler by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing Scheduler')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }  
@@ -4667,7 +5238,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='SchedulerByName',
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOInitiator{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='InitiatorByName', 
                     ValueFromPipeline=$true,
                     Position=0)]
@@ -4688,13 +5259,15 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='InitiatorByName',
         # Remove object by Name
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing Initiator')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4702,13 +5275,15 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='InitiatorByName',
         # Remove object by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing Initiator')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4716,7 +5291,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='InitiatorByName',
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOInitiatorGroup{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='IGByName', 
                     ValueFromPipeline=$true,
                     Position=0)]
@@ -4732,22 +5307,26 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='IGByName',
     Process{
         # Remove IG by Name
         if($Name){
-            $UriString = ($UriObject + '/?name=' + $Name)
-            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing InitiatorGroup')){
+                $UriString = ($UriObject + '/?name=' + $Name)
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            }
         }
     }
     End{
         # Remove IG by Index
         if($ID){
-            $UriString = ($UriObject + '/' + $ID)
-            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing InitiatorGroup')){
+                $UriString = ($UriObject + '/' + $ID)
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            }
         }
     }
 } # Remove-XIOInitiatorGroup
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOConsistencyGroup{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName', 
                    ValueFromPipeline=$true,
                    Position=0)]
@@ -4768,12 +5347,16 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName',
         # Remove object by Name
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            if($Cluster){
-                $JSoNBody = New-Object -TypeName psobject
-                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+
+            if($PSCmdlet.ShouldProcess($Name,'Removing ConsistencyGroup')){
+
+                if($Cluster){
+                    $JSoNBody = New-Object -TypeName psobject
+                    if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4781,12 +5364,14 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName',
         # Remove object by Index
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            if($Cluster){
-                $JSoNBody = New-Object -TypeName psobject
-                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing ConsistencyGroup')){
+                if($Cluster){
+                    $JSoNBody = New-Object -TypeName psobject
+                    if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4797,7 +5382,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName',
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOConsistencyGroupVolume{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName',
                    ValueFromPipeline=$true,position=0)]
         [Alias('n')] 
@@ -4819,22 +5404,26 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName',
         # Remove object by Name
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            $JSoNBody = New-Object -TypeName psobject
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $Name
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroup
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            if($PSCmdlet.ShouldProcess($Name,'Removing ConsistencyGroupVolume')){
+                $JSoNBody = New-Object -TypeName psobject
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $Name
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroup
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
         } 
     }
     End{
         # Remove object by Index
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            $JSoNBody = New-Object -TypeName psobject
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $Name
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroup
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
-            Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            if($PSCmdlet.ShouldProcess($Name,'Removing ConsistencyGroupVolume')){
+                $JSoNBody = New-Object -TypeName psobject
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name vol-id -Value $Name
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name cg-id -Value $ConsistencyGroup
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
         }
     }
 
@@ -4844,7 +5433,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='CGByName',
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOIscsiPortal{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='PortalByName',
                     ValueFromPipeline=$true, 
                     Position=0)] 
@@ -4866,36 +5455,41 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='PortalByName',
     Process{
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            $JSoNBody = New-Object -TypeName psobject
 
-            # Required Parameters
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name ip-addr -Value $IPAddress
+            if($PSCmdlet.ShouldProcess($Name,'Removing Iscsi Portal')){
+                $JSoNBody = New-Object -TypeName psobject
+
+                # Required Parameters
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name ip-addr -Value $IPAddress
         
-            # Optional Parameters
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                # Optional Parameters
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
                
-            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
         }
     }
     End{
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            $JSoNBody = New-Object -TypeName psobject
+            if($PSCmdlet.ShouldProcess($ID,'Removing Iscsi Portal')){
+                $JSoNBody = New-Object -TypeName psobject
 
-            # Required Parameters
-            $JSoNBody | Add-Member -MemberType NoteProperty -Name ip-addr -Value $IPAddress
+                # Required Parameters
+                $JSoNBody | Add-Member -MemberType NoteProperty -Name ip-addr -Value $IPAddress
         
-            # Optional Parameters
-            if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
+                # Optional Parameters
+                if($Cluster){$JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster}
             
-            Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                Invoke-RestMethod -Method Post -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+            }
         }
     }
 } # Remove-XIOIscsiPortal
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOIscsiRoute{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='RouteByName',
                     ValueFromPipeline=$true, 
                     Position=0)] 
@@ -4915,26 +5509,30 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='RouteByName',
     Process{
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
-            }   
+            if($PSCmdlet.ShouldProcess($Name,'Removing Iscsi Route')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }   
+            }
         }
     }
     End{
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($ID,'Removing Iscsi Route')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4943,7 +5541,7 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='RouteByName',
 
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Remove-XIOLunMap{
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess,ConfirmImpact='medium')]
 param ( [Parameter(Mandatory=$true,ParameterSetName='LMByName', 
                     ValueFromPipeline=$true,
                     Position=0)]
@@ -4964,13 +5562,15 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='LMByName',
         # Remove object by Name
         if($Name){
             $UriString = ($UriObject + '/?name=' + $Name)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($Name,'Removing LUN Map')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     }
@@ -4978,13 +5578,15 @@ param ( [Parameter(Mandatory=$true,ParameterSetName='LMByName',
         # Remove object by ID
         if($ID){
             $UriString = ($UriObject + '/' + $ID)
-            if($Cluster){
-                # Optional Parameters
-                $JSoNBody = New-Object -TypeName psobject
-                $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
-            }else{
-                Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+            if($PSCmdlet.ShouldProcess($ID,'Removing LUN Map')){
+                if($Cluster){
+                    # Optional Parameters
+                    $JSoNBody = New-Object -TypeName psobject
+                    $JSoNBody | Add-Member -MemberType NoteProperty -Name cluster-id -Value $Cluster
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders -Body ($JSoNBody | ConvertTo-Json)
+                }else{
+                    Invoke-RestMethod -Method Delete -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders
+                }
             }
         }
     } 
