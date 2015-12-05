@@ -293,7 +293,7 @@ $Volumes | ForEach-Object{Set-XIOVolume -Name $_ -SmallIOAlerts enable}
 
 
 Get-XIOVolume -Name $Volumes[0] -Cluster 1
-Get-XIOVolume | Select-Object Name,index,lb-size,vol-size,logical-space-in-use | FT -AutoSize
+Get-XIOVolume | Select-Object Name,index,lb-size,vol-size,logical-space-in-use | Where Name -Like 'DAM*' | FT -AutoSize
 Get-XIOVolume -ID 64 |  Select Name
 $Volumes | Get-XIOVolume | Select-object Name,index,lb-size,vol-size,logical-space-in-use | FT -AutoSize
 
@@ -345,8 +345,25 @@ New-XIOSnapshot -TagList @('/Volume/DAM01','/Volume/DAM02') -SnapSuffix '.Snap00
 New-XIOSnapshot -TagList @('/Volume/DAM01','/Volume/DAM02') -SnapSuffix ('{0}{1}' -f '.Snap_',(Get-Date -Format yyyyMMdd-HHmmss)) -SnapSetName 'DAM01_Set0010'
 
 
+(Get-XIOConsistencyGroup -Name 'DAMTest01').index
+
+New-XIOSnapshot -CGID ((Get-XIOConsistencyGroup -Name 'DAMTest01').index) -SnapSuffix 'CG_Test001'
+
+
+Get-XIOSnapshot | Where Name -like 'DAM*' | Select Name,index | FT -AutoSize
+
+
 Update-XIOSnapshot -SourceVol 'DAM01' -DestVol 'DAM01.snap.0001' -NoBackup
 Update-XIOSnapshot -SourceSnapSet 'SQLDATA01' -DestSnapSet 'SQLDATA02'
+
+
+
+Get-XIOConsistencyGroup
+
+
+Update-XIOSnapshot -SourceCG 'DAMTest01'
+
+
 
 Get-XIOSnapshot | Where Name -match 'DAM[0-9]{2}.Snap_.*' | Select-Object Name,@{Name="AncestorValumeName";Expression={$_."ancestor-vol-id"[1]}},creation-time,vol-size,logical-space-in-use | ft -AutoSize
 Get-XIOSnapshot | Where Name -match 'DAM[0-9]{2}.Snap_.*' | Remove-XIOSnapshot
@@ -790,15 +807,40 @@ Get-XIOSlot
 
 
 #region Event (Get)
-Get-XIOEvent
-Get-XIOEvent -ToDateTime ([System.convert]::ToDateTime('4/19/2015'))
-Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime('7/16/2015')) -ToDateTime ([System.convert]::ToDateTime('7/17/2015'))
-# Apparent issues with this API object waiting on EMC feedback
+$Events = Get-XIOEvent
+$Events | Select timestamp,id,event_code -First 1 | FT
+$Events | Select timestamp,id,event_code -Last 1 | FT
+$Events.count
 
+$Events = Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime('12/01/2015'))
+$Events | Select timestamp,id,event_code -First 1 | FT
+$Events | Select timestamp,id,event_code -Last 1 | FT
+$Events.count
+
+$Events = Get-XIOEvent -ToDateTime ([System.convert]::ToDateTime('12/03/2015'))
+$Events | Select timestamp,id,event_code -First 1 | FT
+$Events | Select timestamp,id,event_code -Last 1 | FT
+$Events.count
+
+
+$Events = Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime('11/15/2015')) -ToDateTime ([System.convert]::ToDateTime('11/17/2015'))
+$Events | Select timestamp,id,event_code -First 1 | FT
+$Events | Select timestamp,id,event_code -Last 1 | FT
+$Events.count
+
+# Apparent issues with this API object waiting on EMC feedback
+[System.Web.HttpUtility]::UrlEncode(([System.convert]::ToDateTime('4/19/2015')))
 
 Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime('7/16/2015')) -ToDateTime ([System.convert]::ToDateTime('7/17/2015'))
 Get-XIOEvent -FromDateTime ([System.convert]::ToDateTime('8/20/2015'))
 Get-XIOEvent -ToDateTime ([System.convert]::ToDateTime('7/19/2015'))
+
+
+https://192.168.1.59/api/json/v2/types/events/from-date-time=2015-10-01%2000:00:00?to-date-time=2015-11-17%2000:00:00
+
+((Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/types/events/from-date-time="2015-07-01 05:00:00"?to-date-time="2015-08-31 05:00:00"' -Headers $Global:XIOAPIHeaders).events | Select timestamp,id,event_code | FT).Count
+((Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/types/events?from-date-time="2015-07-01 05:00:00"&to-date-time="2015-08-31 05:00:00"' -Headers $Global:XIOAPIHeaders).events | Select timestamp,id,event_code | FT).Count
+((Invoke-RestMethod -Method Get -Uri 'https://192.168.1.59/api/json/types/events?from-date-time=2015-07-01%2005:00:00' -Headers $Global:XIOAPIHeaders).events | Select timestamp,id,event_code | FT).Count
 
 
 <#

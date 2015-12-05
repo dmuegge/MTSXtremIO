@@ -146,7 +146,9 @@ Version
 
 - 0.42.0 2015-11-22 - Add Multi-Cluster support to Get-XIOBrick, Get-XIOEnvs, Get-XIOStorageController, Get-XIOStorageControllerPSU, Get-XIODataProtectionGroup, Get-XIOTag, Get-XIOTagObject, Get-XIOVolume, Get-XIOSnapshotSet, Get-XIOScheduler, Get-XIOInitiator. Added ability to do adhoc authentication with Set-XIOAPIConnectionInfo. Corrected implementation of cmdlet aliases. Updated help.
 
-- 0.43.0 2015-11-30 - Add Multi-Cluster support to remaining applicable Get functions and updated corresponding help documentation. Re-factored some code to reduce repetition. Added other help information. Added multi-cluster support and supports should process to all new,set,and remove cmdlets.   
+- 0.43.0 2015-11-30 - Add Multi-Cluster support to remaining applicable Get functions and updated corresponding help documentation. Re-factored some code to reduce repetition. Added other help information. Added multi-cluster support and supports should process to all new,set,and remove cmdlets.
+
+- 0.44.0 2015-12-04 - Corrected issue with Get-XIOEvent    
 
 
 Notes

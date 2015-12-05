@@ -2794,13 +2794,13 @@ param ( [Parameter(Mandatory=$true,
 # .ExternalHelp MTSXtremIO.psm1-Help.xml
 function Get-XIOEvent{
 [CmdletBinding(DefaultParameterSetName='AllEvents')]
-param ( [Parameter(Mandatory=$true,
+param ( [Parameter(Mandatory=$false,
                     ParameterSetName='EventsByDateTime')]
         [ValidateNotNull()]
         [Alias('f')] 
         [Alias('From')]
         [datetime]$FromDateTime,
-        [Parameter(Mandatory=$true,
+        [Parameter(Mandatory=$false,
                     ParameterSetName='EventsByDateTime')]
         [ValidateNotNull()]
         [Alias('t')] 
@@ -2808,18 +2808,19 @@ param ( [Parameter(Mandatory=$true,
         [datetime]$ToDateTime
 )
     
-    $UriString = 'events/'
+    $UriString = 'events'
     # Return events by from date and time
     if($FromDateTime){
-        $UriString += ('from-date-time="' + ($FromDateTime.ToString('u').Replace('Z',[string]::Empty)) + '"')
+        $UriString += ('?from-date-time=' + (($FromDateTime.ToString('u').Replace('Z',[string]::Empty)).Replace(' ','%20')))
+
         if($ToDateTime){
-            $UriString += ('?to-date-time="' + ($ToDateTime.ToString('u').Replace('Z',[string]::Empty)) + '"')   
+            $UriString += ('&to-date-time=' + (($ToDateTime.ToString('u').Replace('Z',[string]::Empty)).Replace(' ','%20')))   
         }
     }
     else{
         # Return events by to date and time
         if($ToDateTime){
-            $UriString += ('to-date-time="' + ($ToDateTime.ToString('u').Replace('Z',[string]::Empty)) + '"')   
+            $UriString += ('?to-date-time=' + (($ToDateTime.ToString('u').Replace('Z',[string]::Empty)).Replace(' ','%20')))   
         }
     }
     # No parameters passed return details of all events
@@ -2829,8 +2830,6 @@ param ( [Parameter(Mandatory=$true,
     else{
         (Invoke-RestMethod -Method Get -Uri ($Global:XIOAPIBaseUri + $UriString) -Headers $Global:XIOAPIHeaders).events
     }
-
-    # TODO - Need to revist this after feedback from EMC on from and to behavior. From does not seem to work and all requests appear to retrieve 504 records
     
 } # Get-XIOEvent
 
